@@ -10,11 +10,12 @@ type TripDetailsPageProps = {
   returnDate: string;
   passengers: number;
   onCheckout: (order: TripOrder) => void;
+  baseFarePerPassengerOverride?: number;
 };
 
 type SeatType = 'ECONOMY' | 'PREMIUM' | 'BUSINESS';
 
-const BASE_FARE_PER_PASSENGER = 300;
+const DEFAULT_BASE_FARE_PER_PASSENGER = 300;
 const TAX_RATE = 0.22;
 const BAG_FEE = 35;
 const WIFI_FEE = 12;
@@ -49,6 +50,7 @@ export default function TripDetailsPage({
   returnDate,
   passengers,
   onCheckout,
+  baseFarePerPassengerOverride,
 }: TripDetailsPageProps) {
   const [bags, setBags] = useState(0);
   const [seatType, setSeatType] = useState<SeatType>('ECONOMY');
@@ -62,8 +64,13 @@ export default function TripDetailsPage({
       BUSINESS: 1.8,
     };
 
+    const perPassengerBase =
+      typeof baseFarePerPassengerOverride === 'number'
+        ? baseFarePerPassengerOverride
+        : DEFAULT_BASE_FARE_PER_PASSENGER;
+
     const seatMultiplier = seatMultiplierMap[seatType];
-    const baseFare = BASE_FARE_PER_PASSENGER * seatMultiplier * passengers;
+    const baseFare = perPassengerBase * seatMultiplier * passengers;
     const taxes = baseFare * TAX_RATE;
     const extrasTotal =
       bags * BAG_FEE +
@@ -72,7 +79,7 @@ export default function TripDetailsPage({
     const total = baseFare + taxes + extrasTotal;
 
     return { baseFare, taxes, extrasTotal, total };
-  }, [bags, seatType, extrasWifi, extrasPriority, passengers]);
+  }, [bags, seatType, extrasWifi, extrasPriority, passengers, baseFarePerPassengerOverride]);
 
   const handleContinueToCheckout = () => {
     const order: TripOrder = {

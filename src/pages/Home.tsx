@@ -4,8 +4,9 @@ import SearchCapsule from '../capsules/SearchCapsule';
 import Button from '../components/Button';
 import TripDetailsPage, { TripOrder } from './TripDetailsPage';
 import CheckoutPage from './CheckoutPage';
+import FlightResultsPage, { FlightOption } from './FlightResultsPage';
 
-type TripData = {
+type SearchData = {
   from: string;
   to: string;
   departDate: string;
@@ -13,15 +14,22 @@ type TripData = {
   passengers: number;
 };
 
-type ViewState = 'SEARCH' | 'TRIP_DETAILS' | 'CHECKOUT' | 'CONFIRMED';
+type ViewState = 'SEARCH' | 'RESULTS' | 'TRIP_DETAILS' | 'CHECKOUT' | 'CONFIRMED';
 
 export default function Home() {
   const [view, setView] = useState<ViewState>('SEARCH');
-  const [tripData, setTripData] = useState<TripData | null>(null);
+  const [searchData, setSearchData] = useState<SearchData | null>(null);
+  const [selectedFlight, setSelectedFlight] = useState<FlightOption | null>(null);
   const [order, setOrder] = useState<TripOrder | null>(null);
 
-  const handleSearch = (data: TripData) => {
-    setTripData(data);
+  const handleSearch = (data: SearchData) => {
+    setSearchData(data);
+    setSelectedFlight(null);
+    setView('RESULTS');
+  };
+
+  const handleFlightSelected = (flight: FlightOption) => {
+    setSelectedFlight(flight);
     setView('TRIP_DETAILS');
   };
 
@@ -44,17 +52,30 @@ export default function Home() {
     );
   }
 
-  if (view === 'TRIP_DETAILS' && tripData) {
+  if (view === 'RESULTS' && searchData) {
+    return (
+      <FlightResultsPage
+        search={searchData}
+        onBack={() => setView('SEARCH')}
+        onSelectFlight={handleFlightSelected}
+      />
+    );
+  }
+
+  if (view === 'TRIP_DETAILS' && searchData) {
+    const baseFarePerPassengerOverride = selectedFlight?.baseFarePerPassenger;
+
     return (
       <Page>
-        <Button onClick={() => setView('SEARCH')}>Back to Search</Button>
+        <Button onClick={() => setView('RESULTS')}>Back to Results</Button>
         <div style={{ marginTop: '16px' }}>
           <TripDetailsPage
-            from={tripData.from}
-            to={tripData.to}
-            departDate={tripData.departDate}
-            returnDate={tripData.returnDate}
-            passengers={tripData.passengers}
+            from={searchData.from}
+            to={searchData.to}
+            departDate={searchData.departDate}
+            returnDate={searchData.returnDate}
+            passengers={searchData.passengers}
+            baseFarePerPassengerOverride={baseFarePerPassengerOverride}
             onCheckout={handleCheckoutStart}
           />
         </div>
