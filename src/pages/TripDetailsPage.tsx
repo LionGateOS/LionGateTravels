@@ -9,6 +9,7 @@ type TripDetailsPageProps = {
   departDate: string;
   returnDate: string;
   passengers: number;
+  onCheckout: (order: TripOrder) => void;
 };
 
 type SeatType = 'ECONOMY' | 'PREMIUM' | 'BUSINESS';
@@ -19,12 +20,35 @@ const BAG_FEE = 35;
 const WIFI_FEE = 12;
 const PRIORITY_FEE = 24;
 
+export type TripOrder = {
+  tripDetails: {
+    from: string;
+    to: string;
+    departDate: string;
+    returnDate: string;
+    passengers: number;
+  };
+  pricing: {
+    baseFare: number;
+    taxes: number;
+    extrasTotal: number;
+    total: number;
+  };
+  selections: {
+    bags: number;
+    seatType: SeatType;
+    extrasWifi: boolean;
+    extrasPriority: boolean;
+  };
+};
+
 export default function TripDetailsPage({
   from,
   to,
   departDate,
   returnDate,
   passengers,
+  onCheckout,
 }: TripDetailsPageProps) {
   const [bags, setBags] = useState(0);
   const [seatType, setSeatType] = useState<SeatType>('ECONOMY');
@@ -50,10 +74,36 @@ export default function TripDetailsPage({
     return { baseFare, taxes, extrasTotal, total };
   }, [bags, seatType, extrasWifi, extrasPriority, passengers]);
 
+  const handleContinueToCheckout = () => {
+    const order: TripOrder = {
+      tripDetails: {
+        from,
+        to,
+        departDate,
+        returnDate,
+        passengers,
+      },
+      pricing: {
+        baseFare: summary.baseFare,
+        taxes: summary.taxes,
+        extrasTotal: summary.extrasTotal,
+        total: summary.total,
+      },
+      selections: {
+        bags,
+        seatType,
+        extrasWifi,
+        extrasPriority,
+      },
+    };
+
+    onCheckout(order);
+  };
+
   return (
     <Page>
       <h2>Trip Details</h2>
-      <p>This screen is now driven by your actual search inputs and dynamic pricing.</p>
+      <p>This screen is driven by your actual search inputs and dynamic pricing.</p>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: '16px', marginTop: '16px' }}>
         <TripDetailsCapsule
@@ -77,6 +127,7 @@ export default function TripDetailsPage({
           onExtrasWifiChange={setExtrasWifi}
           onExtrasPriorityChange={setExtrasPriority}
           summary={summary}
+          onContinue={handleContinueToCheckout}
         />
       </div>
     </Page>

@@ -20,6 +20,7 @@ type TripBuilderCapsuleProps = {
     extrasTotal: number;
     total: number;
   };
+  onContinue: () => void;
 };
 
 export default function TripBuilderCapsule({
@@ -32,6 +33,7 @@ export default function TripBuilderCapsule({
   onExtrasWifiChange,
   onExtrasPriorityChange,
   summary,
+  onContinue,
 }: TripBuilderCapsuleProps) {
   const handleBagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value || '0', 10);
@@ -113,8 +115,8 @@ export default function TripBuilderCapsule({
       </Panel>
 
       <div style={{ marginTop: '16px' }}>
-        <Button onClick={() => alert('Trip configuration saved (mock). Backend integration coming soon.')}>
-          Continue
+        <Button onClick={onContinue}>
+          Continue to Checkout
         </Button>
       </div>
     </Card>
