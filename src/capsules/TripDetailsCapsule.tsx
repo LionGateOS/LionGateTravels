@@ -9,6 +9,8 @@ type TripDetailsProps = {
   passengers: number;
   baseFare: number;
   taxes: number;
+  extrasTotal: number;
+  total: number;
 };
 
 export default function TripDetailsCapsule({
@@ -18,15 +20,15 @@ export default function TripDetailsCapsule({
   returnDate,
   passengers,
   baseFare,
-  taxes
+  taxes,
+  extrasTotal,
+  total,
 }: TripDetailsProps) {
-  const total = baseFare + taxes;
-
   return (
     <Card>
       <h3>Trip Details</h3>
       <p>
-        <strong>From:</strong> {from} &rarr; <strong>To:</strong> {to}
+        <strong>From:</strong> {from || 'TBD'} &rarr; <strong>To:</strong> {to || 'TBD'}
       </p>
       <p>
         <strong>Depart:</strong> {departDate || 'TBD'} &nbsp;|&nbsp;
@@ -41,6 +43,9 @@ export default function TripDetailsCapsule({
       </p>
       <p>
         <strong>Taxes & fees:</strong> ${taxes.toFixed(2)}
+      </p>
+      <p>
+        <strong>Extras:</strong> ${extrasTotal.toFixed(2)}
       </p>
       <p>
         <strong>Total:</strong> ${total.toFixed(2)}
