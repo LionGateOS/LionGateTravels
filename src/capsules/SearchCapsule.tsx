@@ -1,9 +1,20 @@
-
 import React, { useState } from 'react';
 import Card from '../components/Card';
 import Button from '../components/Button';
 
-export default function SearchCapsule() {
+type SearchData = {
+  from: string;
+  to: string;
+  departDate: string;
+  returnDate: string;
+  passengers: number;
+};
+
+type SearchCapsuleProps = {
+  onSearch: (data: SearchData) => void;
+};
+
+export default function SearchCapsule({ onSearch }: SearchCapsuleProps) {
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
   const [depart, setDepart] = useState('');
@@ -11,14 +22,14 @@ export default function SearchCapsule() {
   const [passengers, setPassengers] = useState(1);
 
   const handleSearch = () => {
-    console.log({
+    const data: SearchData = {
       from,
       to,
-      depart,
+      departDate: depart,
       returnDate,
-      passengers
-    });
-    alert('Search submitted! (Backend integration coming soon)');
+      passengers,
+    };
+    onSearch(data);
   };
 
   return (
@@ -26,7 +37,6 @@ export default function SearchCapsule() {
       <h3>Search Flights</h3>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-
         <input
           placeholder="Departure Airport"
           value={from}
@@ -57,13 +67,13 @@ export default function SearchCapsule() {
 
         <input
           type="number"
-          min="1"
+          min={1}
           value={passengers}
-          onChange={(e) => setPassengers(parseInt(e.target.value))}
+          onChange={(e) => setPassengers(parseInt(e.target.value || '1', 10))}
           style={{ padding: '10px', borderRadius: '6px', border: '1px solid #ccc' }}
         />
 
-        <Button onClick={handleSearch}>Search</Button>
+        <Button onClick={handleSearch}>Search & Continue</Button>
       </div>
     </Card>
   );

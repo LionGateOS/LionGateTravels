@@ -4,15 +4,29 @@ import SearchCapsule from '../capsules/SearchCapsule';
 import Button from '../components/Button';
 import TripDetailsPage from './TripDetailsPage';
 
-export default function Home() {
-  const [view, setView] = useState('SEARCH');
+type TripData = {
+  from: string;
+  to: string;
+  departDate: string;
+  returnDate: string;
+  passengers: number;
+};
 
-  if (view === 'TRIP_DETAILS') {
+export default function Home() {
+  const [view, setView] = useState<'SEARCH' | 'TRIP_DETAILS'>('SEARCH');
+  const [tripData, setTripData] = useState<TripData | null>(null);
+
+  const handleSearch = (data: TripData) => {
+    setTripData(data);
+    setView('TRIP_DETAILS');
+  };
+
+  if (view === 'TRIP_DETAILS' && tripData) {
     return (
       <Page>
         <Button onClick={() => setView('SEARCH')}>Back to Search</Button>
         <div style={{ marginTop: '16px' }}>
-          <TripDetailsPage />
+          <TripDetailsPage {...tripData} />
         </div>
       </Page>
     );
@@ -20,12 +34,7 @@ export default function Home() {
 
   return (
     <Page>
-      <SearchCapsule />
-      <div style={{ marginTop: '16px' }}>
-        <Button onClick={() => setView('TRIP_DETAILS')}>
-          View Sample Trip Details
-        </Button>
-      </div>
+      <SearchCapsule onSearch={handleSearch} />
     </Page>
   );
 }
