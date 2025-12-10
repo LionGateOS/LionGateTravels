@@ -1,6 +1,8 @@
+
 import React, { useMemo } from 'react';
 import Page from '../layouts/Page';
 import FlightResultCardCapsule from '../capsules/FlightResultCardCapsule';
+import Button from '../components/Button';
 
 type FlightResultsPageProps = {
   search: {
@@ -65,27 +67,28 @@ export default function FlightResultsPage({
 
   return (
     <Page>
-      <button
-        onClick={onBack}
-        style={{
-          marginBottom: '12px',
-          padding: '6px 10px',
-          borderRadius: '4px',
-          border: '1px solid #ccc',
-          background: 'white',
-          cursor: 'pointer',
-        }}
-      >
-        ← Back to Search
-      </button>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+        <Button variant="ghost" onClick={onBack}>
+          ← Back to Search
+        </Button>
+        <div
+          style={{
+            fontSize: '0.78rem',
+            textTransform: 'uppercase',
+            letterSpacing: '0.16em',
+            color: '#9ba7ff',
+          }}
+        >
+          STEP 2 · SELECT FLIGHT
+        </div>
+      </div>
 
-      <h2>{title}</h2>
-      <p>
-        Showing sample flight options for your search. This screen will later be powered by
-        real airline APIs.
+      <h2 style={{ margin: '0 0 4px', fontSize: '1.4rem' }}>{title}</h2>
+      <p style={{ margin: '0 0 18px', fontSize: '0.92rem', color: '#c3ccff' }}>
+        Choose a sample flight option. In the future, this screen will be powered by live airline APIs.
       </p>
 
-      <div style={{ display: 'grid', gap: '12px', marginTop: '16px' }}>
+      <div style={{ display: 'grid', gap: '12px', marginTop: '8px' }}>
         {flights.map((flight) => (
           <FlightResultCardCapsule
             key={flight.id}

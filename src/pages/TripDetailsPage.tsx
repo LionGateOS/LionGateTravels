@@ -1,3 +1,4 @@
+
 import React, { useMemo, useState } from 'react';
 import Page from '../layouts/Page';
 import TripDetailsCapsule from '../capsules/TripDetailsCapsule';
@@ -109,10 +110,32 @@ export default function TripDetailsPage({
 
   return (
     <Page>
-      <h2>Trip Details</h2>
-      <p>This screen is driven by your actual search inputs and dynamic pricing.</p>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '16px',
+        }}
+      >
+        <div
+          style={{
+            fontSize: '0.78rem',
+            textTransform: 'uppercase',
+            letterSpacing: '0.16em',
+            color: '#9ba7ff',
+          }}
+        >
+          STEP 4 · CUSTOMIZE TRIP
+        </div>
+      </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: '16px', marginTop: '16px' }}>
+      <h2 style={{ margin: '0 0 4px', fontSize: '1.4rem' }}>Trip details</h2>
+      <p style={{ margin: '0 0 18px', fontSize: '0.92rem', color: '#c3ccff' }}>
+        Review your route and fine‑tune bags, seats, and extras. All pricing updates live as you adjust options.
+      </p>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1.1fr', gap: '16px', marginTop: '10px' }}>
         <TripDetailsCapsule
           from={from}
           to={to}
