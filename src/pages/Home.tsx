@@ -5,6 +5,7 @@ import Button from '../components/Button';
 import TripDetailsPage, { TripOrder } from './TripDetailsPage';
 import CheckoutPage from './CheckoutPage';
 import FlightResultsPage, { FlightOption } from './FlightResultsPage';
+import FlightDetailsPage from './FlightDetailsPage';
 
 type SearchData = {
   from: string;
@@ -14,7 +15,13 @@ type SearchData = {
   passengers: number;
 };
 
-type ViewState = 'SEARCH' | 'RESULTS' | 'TRIP_DETAILS' | 'CHECKOUT' | 'CONFIRMED';
+type ViewState =
+  | 'SEARCH'
+  | 'RESULTS'
+  | 'FLIGHT_DETAILS'
+  | 'TRIP_DETAILS'
+  | 'CHECKOUT'
+  | 'CONFIRMED';
 
 export default function Home() {
   const [view, setView] = useState<ViewState>('SEARCH');
@@ -25,11 +32,16 @@ export default function Home() {
   const handleSearch = (data: SearchData) => {
     setSearchData(data);
     setSelectedFlight(null);
+    setOrder(null);
     setView('RESULTS');
   };
 
   const handleFlightSelected = (flight: FlightOption) => {
     setSelectedFlight(flight);
+    setView('FLIGHT_DETAILS');
+  };
+
+  const handleProceedFromFlightDetails = () => {
     setView('TRIP_DETAILS');
   };
 
@@ -62,12 +74,22 @@ export default function Home() {
     );
   }
 
+  if (view === 'FLIGHT_DETAILS' && selectedFlight) {
+    return (
+      <FlightDetailsPage
+        flight={selectedFlight}
+        onBack={() => setView('RESULTS')}
+        onContinue={handleProceedFromFlightDetails}
+      />
+    );
+  }
+
   if (view === 'TRIP_DETAILS' && searchData) {
     const baseFarePerPassengerOverride = selectedFlight?.baseFarePerPassenger;
 
     return (
       <Page>
-        <Button onClick={() => setView('RESULTS')}>Back to Results</Button>
+        <Button onClick={() => setView('FLIGHT_DETAILS')}>Back to Flight Details</Button>
         <div style={{ marginTop: '16px' }}>
           <TripDetailsPage
             from={searchData.from}
