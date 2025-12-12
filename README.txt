@@ -1,1 +1,3 @@
-v15 placeholder: visible interactions (row highlights + click actions) will appear in v16 full build.
+v16: Interaction groundwork + activation flags.
+You WILL see a visual change in v17.
+This version prepares hover + selection styling injection.
