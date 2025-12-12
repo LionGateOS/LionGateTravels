@@ -1,33 +1,33 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const navItems = [
-  { path: "/", label: "Overview" },
-  { path: "/trips", label: "Trips" },
-  { path: "/quotes", label: "Quotes" },
-  { path: "/clients", label: "Clients" },
-  { path: "/tasks", label: "Tasks" },
-  { path: "/settings", label: "Settings" }
+const nav = [
+  { to: "/", label: "Overview" },
+  { to: "/trips", label: "Trips" },
+  { to: "/quotes", label: "Quotes" },
+  { to: "/clients", label: "Clients" },
+  { to: "/tasks", label: "Tasks" },
+  { to: "/settings", label: "Settings" }
 ];
 
-export const Sidebar: React.FC = () => {
+export function Sidebar() {
   return (
     <aside className="to-sidebar">
       <div className="to-logo">TravelOrchestrator</div>
       <nav>
-        {navItems.map((item) => (
+        {nav.map(i => (
           <NavLink
-            key={item.path}
-            to={item.path}
-            end={item.path === "/"}
+            key={i.to}
+            to={i.to}
+            end={i.to === "/"}
             className={({ isActive }) =>
               "to-nav-item" + (isActive ? " to-nav-item-active" : "")
             }
           >
-            {item.label}
+            {i.label}
           </NavLink>
         ))}
       </nav>
     </aside>
   );
-};
+}

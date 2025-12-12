@@ -1,6 +1,6 @@
 {
   "name": "travelorchestrator",
-  "version": "0.0.9-fixed",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "vite",
