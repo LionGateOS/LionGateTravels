@@ -1,35 +1,31 @@
 import React from "react";
-import type { SectionKey } from "../App";
+import { NavLink } from "react-router-dom";
 
-const navItems: { key: SectionKey; label: string }[] = [
-  { key: "overview", label: "Overview" },
-  { key: "trips", label: "Trips" },
-  { key: "quotes", label: "Quotes" },
-  { key: "clients", label: "Clients" },
-  { key: "tasks", label: "Tasks" },
-  { key: "settings", label: "Settings" }
+const navItems = [
+  { path: "/", label: "Overview" },
+  { path: "/trips", label: "Trips" },
+  { path: "/quotes", label: "Quotes" },
+  { path: "/clients", label: "Clients" },
+  { path: "/tasks", label: "Tasks" },
+  { path: "/settings", label: "Settings" }
 ];
 
-interface SidebarProps {
-  activeSection: SectionKey;
-  onChange: (section: SectionKey) => void;
-}
-
-export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onChange }) => {
+export const Sidebar: React.FC = () => {
   return (
     <aside className="to-sidebar">
       <div className="to-logo">TravelOrchestrator</div>
       <nav>
         {navItems.map((item) => (
-          <button
-            key={item.key}
-            className={
-              "to-nav-item" + (item.key === activeSection ? " to-nav-item-active" : "")
+          <NavLink
+            key={item.path}
+            to={item.path}
+            end={item.path === "/"}
+            className={({ isActive }) =>
+              "to-nav-item" + (isActive ? " to-nav-item-active" : "")
             }
-            onClick={() => onChange(item.key)}
           >
             {item.label}
-          </button>
+          </NavLink>
         ))}
       </nav>
     </aside>
