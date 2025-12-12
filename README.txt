@@ -1,1 +1,1 @@
-v13: Visible interaction layer placeholder (clickable rows will be implemented in full build).
+v14 placeholder: interactive UI behaviors will be implemented in full build. No visual changes yet.
