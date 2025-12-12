@@ -1,1 +1,1 @@
-v12 interaction hooks placeholder
+v13: Visible interaction layer placeholder (clickable rows will be implemented in full build).
