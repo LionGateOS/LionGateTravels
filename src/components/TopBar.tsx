@@ -1,6 +1,6 @@
 import React from "react";
 
-export function TopBar() {
+export const TopBar: React.FC = () => {
   return (
     <header className="to-topbar">
       <div className="to-topbar-title">Travel workspace</div>
@@ -10,4 +10,4 @@ export function TopBar() {
       </div>
     </header>
   );
-}
+};

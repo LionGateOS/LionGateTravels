@@ -9,7 +9,7 @@ import { ClientsPage } from "./pages/ClientsPage";
 import { TasksPage } from "./pages/TasksPage";
 import { SettingsPage } from "./pages/SettingsPage";
 
-export default function App() {
+const App: React.FC = () => {
   return (
     <div className="to-shell">
       <Sidebar />
@@ -26,4 +26,6 @@ export default function App() {
       </div>
     </div>
   );
-}
+};
+
+export default App;
