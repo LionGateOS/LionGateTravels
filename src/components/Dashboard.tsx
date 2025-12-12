@@ -25,6 +25,14 @@ export const Dashboard: React.FC = () => {
           ))}
         </div>
       </section>
+      <section className="to-section">
+        <h2 className="to-h2">Next actions</h2>
+        <ul className="to-list">
+          <li>Call supplier to confirm airport transfer times.</li>
+          <li>Send updated quote for Lisbon city break.</li>
+          <li>Check-in reminder for tomorrow&apos;s departures.</li>
+        </ul>
+      </section>
     </main>
   );
 };
