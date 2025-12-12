@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { store } from "../data/store";
 
 export const TripsPage: React.FC = () => {
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
   return (
     <main className="to-dashboard">
       <section className="to-section">
@@ -18,8 +20,12 @@ export const TripsPage: React.FC = () => {
           </div>
           {store.trips.map((trip) => (
             <div
-              key={trip.traveller + trip.destination}
-              className="to-table-row"
+              key={trip.id}
+              className={
+                "to-table-row to-table-row-clickable" +
+                (trip.id === selectedId ? " to-table-row-selected" : "")
+              }
+              onClick={() => setSelectedId(trip.id)}
             >
               <span>{trip.traveller}</span>
               <span>{trip.destination}</span>
@@ -28,6 +34,11 @@ export const TripsPage: React.FC = () => {
             </div>
           ))}
         </div>
+        {selectedId && (
+          <div className="to-selection-hint">
+            Selected trip ID: <span>{selectedId}</span>
+          </div>
+        )}
       </section>
     </main>
   );

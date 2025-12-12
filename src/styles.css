@@ -234,6 +234,35 @@ a {
   color: #e5e7eb;
 }
 
+.to-table-row-clickable {
+  cursor: pointer;
+  border-radius: 12px;
+  padding-inline: 6px;
+  transition: background 0.12s ease-out, box-shadow 0.12s ease-out,
+    transform 0.08s ease-out;
+}
+
+.to-table-row-clickable:hover {
+  background: rgba(15, 23, 42, 0.9);
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4);
+  transform: translateY(-1px);
+}
+
+.to-table-row-selected {
+  background: rgba(56, 189, 248, 0.12);
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.9);
+}
+
+.to-selection-hint {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.to-selection-hint span {
+  color: var(--text);
+}
+
 .to-settings-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
