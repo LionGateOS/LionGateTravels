@@ -1,1 +1,1 @@
-v14 placeholder: interactive UI behaviors will be implemented in full build. No visual changes yet.
+v15 placeholder: visible interactions (row highlights + click actions) will appear in v16 full build.
