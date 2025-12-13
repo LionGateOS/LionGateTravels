@@ -1,2 +1,2 @@
-TravelOrchestrator v19
-YOU WILL see a visual change: editable detail panel with Save/Cancel.
+TravelOrchestrator v20
+YOU WILL see a visual change: inline creation + empty states.

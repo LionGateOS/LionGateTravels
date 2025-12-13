@@ -3,7 +3,7 @@
 a{text-decoration:none;color:inherit}
 .to-shell{display:grid;grid-template-columns:260px 1fr;gap:18px;padding:18px;min-height:100vh}
 .to-sidebar{background:#020617;border-radius:var(--radius-xl);border:1px solid rgba(15,23,42,.95);padding:18px;box-shadow:var(--shadow-soft)}
-.to-logo{font-weight:650;letter-spacing:.04em;font-size:13px;margin-bottom:18px}
+.to-logo{font-weight:650;font-size:13px;margin-bottom:18px}
 .to-nav-item{display:block;border-radius:999px;padding:8px 12px;margin-bottom:6px;color:var(--muted)}
 .to-nav-item-active{background:var(--accent-soft);color:var(--text)}
 .to-main{display:flex;flex-direction:column;gap:14px}
@@ -34,3 +34,5 @@ a{text-decoration:none;color:inherit}
 .to-textarea{min-height:90px;resize:vertical}
 .to-drawer-actions{grid-column:1/-1;display:flex;justify-content:flex-end;gap:10px}
 .to-dirty{color:#fbbf24;font-size:12px;margin-left:6px}
+.to-empty{border:1px dashed var(--border-subtle);border-radius:18px;padding:24px;display:flex;align-items:center;justify-content:space-between}
+.to-empty-title{font-size:14px;color:var(--muted)}

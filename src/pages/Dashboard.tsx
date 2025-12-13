@@ -1,24 +1,16 @@
 import React from "react";
 import { store } from "../data/store";
 export const Dashboard: React.FC = () => {
-  const cards = [
-    { label: "Active trips", value: store.trips.length.toString() },
-    { label: "Quotes awaiting reply", value: store.quotes.filter(q=>q.status.toLowerCase().includes("waiting")).length.toString() },
-    { label: "Tasks due today", value: store.tasks.filter(t=>t.due.toLowerCase().includes("today")).length.toString() },
-    { label: "Clients travelling now", value: store.trips.filter(t=>t.status.toLowerCase().includes("confirmed")).length.toString() }
-  ];
   return (
     <main className="to-dashboard">
       <section className="to-section">
         <h1 className="to-h1">Today&apos;s cockpit</h1>
-        <p className="to-muted">A single place to see what needs your attention.</p>
+        <p className="to-muted">Create items using the New buttons in each section.</p>
         <div className="to-grid">
-          {cards.map(c=>(
-            <article key={c.label} className="to-card">
-              <div className="to-card-value">{c.value}</div>
-              <div className="to-card-label">{c.label}</div>
-            </article>
-          ))}
+          <article className="to-card"><div className="to-card-value">{store.trips.length}</div><div className="to-card-label">Trips</div></article>
+          <article className="to-card"><div className="to-card-value">{store.quotes.length}</div><div className="to-card-label">Quotes</div></article>
+          <article className="to-card"><div className="to-card-value">{store.clients.length}</div><div className="to-card-label">Clients</div></article>
+          <article className="to-card"><div className="to-card-value">{store.tasks.length}</div><div className="to-card-label">Tasks</div></article>
         </div>
       </section>
     </main>

@@ -1,10 +1,16 @@
 import React from "react";
-export const TopBar: React.FC = () => (
-  <header className="to-topbar">
-    <div className="to-topbar-title">Travel workspace</div>
-    <div className="to-topbar-right">
-      <span className="to-pill to-pill-green">ONLINE</span>
-      <button className="to-primary-btn">New trip</button>
-    </div>
-  </header>
-);
+import { useLocation } from "react-router-dom";
+export const TopBar: React.FC = () => {
+  const loc = useLocation();
+  const titleMap: Record<string,string> = {
+    "/":"Overview","/trips":"Trips","/quotes":"Quotes","/clients":"Clients","/tasks":"Tasks","/settings":"Settings"
+  };
+  return (
+    <header className="to-topbar">
+      <div className="to-topbar-title">{titleMap[loc.pathname] ?? "Travel workspace"}</div>
+      <div className="to-topbar-right">
+        <span className="to-pill to-pill-green">ONLINE</span>
+      </div>
+    </header>
+  );
+};
