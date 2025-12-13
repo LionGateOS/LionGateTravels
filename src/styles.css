@@ -34,5 +34,3 @@ a{text-decoration:none;color:inherit}
 .to-textarea{min-height:90px;resize:vertical}
 .to-drawer-actions{grid-column:1/-1;display:flex;justify-content:flex-end;gap:10px}
 .to-dirty{color:#fbbf24;font-size:12px;margin-left:6px}
-.to-empty{border:1px dashed var(--border-subtle);border-radius:18px;padding:24px;display:flex;align-items:center;justify-content:space-between}
-.to-empty-title{font-size:14px;color:var(--muted)}
