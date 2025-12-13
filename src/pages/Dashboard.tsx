@@ -4,24 +4,9 @@ import { store } from "../data/store";
 export const Dashboard: React.FC = () => {
   const cards = [
     { label: "Active trips", value: store.trips.length.toString() },
-    {
-      label: "Quotes awaiting reply",
-      value: store.quotes.filter((q) =>
-        q.status.toLowerCase().includes("waiting")
-      ).length.toString()
-    },
-    {
-      label: "Tasks due today",
-      value: store.tasks
-        .filter((t) => t.due.toLowerCase().includes("today"))
-        .length.toString()
-    },
-    {
-      label: "Clients travelling now",
-      value: store.trips
-        .filter((t) => t.status.toLowerCase().includes("confirmed"))
-        .length.toString()
-    }
+    { label: "Quotes awaiting reply", value: store.quotes.filter(q => q.status.toLowerCase().includes("waiting")).length.toString() },
+    { label: "Tasks due today", value: store.tasks.filter(t => t.due.toLowerCase().includes("today")).length.toString() },
+    { label: "Clients travelling now", value: store.trips.filter(t => t.status.toLowerCase().includes("confirmed")).length.toString() }
   ];
 
   return (

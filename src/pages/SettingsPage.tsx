@@ -5,9 +5,7 @@ export const SettingsPage: React.FC = () => {
     <main className="to-dashboard">
       <section className="to-section">
         <h1 className="to-h1">Settings</h1>
-        <p className="to-muted">
-          High-level preferences for how your workspace behaves.
-        </p>
+        <p className="to-muted">High-level preferences for how your workspace behaves.</p>
         <div className="to-settings-grid">
           <div className="to-card">
             <div className="to-card-label">Work hours</div>
