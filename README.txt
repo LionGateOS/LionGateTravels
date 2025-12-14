@@ -1,5 +1,5 @@
-LionGate Travels v37 — AI Rules Wired to Actions
+LionGate Travels v38 — Mode Enforcement
 
-Wires AI decision rules enforcement into action handling.
-TEST MODE ONLY.
-No UI changes expected.
+Adds hard guard so LIVE actions are blocked by default.
+TEST MODE continues to work normally.
+No UI changes.
