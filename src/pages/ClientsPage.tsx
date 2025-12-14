@@ -3,6 +3,9 @@ import { StoreState, uid, pushUndo } from "../data/store";
 import { DetailDrawer } from "../components/DetailDrawer";
 export const ClientsPage: React.FC<{state:StoreState; setState:(s:StoreState)=>void}> = ({state,setState}) => {
   const [selectedId,setSelectedId]=useState<string|null>(null);
+  const [query, setQuery] = useState<string>("");
+  const q = query.trim().toLowerCase();
+  const matches = (obj: any) => !q || JSON.stringify(obj).toLowerCase().includes(q);
   const selected = useMemo(()=> selectedId? state.clients.find(c=>c.id===selectedId)??null:null,[selectedId,state]);
   const [name,setName]=useState(""); const [segment,setSegment]=useState("Leisure"); const [notes,setNotes]=useState("");
   const dirty = selected? (notes!==selected.notes || segment!==selected.segment): name!=="";
@@ -11,9 +14,12 @@ export const ClientsPage: React.FC<{state:StoreState; setState:(s:StoreState)=>v
   const save=()=>{ if(!selected) return; pushUndo(state); setState({...state, clients: state.clients.map(c=> c.id===selected.id? {...c, segment, notes}: c)}); };
   return (
     <main className="to-dashboard"><section className="to-section"><h1 className="to-h1">Clients</h1>
+      <div className="to-searchbar">
+        <input className="to-input" placeholder="Search clients…" value={query} onChange={e=>setQuery(e.target.value)} />
+      </div>
       <div className="to-table-card">
         <div className="to-table-header to-table-header-3"><span>Name</span><span>Segment</span><span>Notes</span></div>
-        {state.clients.map(c=>(
+        {state.clients.filter(matches).map(c=>(
           <div key={c.id} className={"to-table-row to-table-row-3 to-table-row-clickable"+(c.id===selectedId?" to-table-row-selected":"")} onClick={()=>setSelectedId(c.id)}>
             <span>{c.name}</span><span>{c.segment}</span><span>{c.notes}</span>
           </div>

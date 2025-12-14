@@ -3,6 +3,9 @@ import { StoreState, uid, pushUndo } from "../data/store";
 import { DetailDrawer } from "../components/DetailDrawer";
 export const TasksPage: React.FC<{state:StoreState; setState:(s:StoreState)=>void}> = ({state,setState}) => {
   const [selectedId,setSelectedId]=useState<string|null>(null);
+  const [query, setQuery] = useState<string>("");
+  const q = query.trim().toLowerCase();
+  const matches = (obj: any) => !q || JSON.stringify(obj).toLowerCase().includes(q);
   const selected = useMemo(()=> selectedId? state.tasks.find(t=>t.id===selectedId)??null:null,[selectedId,state]);
   const [title,setTitle]=useState(""); const [notes,setNotes]=useState("");
   const dirty = selected? notes!==(selected.notes??""): title!=="";
@@ -11,9 +14,12 @@ export const TasksPage: React.FC<{state:StoreState; setState:(s:StoreState)=>voi
   const save=()=>{ if(!selected) return; pushUndo(state); setState({...state, tasks: state.tasks.map(t=> t.id===selected.id? {...t, notes}: t)}); };
   return (
     <main className="to-dashboard"><section className="to-section"><h1 className="to-h1">Tasks</h1>
+      <div className="to-searchbar">
+        <input className="to-input" placeholder="Search tasks…" value={query} onChange={e=>setQuery(e.target.value)} />
+      </div>
       <div className="to-table-card">
         <div className="to-table-header to-table-header-3"><span>Task</span><span>When</span><span>Related to</span></div>
-        {state.tasks.map(t=>(
+        {state.tasks.filter(matches).map(t=>(
           <div key={t.id} className={"to-table-row to-table-row-3 to-table-row-clickable"+(t.id===selectedId?" to-table-row-selected":"")} onClick={()=>setSelectedId(t.id)}>
             <span>{t.title}</span><span>{t.due}</span><span>{t.context}</span>
           </div>
