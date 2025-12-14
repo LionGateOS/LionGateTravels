@@ -1,6 +1,5 @@
-LionGate Travels v40 — Result Mapping Wired
+LionGate Travels v41 — Notification Stub
 
-Wires the action result mapper into the execution flow.
-User-facing messages are now resolved centrally.
+Adds a central notification stub (email/app) for future use.
 TEST MODE ONLY.
-No UI changes expected.
+No UI changes.
