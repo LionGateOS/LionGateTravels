@@ -1,5 +1,5 @@
-LionGate Travels v34 — Audit Integration Scaffold
+LionGate Travels v35 — Audit Activation Scaffold
 
-This wires audit logging helpers for Cancel / Change / Issue.
-Still TEST MODE ONLY.
-No UI changes.
+Activates audit logging calls for core actions.
+TEST MODE ONLY.
+No UI changes expected.
