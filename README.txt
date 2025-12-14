@@ -1,5 +1,5 @@
-LionGate Travels v54 — Camera OCR Consent Wiring
+LionGate Travels v55 — Traveler Profile Builder
 
-Wires camera/OCR intake behind privacy consent.
+Builds a normalized traveler profile from ID/OCR sources.
 TEST MODE ONLY.
 No UI changes.
