@@ -1,5 +1,5 @@
-LionGate Travels v42 — Notification Wired
+LionGate Travels v43 — Central Error Handling
 
-Wires notification stub into the execution flow.
+Adds centralized error handling and wires it into execution.
 TEST MODE ONLY.
 No UI changes expected.
