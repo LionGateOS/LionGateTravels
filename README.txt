@@ -1,4 +1,5 @@
-LionGate Travels v46 — Admin Metrics Scaffold
+LionGate Travels v47 — Admin Metrics Wired
 
-Adds internal admin metrics counters (TEST MODE).
-No UI changes.
+Wires admin metrics collection into the execution flow.
+TEST MODE ONLY.
+No UI changes expected.
