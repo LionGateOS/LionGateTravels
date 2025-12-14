@@ -1,5 +1,5 @@
-LionGate Travels v50 — Digital ID Intake Stub
+LionGate Travels v51 — Privacy & Consent Scaffold
 
-Adds a central intake stub to accept digital ID wallet payloads in the future.
+Adds a central consent manager for sensitive operations.
 TEST MODE ONLY.
 No UI changes.
