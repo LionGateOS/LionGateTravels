@@ -1,5 +1,5 @@
-LionGate Travels v47 — Admin Metrics Wired
+LionGate Travels v48 — Admin Snapshot Exporter
 
-Wires admin metrics collection into the execution flow.
+Adds ability to export a combined admin snapshot (metrics + audit).
 TEST MODE ONLY.
-No UI changes expected.
+No UI changes.
