@@ -1,5 +1,5 @@
-LionGate Travels v52 — Digital ID Consent Wired
+LionGate Travels v53 — Camera OCR Intake Scaffold
 
-Wires privacy consent enforcement into Digital ID intake.
+Adds a camera/OCR intake stub for passport or driver's license images.
 TEST MODE ONLY.
 No UI changes.
