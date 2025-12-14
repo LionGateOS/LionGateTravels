@@ -1,17 +1,38 @@
 import React from "react";
-type Props = { isOpen: boolean; title: string; subtitle?: string; dirty?: boolean; children: React.ReactNode; onClose: () => void; };
-export const DetailDrawer: React.FC<Props> = ({ isOpen, title, subtitle, dirty, children, onClose }) => (
-  <>
-    <div className={"to-drawer-overlay"+(isOpen?" to-drawer-overlay-open":"")} onClick={onClose} />
-    <aside className={"to-drawer"+(isOpen?" to-drawer-open":"")}>
-      <div className="to-drawer-header">
-        <div className="to-drawer-titles">
-          <div className="to-drawer-title">{title}{dirty? <span className="to-dirty"> • unsaved</span>:null}</div>
-          {subtitle? <div className="to-drawer-subtitle">{subtitle}</div>:null}
+
+export function DetailDrawer({
+  isOpen,
+  title,
+  onClose,
+  children,
+}: {
+  isOpen: boolean;
+  title: string;
+  onClose: () => void;
+  children: React.ReactNode;
+}) {
+  React.useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    if (isOpen) window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="to-drawer-wrap" role="dialog" aria-modal="true">
+      <div className="to-drawer-backdrop" onClick={onClose} />
+      <aside className="to-drawer">
+        <div className="to-drawer-head">
+          <div className="to-drawer-title">{title}</div>
+          <button className="to-ghost-btn" type="button" onClick={onClose}>
+            Close
+          </button>
         </div>
-        <button className="to-drawer-close" onClick={onClose}>✕</button>
-      </div>
-      <div className="to-drawer-body">{children}</div>
-    </aside>
-  </>
-);
+        <div className="to-drawer-body">{children}</div>
+      </aside>
+    </div>
+  );
+}

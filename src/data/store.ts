@@ -1,41 +1,17 @@
-export type Trip = { id: string; traveller: string; destination: string; dates: string; status: string; notes?: string; };
-export type Quote = { id: string; reference: string; traveller: string; destination: string; value: string; status: string; notes?: string; };
-export type Client = { id: string; name: string; segment: string; notes: string; };
-export type Task = { id: string; title: string; due: string; context: string; notes?: string; };
 
-export type StoreState = {
-  trips: Trip[];
-  quotes: Quote[];
-  clients: Client[];
-  tasks: Task[];
-};
+export type Item={id:string;[k:string]:any};
+export type StoreState={trips:Item[];quotes:Item[];clients:Item[];tasks:Item[]};
+const KEY="to.v22"; const empty:StoreState={trips:[],quotes:[],clients:[],tasks:[]};
+export const load=():StoreState=>{try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):empty}catch{return empty}};
+export const save=(s:StoreState)=>localStorage.setItem(KEY,JSON.stringify(s));
+let id=Date.now(); export const uid=(p:string)=>`${p}_${id++}`;
 
-const KEY = "travelorchestrator.store.v1";
-const UNDO_KEY = "travelorchestrator.store.undo";
 
-const empty: StoreState = { trips: [], quotes: [], clients: [], tasks: [] };
-
-export const loadState = (): StoreState => {
+export function pushUndo(state: StoreState) {
+  if (!state || typeof state !== "object") return;
   try {
-    const raw = localStorage.getItem(KEY);
-    return raw ? JSON.parse(raw) : empty;
+    (state as any).__undo = JSON.parse(JSON.stringify(state));
   } catch {
-    return empty;
+    /* noop */
   }
-};
-
-export const saveState = (state: StoreState) => {
-  localStorage.setItem(KEY, JSON.stringify(state));
-};
-
-export const pushUndo = (state: StoreState) => {
-  localStorage.setItem(UNDO_KEY, JSON.stringify(state));
-};
-
-export const undo = (): StoreState | null => {
-  const raw = localStorage.getItem(UNDO_KEY);
-  return raw ? JSON.parse(raw) : null;
-};
-
-let idSeq = Date.now();
-export const uid = (p:string)=> `${p}_${idSeq++}`;
+}

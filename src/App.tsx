@@ -1,38 +1,27 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
-import { Sidebar } from "./components/Sidebar";
-import { TopBar } from "./components/TopBar";
-import { Dashboard } from "./pages/Dashboard";
-import { TripsPage } from "./pages/TripsPage";
-import { QuotesPage } from "./pages/QuotesPage";
-import { ClientsPage } from "./pages/ClientsPage";
-import { TasksPage } from "./pages/TasksPage";
-import { SettingsPage } from "./pages/SettingsPage";
-import { loadState, saveState, undo as undoFn } from "./data/store";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { load, save } from "./data/store";
+import { Shell } from "./components/Shell";
 
-export default function App(){
-  const [state, setState] = React.useState(loadState());
-  React.useEffect(()=> saveState(state), [state]);
+import Trips from "./pages/Trips";
+import Quotes from "./pages/Quotes";
+import Clients from "./pages/Clients";
+import Tasks from "./pages/Tasks";
 
-  const undo = ()=>{
-    const prev = undoFn();
-    if(prev){ setState(prev); saveState(prev); }
-  };
+export default function App() {
+  const [state, setState] = React.useState(load());
+  React.useEffect(() => save(state), [state]);
 
   return (
-    <div className="to-shell">
-      <Sidebar />
-      <div className="to-main">
-        <TopBar onUndo={undo} />
-        <Routes>
-          <Route path="/" element={<Dashboard state={state} />} />
-          <Route path="/trips" element={<TripsPage state={state} setState={setState} />} />
-          <Route path="/quotes" element={<QuotesPage state={state} setState={setState} />} />
-          <Route path="/clients" element={<ClientsPage state={state} setState={setState} />} />
-          <Route path="/tasks" element={<TasksPage state={state} setState={setState} />} />
-          <Route path="/settings" element={<SettingsPage />} />
-        </Routes>
-      </div>
-    </div>
+    <Shell>
+      <Routes>
+        <Route path="/" element={<Navigate to="/trips" replace />} />
+        <Route path="/trips" element={<Trips state={state} setState={setState} />} />
+        <Route path="/quotes" element={<Quotes state={state} setState={setState} />} />
+        <Route path="/clients" element={<Clients state={state} setState={setState} />} />
+        <Route path="/tasks" element={<Tasks state={state} setState={setState} />} />
+        <Route path="*" element={<Navigate to="/trips" replace />} />
+      </Routes>
+    </Shell>
   );
 }

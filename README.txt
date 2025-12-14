@@ -1,3 +1,2 @@
-TravelOrchestrator v22_FINAL
-YOU WILL see a visual change: search inputs above each table (Trips/Quotes/Clients/Tasks).
-Built on v21 (persistence + undo preserved).
+TravelOrchestrator v24
+YOU WILL see a visual change: new app shell/sidebar + Trips drawer create/edit + improved table spacing + empty states.
