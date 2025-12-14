@@ -1,5 +1,5 @@
-LionGate Travels v48 — Admin Snapshot Exporter
+LionGate Travels v49 — Digital ID Readiness Scaffold
 
-Adds ability to export a combined admin snapshot (metrics + audit).
+Adds a scaffold to accept and classify future government/wallet digital IDs (VC / mDL).
 TEST MODE ONLY.
 No UI changes.
