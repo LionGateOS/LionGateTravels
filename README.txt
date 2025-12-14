@@ -1,5 +1,6 @@
-LionGate Travels v39 — Action Result Mapper
+LionGate Travels v40 — Result Mapping Wired
 
-Adds a central mapper to convert action outcomes into safe user messages.
+Wires the action result mapper into the execution flow.
+User-facing messages are now resolved centrally.
 TEST MODE ONLY.
-No UI changes expected yet.
+No UI changes expected.
