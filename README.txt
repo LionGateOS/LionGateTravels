@@ -1,5 +1,5 @@
-LionGate Travels v44 — Abuse Guard Scaffold
+LionGate Travels v45 — Abuse Guard Wired
 
-Adds a basic abuse-prevention guard scaffold.
+Wires abuse-prevention guard into the execution flow.
 TEST MODE ONLY.
 No UI changes.
