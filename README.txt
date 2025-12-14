@@ -1,5 +1,5 @@
-LionGate Travels v53 — Camera OCR Intake Scaffold
+LionGate Travels v54 — Camera OCR Consent Wiring
 
-Adds a camera/OCR intake stub for passport or driver's license images.
+Wires camera/OCR intake behind privacy consent.
 TEST MODE ONLY.
 No UI changes.
