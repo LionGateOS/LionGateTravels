@@ -1,5 +1,5 @@
-LionGate Travels v49 — Digital ID Readiness Scaffold
+LionGate Travels v50 — Digital ID Intake Stub
 
-Adds a scaffold to accept and classify future government/wallet digital IDs (VC / mDL).
+Adds a central intake stub to accept digital ID wallet payloads in the future.
 TEST MODE ONLY.
 No UI changes.
