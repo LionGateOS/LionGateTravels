@@ -1,5 +1,4 @@
-LionGate Travels v45 — Abuse Guard Wired
+LionGate Travels v46 — Admin Metrics Scaffold
 
-Wires abuse-prevention guard into the execution flow.
-TEST MODE ONLY.
+Adds internal admin metrics counters (TEST MODE).
 No UI changes.
