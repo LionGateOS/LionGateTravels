@@ -1,5 +1,5 @@
-LionGate Travels v38 — Mode Enforcement
+LionGate Travels v39 — Action Result Mapper
 
-Adds hard guard so LIVE actions are blocked by default.
-TEST MODE continues to work normally.
-No UI changes.
+Adds a central mapper to convert action outcomes into safe user messages.
+TEST MODE ONLY.
+No UI changes expected yet.
