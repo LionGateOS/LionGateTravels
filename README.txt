@@ -1,5 +1,5 @@
-LionGate Travels v43 — Central Error Handling
+LionGate Travels v44 — Abuse Guard Scaffold
 
-Adds centralized error handling and wires it into execution.
+Adds a basic abuse-prevention guard scaffold.
 TEST MODE ONLY.
-No UI changes expected.
+No UI changes.
