@@ -1,7 +1,5 @@
-LionGate Travels v58 — Feature Flags Registry
+LionGate Travels v59 — Feature Flags Wired
 
-Adds a central feature flag registry to safely toggle major capabilities
-(DigitalID, Camera OCR, Auto-fill) without code changes.
-
+Wires DigitalID, Camera OCR, and Auto-fill pipelines behind feature flags.
 TEST MODE ONLY.
 No UI changes.
