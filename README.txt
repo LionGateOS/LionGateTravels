@@ -1,2 +1,4 @@
-TravelOrchestrator v24
-YOU WILL see a visual change: new app shell/sidebar + Trips drawer create/edit + improved table spacing + empty states.
+LionGate Travels v30 — Mode Safety Update
+
+Extract over your project root.
+No commands change.

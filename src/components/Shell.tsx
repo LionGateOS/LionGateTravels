@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const NAV = [
+  { to: "/", label: "Start" },
   { to: "/trips", label: "Trips" },
   { to: "/quotes", label: "Quotes" },
   { to: "/clients", label: "Clients" },
@@ -16,14 +17,14 @@ export function Shell({ children }: { children: React.ReactNode }) {
         <div className="to-brand">
           <div className="to-brand-mark" aria-hidden="true" />
           <div className="to-brand-text">
-            <div className="to-brand-title">TravelOrchestrator</div>
-            <div className="to-brand-sub">Workspace</div>
+            <div className="to-brand-title">LionGate Travels</div>
+            <div className="to-brand-sub">Test Mode</div>
           </div>
         </div>
 
         <nav className="to-nav" aria-label="Primary">
           {NAV.map((n) => {
-            const active = loc.pathname === n.to || (n.to === "/trips" && loc.pathname === "/");
+            const active = loc.pathname === n.to;
             return (
               <Link
                 key={n.to}
@@ -44,7 +45,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
 
       <div className="to-content">
         <header className="to-topbar">
-          <div className="to-topbar-title">Travel workspace</div>
+          <div className="to-topbar-title">LionGate Travels</div>
           <div className="to-topbar-right">
             <button className="to-ghost-btn" type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
               Back to top

@@ -7,6 +7,7 @@ import Trips from "./pages/Trips";
 import Quotes from "./pages/Quotes";
 import Clients from "./pages/Clients";
 import Tasks from "./pages/Tasks";
+import Overview from "./pages/Overview";
 
 export default function App() {
   const [state, setState] = React.useState(load());
@@ -15,12 +16,12 @@ export default function App() {
   return (
     <Shell>
       <Routes>
-        <Route path="/" element={<Navigate to="/trips" replace />} />
+        <Route path="/" element={<Overview state={state} setState={setState} />} />
         <Route path="/trips" element={<Trips state={state} setState={setState} />} />
         <Route path="/quotes" element={<Quotes state={state} setState={setState} />} />
         <Route path="/clients" element={<Clients state={state} setState={setState} />} />
         <Route path="/tasks" element={<Tasks state={state} setState={setState} />} />
-        <Route path="*" element={<Navigate to="/trips" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Shell>
   );

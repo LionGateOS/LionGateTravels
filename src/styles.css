@@ -61,6 +61,14 @@ a{text-decoration:none;color:inherit}
 .to-dashboard{padding:0}
 .to-section{padding:0}
 .to-h1{margin:0 0 12px;font-size:22px;letter-spacing:.2px}
+.to-h2{margin:0 0 10px;font-size:16px;letter-spacing:.2px;color:var(--text)}
+.to-muted{color:var(--muted);font-size:13px}
+
+.to-card{
+  border:1px solid rgba(148,163,184,.28);
+  border-radius:16px;
+  background:rgba(15,23,42,.35);
+}
 
 .to-input{
   width:100%;
@@ -79,6 +87,24 @@ a{text-decoration:none;color:inherit}
   background:var(--accent2);color:#fff;cursor:pointer;
 }
 .to-primary-btn:hover{filter:brightness(1.04)}
+
+.to-secondary-btn{
+  padding:10px 14px;border-radius:999px;
+  border:1px solid rgba(148,163,184,.35);
+  background:rgba(2,6,23,.65);
+  color:var(--text);
+  cursor:pointer;
+}
+.to-secondary-btn:hover{background:rgba(148,163,184,.08)}
+
+.to-danger-btn{
+  padding:10px 14px;border-radius:999px;
+  border:1px solid rgba(248,113,113,.6);
+  background:rgba(248,113,113,.18);
+  color:#fff;
+  cursor:pointer;
+}
+.to-danger-btn:hover{filter:brightness(1.06)}
 .to-ghost-btn{
   padding:10px 12px;border-radius:999px;
   border:1px solid rgba(148,163,184,.35);
@@ -181,3 +207,10 @@ a{text-decoration:none;color:inherit}
 .to-k{font-size:12px;color:var(--muted)}
 .to-kv-wide{grid-column:1 / -1}
 .to-drawer-actions{grid-column:1 / -1;display:flex;gap:10px;align-items:center;justify-content:flex-end;margin-top:4px}
+
+
+.to-danger {
+  margin-left: 8px;
+  background: #7a1f1f;
+  color: #fff;
+}
