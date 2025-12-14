@@ -1,7 +1,7 @@
-LionGate Travels v57 — DigitalID Alias Layer
+LionGate Travels v58 — Feature Flags Registry
 
-Adds an internal alias so anything labeled 'DigitalID' routes to the correct
-standards-based Digital ID intake pipeline.
+Adds a central feature flag registry to safely toggle major capabilities
+(DigitalID, Camera OCR, Auto-fill) without code changes.
 
 TEST MODE ONLY.
 No UI changes.
