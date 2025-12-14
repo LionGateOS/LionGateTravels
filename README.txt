@@ -1,5 +1,5 @@
-LionGate Travels v36 — AI Decision Rules Enforcement
+LionGate Travels v37 — AI Rules Wired to Actions
 
-Adds a central enforcer so actions resolve using ai.decision.rules.json.
+Wires AI decision rules enforcement into action handling.
 TEST MODE ONLY.
 No UI changes expected.
