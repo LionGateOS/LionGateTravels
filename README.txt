@@ -1,5 +1,5 @@
-LionGate Travels v41 — Notification Stub
+LionGate Travels v42 — Notification Wired
 
-Adds a central notification stub (email/app) for future use.
+Wires notification stub into the execution flow.
 TEST MODE ONLY.
-No UI changes.
+No UI changes expected.
