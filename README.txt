@@ -1,5 +1,5 @@
-LionGate Travels v59 — Feature Flags Wired
+LionGate Travels v60 — Admin Feature Flag Toggle
 
-Wires DigitalID, Camera OCR, and Auto-fill pipelines behind feature flags.
+Adds an admin-only stub to toggle feature flags safely.
 TEST MODE ONLY.
 No UI changes.
