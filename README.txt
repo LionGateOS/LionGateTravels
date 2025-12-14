@@ -1,5 +1,5 @@
-LionGate Travels v60 — Admin Feature Flag Toggle
+LionGate Travels v61 — Feature Flag Audit Logging
 
-Adds an admin-only stub to toggle feature flags safely.
+Adds audit logging whenever an admin toggles a feature flag.
 TEST MODE ONLY.
 No UI changes.
