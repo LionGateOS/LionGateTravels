@@ -1,5 +1,5 @@
-LionGate Travels v33 — Audit Log Writing Scaffold
+LionGate Travels v34 — Audit Integration Scaffold
 
-This adds the ability for the app to WRITE entries to audit.log.json.
+This wires audit logging helpers for Cancel / Change / Issue.
+Still TEST MODE ONLY.
 No UI changes.
-TEST MODE ONLY.
