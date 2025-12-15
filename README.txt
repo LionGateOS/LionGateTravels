@@ -1,5 +1,5 @@
-LionGate Travels v61 — Feature Flag Audit Logging
+LionGate Travels v62 — Admin Feature Flags UI Stub
 
-Adds audit logging whenever an admin toggles a feature flag.
+Adds a placeholder for a visible admin UI for feature flags.
 TEST MODE ONLY.
-No UI changes.
+No functional changes yet.
