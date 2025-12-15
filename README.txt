@@ -1,9 +1,6 @@
-LionGate Travels v64 — Traveler Profile Auto-Fill Mock Inputs
+LionGate Travels v65 — Wire Mock Inputs to Auto-Fill Screen
 
-Includes sample payloads for testing the Test Mode Traveler Profile Auto-Fill screen:
-- digitalid_sample.json
-- cameraocr_sample.json
-- combined_sample.json
-- invalid_sample.json
+Connects the mock input JSON files to the Test Mode Traveler Profile Auto-Fill screen,
+so you can see simulated outputs for DigitalID, Camera OCR, Combined, and Invalid scenarios.
 
-TEST MODE ONLY. Safe for overwriting in the main folder.
+TEST MODE ONLY.
