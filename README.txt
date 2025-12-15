@@ -1,7 +1,7 @@
-LionGate Travels v68 — Feature Flags Wired into Test Mode Dashboard & Consent Panel
+LionGate Travels v69 — Test Mode Admin Feature Flag Toggle Dashboard
 
-Integrates feature flags (DigitalID, Camera OCR, Auto-Fill) into Test Mode
-Traveler Profile Auto-Fill dashboard and consent panel.
+Adds a safe Test Mode interface to toggle feature flags and preview
+dashboard/consent panel behavior immediately.
 
 TEST MODE ONLY.
 No real bookings are affected.
