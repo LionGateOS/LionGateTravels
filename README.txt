@@ -1,8 +1,7 @@
-LionGate Travels v73 — Test Mode Batch Simulation Runner
+LionGate Travels v74 — Test Mode Auto-Fill Report Generator
 
-Adds a batch simulation runner to automatically test all mock inputs with
-both consent granted and denied scenarios. Logs results to
-test_mode_autofill_log.json for review.
+Generates a readable console report from Test Mode Auto-Fill log file
+(test_mode_autofill_log.json). Shows all scenarios, consent, and feature flags.
 
 TEST MODE ONLY.
 No real bookings are affected.
