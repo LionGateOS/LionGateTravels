@@ -1,7 +1,7 @@
-LionGate Travels v69 — Test Mode Admin Feature Flag Toggle Dashboard
+LionGate Travels v70 — Visible Test Mode Feature Flags Display
 
-Adds a safe Test Mode interface to toggle feature flags and preview
-dashboard/consent panel behavior immediately.
+Adds a simple console-based visible component to display the current state
+of DigitalID, Camera OCR, and Auto-Fill feature flags in Test Mode.
 
 TEST MODE ONLY.
 No real bookings are affected.
