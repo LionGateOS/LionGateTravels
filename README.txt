@@ -1,8 +1,8 @@
-LionGate Travels v71 — Test Mode Auto-Fill Simulation Preview Panel
+LionGate Travels v72 — Test Mode Auto-Fill Preview Panel Logging & Reporting
 
-Combines feature flags, dashboard, and consent panel output into a single
-console-based view for Test Mode. Shows how profile auto-fill behaves
-given mock inputs, consent, and flag states.
+Adds logging for all Test Mode Auto-Fill Simulation Preview Panel actions:
+- Records selected input, consent, feature flags, dashboard, and consent outputs
+- Appends entries to test_mode_autofill_log.json for review
 
 TEST MODE ONLY.
 No real bookings are affected.
