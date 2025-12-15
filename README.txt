@@ -1,4 +1,7 @@
-LionGate Travels v67 — Test Mode Consent Simulation Panel
+LionGate Travels v68 — Feature Flags Wired into Test Mode Dashboard & Consent Panel
 
-Adds a panel to simulate user consent for DigitalID/Camera OCR inputs in Test Mode.
-Safe, TEST MODE ONLY. No real bookings are affected.
+Integrates feature flags (DigitalID, Camera OCR, Auto-Fill) into Test Mode
+Traveler Profile Auto-Fill dashboard and consent panel.
+
+TEST MODE ONLY.
+No real bookings are affected.
