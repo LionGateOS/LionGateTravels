@@ -1,5 +1,9 @@
-LionGate Travels v62 — Admin Feature Flags UI Stub
+LionGate Travels v63 — Traveler Profile Auto-Fill Test Mode Screen
 
-Adds a placeholder for a visible admin UI for feature flags.
+Adds a Test Mode visible screen to simulate Traveler Profile auto-fill from:
+- DigitalID intake
+- Camera OCR intake
+
+Displays normalized profile fields safely; no real bookings or sensitive data are affected.
+
 TEST MODE ONLY.
-No functional changes yet.
