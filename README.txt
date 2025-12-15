@@ -1,7 +1,8 @@
-LionGate Travels v70 — Visible Test Mode Feature Flags Display
+LionGate Travels v71 — Test Mode Auto-Fill Simulation Preview Panel
 
-Adds a simple console-based visible component to display the current state
-of DigitalID, Camera OCR, and Auto-Fill feature flags in Test Mode.
+Combines feature flags, dashboard, and consent panel output into a single
+console-based view for Test Mode. Shows how profile auto-fill behaves
+given mock inputs, consent, and flag states.
 
 TEST MODE ONLY.
 No real bookings are affected.
