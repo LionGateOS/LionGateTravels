@@ -1,6 +1,7 @@
-LionGate Travels v65 — Wire Mock Inputs to Auto-Fill Screen
+LionGate Travels v66 — Test Mode Interactive Dashboard
 
-Connects the mock input JSON files to the Test Mode Traveler Profile Auto-Fill screen,
-so you can see simulated outputs for DigitalID, Camera OCR, Combined, and Invalid scenarios.
+Adds a simple interactive dashboard to select mock inputs and display
+normalized traveler profiles for Test Mode.
 
 TEST MODE ONLY.
+No UI changes in production.
