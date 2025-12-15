@@ -1,9 +1,9 @@
-LionGate Travels v63 — Traveler Profile Auto-Fill Test Mode Screen
+LionGate Travels v64 — Traveler Profile Auto-Fill Mock Inputs
 
-Adds a Test Mode visible screen to simulate Traveler Profile auto-fill from:
-- DigitalID intake
-- Camera OCR intake
+Includes sample payloads for testing the Test Mode Traveler Profile Auto-Fill screen:
+- digitalid_sample.json
+- cameraocr_sample.json
+- combined_sample.json
+- invalid_sample.json
 
-Displays normalized profile fields safely; no real bookings or sensitive data are affected.
-
-TEST MODE ONLY.
+TEST MODE ONLY. Safe for overwriting in the main folder.
