@@ -1,7 +1,7 @@
-LionGate Travels v85 — Test Mode Scenario Replay with Performance Overlay
+LionGate Travels v86 — Test Mode Feature Flag Stress Tester
 
-Replays previously logged scenarios and overlays execution time, feature flags,
-and consent results. Outputs are logged to console and test_mode_autofill_replay_perf.json.
+Automatically toggles all feature flags for all mock inputs repeatedly
+and logs dashboard and consent outputs to console and test_mode_autofill_flag_stress.json.
 
 TEST MODE ONLY.
 No real bookings are affected.
