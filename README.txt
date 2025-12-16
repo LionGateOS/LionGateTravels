@@ -1,7 +1,7 @@
-LionGate Travels v82 — Test Mode Feature Flag Auto-Toggle Simulator
+LionGate Travels v83 — Test Mode Scenario Replay Player
 
-Cycles feature flags on and off for all mock inputs and logs outputs to
-console and test_mode_autofill_flag_simulation.json.
+Replays previously logged Auto-Fill scenarios sequentially in the console,
+including feature flags, consent, dashboard, and consent panel outputs.
 
 TEST MODE ONLY.
 No real bookings are affected.
