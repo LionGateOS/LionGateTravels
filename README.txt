@@ -1,7 +1,7 @@
-LionGate Travels v79 — Test Mode Performance Timing Logger
+LionGate Travels v80 — Test Mode Anomaly Detection Logger
 
-Logs execution times of Test Mode Auto-Fill scenarios with all consent and
-feature flag combinations to console and test_mode_autofill_timing.json.
+Monitors Auto-Fill Test Mode scenarios for unexpected outputs or errors.
+Logs anomalies to console and test_mode_autofill_anomalies.json.
 
 TEST MODE ONLY.
 No real bookings are affected.
