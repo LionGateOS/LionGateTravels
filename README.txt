@@ -1,7 +1,7 @@
-LionGate Travels v84 — Test Mode Multi-Scenario Comparison Panel
+LionGate Travels v85 — Test Mode Scenario Replay with Performance Overlay
 
-Compares multiple logged Test Mode Auto-Fill scenarios side by side in the console
-and exports comparison to test_mode_autofill_comparison.json.
+Replays previously logged scenarios and overlays execution time, feature flags,
+and consent results. Outputs are logged to console and test_mode_autofill_replay_perf.json.
 
 TEST MODE ONLY.
 No real bookings are affected.
