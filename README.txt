@@ -1,7 +1,10 @@
-LionGate Travels v74 — Test Mode Auto-Fill Report Generator
+LionGate Travels v75 — Test Mode Combined Dashboard Panel
 
-Generates a readable console report from Test Mode Auto-Fill log file
-(test_mode_autofill_log.json). Shows all scenarios, consent, and feature flags.
+Adds a single console-based panel to display in Test Mode:
+- Current feature flags (DigitalID, Camera OCR, Auto-Fill)
+- Selected mock input
+- Consent status (granted/denied)
+- Preview of normalized traveler profile
 
 TEST MODE ONLY.
 No real bookings are affected.
