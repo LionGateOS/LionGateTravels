@@ -1,7 +1,7 @@
-LionGate Travels v77 — Test Mode Summary Report Generator
+LionGate Travels v78 — Test Mode Interactive Feature Flag Scenario Combiner
 
-Aggregates all Test Mode Auto-Fill scenario runs into a single console summary
-using console.table for readability.
+Allows selecting multiple mock inputs and feature flags together in Test Mode,
+showing combined dashboard and consent panel outputs in the console.
 
 TEST MODE ONLY.
 No real bookings are affected.
