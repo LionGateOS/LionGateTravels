@@ -1,7 +1,7 @@
-LionGate Travels v81 — Test Mode Scenario Performance Summary Panel
+LionGate Travels v82 — Test Mode Feature Flag Auto-Toggle Simulator
 
-Aggregates performance timing logs and anomaly detection logs into a single
-console-based summary for Test Mode.
+Cycles feature flags on and off for all mock inputs and logs outputs to
+console and test_mode_autofill_flag_simulation.json.
 
 TEST MODE ONLY.
 No real bookings are affected.
