@@ -1,10 +1,7 @@
-LionGate Travels v75 — Test Mode Combined Dashboard Panel
+LionGate Travels v76 — Test Mode Scenario Selector with Auto-Run
 
-Adds a single console-based panel to display in Test Mode:
-- Current feature flags (DigitalID, Camera OCR, Auto-Fill)
-- Selected mock input
-- Consent status (granted/denied)
-- Preview of normalized traveler profile
+Adds the ability to run all mock inputs with both consent states sequentially.
+Outputs are displayed in the combined dashboard.
 
 TEST MODE ONLY.
 No real bookings are affected.
