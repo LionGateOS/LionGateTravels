@@ -1,7 +1,7 @@
-LionGate Travels v80 — Test Mode Anomaly Detection Logger
+LionGate Travels v81 — Test Mode Scenario Performance Summary Panel
 
-Monitors Auto-Fill Test Mode scenarios for unexpected outputs or errors.
-Logs anomalies to console and test_mode_autofill_anomalies.json.
+Aggregates performance timing logs and anomaly detection logs into a single
+console-based summary for Test Mode.
 
 TEST MODE ONLY.
 No real bookings are affected.
