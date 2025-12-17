@@ -4,17 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LionGate Travels — MVP (Locked)</title>
-  <meta name="description" content="LionGate Travels MVP — accessible, mobile-first, neutral partner-based travel experience." />
+  <meta name="description" content="LionGate Travels MVP — neutral, accessible, partner-based travel experience." />
   <style>
     :root {
       --bg: #0f1220;
       --panel: #15193a;
       --text: #e6e8ff;
-      --muted: #b7bcff;
+      --muted: #c2c7ff;
       --accent: #6c7bff;
       --ok: #38d39f;
       --warn: #f7c948;
-      --border: rgba(255,255,255,0.12);
+      --border: rgba(255,255,255,0.14);
       --focus: #9aa4ff;
     }
     * { box-sizing: border-box; }
@@ -23,9 +23,9 @@
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Arial, sans-serif;
       background: linear-gradient(180deg, #0b0e1a, #0f1220 35%);
       color: var(--text);
-      line-height: 1.5;
+      line-height: 1.55;
     }
-    a { color: inherit; }
+    a { color: inherit; text-decoration: underline; }
     :focus-visible {
       outline: 3px solid var(--focus);
       outline-offset: 3px;
@@ -35,8 +35,7 @@
       padding: 16px;
       border-bottom: 1px solid var(--border);
       background: rgba(0,0,0,0.15);
-      position: sticky; top: 0;
-      z-index: 10;
+      position: sticky; top: 0; z-index: 10;
     }
     .brand { display: flex; align-items: center; gap: 12px; }
     .logo {
@@ -77,7 +76,7 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 12px;
-      background: rgba(255,255,255,0.04);
+      background: rgba(255,255,255,0.05);
     }
     .partner button {
       margin-top: 8px;
@@ -96,9 +95,9 @@
       color: var(--muted);
       border-top: 1px solid var(--border);
     }
-    @media (max-width: 480px) {
-      header h1 { font-size: 18px; }
-      .partner button { font-size: 17px; }
+    .legal {
+      font-size: 13px;
+      color: var(--muted);
     }
   </style>
 </head>
@@ -114,22 +113,24 @@
     <div class="card" role="region" aria-labelledby="before-title">
       <h2 id="before-title">Before you continue</h2>
       <p class="muted">
-        You are about to leave LionGate Travels and continue on a partner’s website.
+        LionGate Travels helps you discover travel options and continue with trusted partners.
+        We do not sell travel services directly.
       </p>
 
       <div class="notice" role="note">
-        <strong>Third-party terms</strong>
+        <strong>Third‑party terms & responsibility</strong>
         <p class="muted">
-          LionGate Travels does not control partner content, pricing, availability, or policies.
-          Any booking, payment, or agreement occurs solely with the selected partner.
+          When you select a partner, you will leave LionGate Travels.
+          All pricing, availability, payments, refunds, and policies are determined solely by the partner.
+          LionGate Travels is not the seller, agent, or provider of travel services.
         </p>
       </div>
 
       <div class="ack">
         <input id="ack" type="checkbox" aria-describedby="ack-desc" />
         <label for="ack" id="ack-desc" class="muted">
-          I understand that I am continuing to a third-party site and that LionGate Travels
-          is not the seller or provider of travel services.
+          I understand that I am continuing to a third‑party site and that LionGate Travels
+          does not process bookings or payments.
         </label>
       </div>
     </div>
@@ -153,21 +154,27 @@
     <div class="card" role="region" aria-labelledby="status-title">
       <h2 id="status-title">Status</h2>
       <ul class="muted">
-        <li>Phase B — Partner handoff clarity ✔</li>
-        <li>Phase C — Step 1: Accessibility & mobile-first refinements ✔</li>
+        <li>Phase A — Foundation ✔</li>
+        <li>Phase B — Partner flows ✔</li>
+        <li>Phase C — Step 1: Accessibility & mobile ✔</li>
+        <li>Phase C — Step 2: Copy & legal clarity ✔</li>
       </ul>
     </div>
   </main>
 
   <footer role="contentinfo">
-    © LionGate Travels — Neutral, transparent, partner-based.
+    <p>© LionGate Travels — Neutral, transparent, partner‑based.</p>
+    <p class="legal">
+      This MVP provides informational redirection only. No booking, payment, or contractual
+      relationship is formed on this site.
+    </p>
   </footer>
 
   <script>
     function handoff(partner) {
       const ok = document.getElementById('ack').checked;
       if (!ok) {
-        alert("Please acknowledge the third-party terms before continuing.");
+        alert("Please acknowledge the third‑party terms before continuing.");
         return;
       }
       alert(
