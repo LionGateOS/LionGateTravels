@@ -1,96 +1,46 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta charset="UTF-8">
 <title>LionGate Travels</title>
 <style>
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-  background:#0b0f17;
-  color:#ffffff;
-}
-header{
-  padding:24px;
-  border-bottom:1px solid rgba(255,255,255,.15);
-}
-main{
-  max-width:900px;
-  margin:40px auto;
-  padding:0 20px;
-}
-.card{
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:16px;
-  padding:20px;
-  margin-bottom:20px;
-}
-button{
-  padding:12px 18px;
-  border-radius:10px;
-  border:1px solid rgba(255,255,255,.25);
-  background:#1e2a44;
-  color:#fff;
-  font-size:15px;
-  cursor:pointer;
-}
-button:hover{background:#26345a;}
-label{display:block;margin:12px 0;font-size:14px;}
-footer{
-  font-size:12px;
-  color:#cccccc;
-  margin-top:40px;
-}
+body{font-family:Arial, sans-serif;background:#0b0f14;color:#fff;margin:0;padding:40px}
+.admin-panel{position:fixed;bottom:20px;right:20px;background:#111;border:1px solid #333;padding:12px 16px;border-radius:8px;font-size:14px}
+.hidden{display:none}
 </style>
-<script>
-const BOOKING_URL = "https://www.booking.com/?aid=2698444";
-function handoff(){
-  const ack = document.getElementById("ack");
-  if(!ack.checked){
-    alert("Please acknowledge third‑party responsibility before continuing.");
-    return;
-  }
-  if(confirm("You are leaving LionGate Travels and continuing to a partner site. Continue?")){
-    window.open(BOOKING_URL,"_blank","noopener,noreferrer");
-  }
-}
-</script>
 </head>
 <body>
-<header>
-  <h1>LionGate Travels</h1>
-  <p>Your Journey Simplified.</p>
-</header>
-<main>
-  <div class="card">
-    <h2>Before you continue</h2>
-    <label>
-      <input type="checkbox" id="ack"/>
-      I understand I am continuing to a third‑party website. LionGate Travels does not process payments or bookings.
-    </label>
-  </div>
-  <div class="card">
-    <h2>Partner — Hotels & Stays</h2>
-    <p>You will complete your booking on the partner’s website.</p>
-    <button onclick="handoff()">Continue</button>
-    <p style="margin-top:12px;color:#b8bfd6;font-size:13px;">
-      <strong>Note:</strong> LionGate Travels is not a booking site. You’ll complete your booking on our partner’s website.
-    </p>
 
-  </div>
-  
-  <div class="card">
-    <h2>Frequently Asked Questions</h2>
-    <p><strong>Do I pay LionGate Travels?</strong><br/>No. Payments are made directly on the partner’s website.</p>
-    <p><strong>Who handles refunds or changes?</strong><br/>The partner you book with manages all pricing, refunds, and policies.</p>
-    <p><strong>How does LionGate Travels make money?</strong><br/>We may earn a commission when you book through partner links. This does not change your price.</p>
-  </div>
+<h1>LionGate Travels</h1>
+<p>Select a partner to continue.</p>
 
-  <footer>
-    <p><strong>Affiliate disclosure:</strong> LionGate Travels may earn a commission when users book through partner links.</p>
-  </footer>
-</main>
+<button onclick="track('PartnerA')">Partner A</button>
+<button onclick="track('PartnerB')">Partner B</button>
+
+<div id="admin" class="admin-panel hidden"></div>
+
+<script>
+const key = "liongate_clicks";
+const data = JSON.parse(localStorage.getItem(key) || "{}");
+
+function track(partner){
+  data[partner] = (data[partner] || 0) + 1;
+  data.last = new Date().toISOString();
+  localStorage.setItem(key, JSON.stringify(data));
+  alert(partner + " selected. Redirect would occur here.");
+}
+
+function renderAdmin(){
+  const div = document.getElementById("admin");
+  div.innerHTML = "<strong>Admin Stats</strong><br>" +
+    Object.entries(data).map(([k,v]) => k + ": " + v).join("<br>");
+}
+
+if (new URLSearchParams(window.location.search).get("admin")==="1"){
+  document.getElementById("admin").classList.remove("hidden");
+  renderAdmin();
+}
+</script>
+
 </body>
 </html>
