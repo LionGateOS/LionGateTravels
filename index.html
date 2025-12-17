@@ -19,7 +19,7 @@
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Arial, sans-serif;
       background: linear-gradient(180deg, #0b0e1a, #0f1220 35%);
       color: var(--text);
     }
@@ -27,141 +27,123 @@
       padding: 20px;
       border-bottom: 1px solid var(--border);
       background: rgba(0,0,0,0.15);
-      backdrop-filter: blur(8px);
       position: sticky; top: 0;
     }
-    .brand {
-      display: flex; align-items: center; gap: 12px;
-    }
-    .brand .logo {
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .logo {
       width: 36px; height: 36px; border-radius: 8px;
       background: radial-gradient(circle at 30% 30%, #9aa4ff, #4c5bff);
-      box-shadow: 0 8px 24px rgba(108,123,255,0.35);
     }
-    .brand h1 { font-size: 18px; margin: 0; }
     main { padding: 24px; max-width: 1100px; margin: 0 auto; }
-    .grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
-    @media (min-width: 900px) { .grid { grid-template-columns: 2fr 1fr; } }
     .card {
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      margin-bottom: 16px;
     }
-    .card h2 { margin-top: 0; font-size: 16px; }
+    h1, h2 { margin-top: 0; }
     .muted { color: var(--muted); }
-    .pill {
-      display: inline-block; padding: 6px 10px; border-radius: 999px;
-      background: rgba(108,123,255,0.15); color: #cfd4ff; border: 1px solid var(--border);
-      font-size: 12px;
-    }
-    .list { padding-left: 18px; }
-    .list li { margin: 6px 0; }
-    .cta {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border);
-      background: linear-gradient(180deg, #6c7bff, #4c5bff);
-      color: #fff; cursor: pointer; text-decoration: none;
-    }
-    .cta.secondary {
-      background: transparent; color: var(--text);
-    }
-    footer {
-      padding: 24px; text-align: center; color: var(--muted);
-      border-top: 1px solid var(--border);
-    }
     .notice {
       border-left: 4px solid var(--warn);
       background: rgba(247,201,72,0.08);
-      padding: 12px; border-radius: 12px;
+      padding: 12px;
+      border-radius: 12px;
     }
-    .ok {
-      border-left: 4px solid var(--ok);
-      background: rgba(56,211,159,0.08);
-      padding: 12px; border-radius: 12px;
+    .partners {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .partner {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: rgba(255,255,255,0.03);
+    }
+    .partner button {
+      margin-top: 8px;
+      padding: 10px 12px;
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, #6c7bff, #4c5bff);
+      color: #fff;
+      cursor: pointer;
+    }
+    footer {
+      padding: 24px;
+      text-align: center;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
     }
   </style>
 </head>
 <body>
   <header>
     <div class="brand">
-      <div class="logo" aria-hidden="true"></div>
-      <h1>LionGate Travels <span class="pill">MVP — Locked</span></h1>
+      <div class="logo"></div>
+      <h1>LionGate Travels <small class="muted">MVP — Locked</small></h1>
     </div>
   </header>
 
   <main>
-    <section class="grid">
-      <div class="card">
-        <h2>Welcome</h2>
+    <div class="card">
+      <h2>Partner-based booking</h2>
+      <p class="muted">
+        LionGate Travels does not sell travel directly.
+        You may choose a partner to continue your booking on their site.
+      </p>
+
+      <div class="notice">
+        <strong>Important</strong>
         <p class="muted">
-          This experience uses neutral, respectful language and provides transparent, partner-based booking pathways.
-          It does not assume identity, preferences, or intent.
+          Selecting a partner will redirect you to a third-party website.
+          Any booking, payment, or agreement happens under that partner’s terms.
         </p>
-
-        <div class="notice">
-          <strong>Pre‑Commitment Awareness</strong>
-          <p class="muted">
-            You are not making a purchase on this page. Any booking occurs on a partner’s site under their terms.
-          </p>
-        </div>
-
-        <h2>How it works (MVP)</h2>
-        <ul class="list muted">
-          <li>Explore travel options using neutral descriptors.</li>
-          <li>Select a partner to continue booking.</li>
-          <li>Review partner terms before any commitment.</li>
-        </ul>
-
-        <a class="cta" href="#" onclick="alert('Partner flow is stubbed in MVP.'); return false;">
-          Continue to partners
-        </a>
-        <a class="cta secondary" href="#" onclick="showNeutrality(); return false;">
-          Language & fairness principles
-        </a>
       </div>
 
-      <div class="card">
-        <h2>Status</h2>
-        <p class="muted">Phase A — Foundation Implementation</p>
-        <div class="ok">
-          <strong>Completed</strong>
-          <ul class="list muted">
-            <li>Single-file project baseline</li>
-            <li>Neutral language framework (UI copy)</li>
-            <li>Pre‑commitment awareness notice</li>
-          </ul>
+      <div class="partners">
+        <div class="partner">
+          <strong>Partner A</strong>
+          <p class="muted">Flights & packages</p>
+          <button onclick="redirectStub('Partner A')">Continue</button>
         </div>
-        <div class="notice">
-          <strong>Next</strong>
-          <ul class="list muted">
-            <li>Partner-based booking flow scaffold</li>
-            <li>AI interaction constraints</li>
-          </ul>
+        <div class="partner">
+          <strong>Partner B</strong>
+          <p class="muted">Hotels & stays</p>
+          <button onclick="redirectStub('Partner B')">Continue</button>
+        </div>
+        <div class="partner">
+          <strong>Partner C</strong>
+          <p class="muted">Car rentals</p>
+          <button onclick="redirectStub('Partner C')">Continue</button>
         </div>
       </div>
-    </section>
+    </div>
+
+    <div class="card">
+      <h2>Status</h2>
+      <ul class="muted">
+        <li>Phase A — Step 1: Foundation ✔</li>
+        <li>Phase A — Step 2: Partner booking scaffold ✔</li>
+      </ul>
+    </div>
   </main>
 
   <footer>
-    <p>© LionGate Travels — MVP. Neutral, transparent, partner-based.</p>
+    © LionGate Travels — Neutral, transparent, partner-based.
   </footer>
 
   <script>
-    // Neutral Language Framework — MVP Scaffold
-    // Purpose: ensure wording remains neutral and non-assumptive.
-    const NeutralLanguage = {
-      principles: [
-        "No assumptions about identity or intent",
-        "Transparent partner redirection",
-        "Respectful, non-directive phrasing",
-        "Clear pre-commitment notices"
-      ]
-    };
-
-    function showNeutrality() {
-      alert("Neutral Language Principles:\n\n- " + NeutralLanguage.principles.join("\n- "));
+    function redirectStub(partner) {
+      alert(
+        partner +
+        " selection recorded.\n\n" +
+        "In the MVP, this is a stub.\n" +
+        "Live partner redirection will be enabled later."
+      );
     }
   </script>
 </body>
