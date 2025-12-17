@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LionGate Travels — MVP (Locked)</title>
-  <meta name="description" content="LionGate Travels MVP — neutral, partner-based travel booking with constrained AI assistance." />
+  <meta name="description" content="LionGate Travels MVP — camera-assisted input scaffold with neutral, partner-based booking." />
   <style>
     :root {
       --bg: #0f1220;
@@ -14,7 +14,6 @@
       --accent: #6c7bff;
       --ok: #38d39f;
       --warn: #f7c948;
-      --danger: #ff6b6b;
       --border: rgba(255,255,255,0.08);
     }
     * { box-sizing: border-box; }
@@ -43,7 +42,7 @@
       padding: 16px;
       margin-bottom: 16px;
     }
-    h1, h2, h3 { margin-top: 0; }
+    h1, h2 { margin-top: 0; }
     .muted { color: var(--muted); }
     .notice {
       border-left: 4px solid var(--warn);
@@ -52,19 +51,19 @@
       border-radius: 12px;
       margin: 12px 0;
     }
-    .ok {
-      border-left: 4px solid var(--ok);
-      background: rgba(56,211,159,0.08);
-      padding: 12px;
+    .camera-box {
+      border: 1px dashed var(--border);
       border-radius: 12px;
-      margin: 12px 0;
+      padding: 12px;
+      background: rgba(255,255,255,0.02);
     }
-    .danger {
-      border-left: 4px solid var(--danger);
-      background: rgba(255,107,107,0.08);
-      padding: 12px;
-      border-radius: 12px;
-      margin: 12px 0;
+    .camera-box input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #0f1220;
+      color: var(--text);
     }
     .partners {
       display: grid;
@@ -88,29 +87,6 @@
       color: #fff;
       cursor: pointer;
     }
-    .ai-box {
-      border: 1px dashed var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      background: rgba(255,255,255,0.02);
-    }
-    .ai-box input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: #0f1220;
-      color: var(--text);
-    }
-    .ai-box button {
-      margin-top: 8px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text);
-      cursor: pointer;
-    }
     footer {
       padding: 24px;
       text-align: center;
@@ -129,31 +105,30 @@
 
   <main>
     <div class="card">
-      <h2>AI assistance (constrained)</h2>
+      <h2>Camera-assisted input (scaffold)</h2>
       <p class="muted">
-        AI assistance is limited to neutral information and clarification.
-        It cannot make purchases, recommend specific partners, or influence decisions.
+        You may optionally capture or upload an image to assist with form filling.
+        This MVP does not extract or store data from images.
       </p>
 
       <div class="notice">
-        <strong>Pre‑Commitment Awareness</strong>
+        <strong>Privacy & Awareness</strong>
         <p class="muted">
-          AI responses are informational only. You are not entering an agreement or making a booking here.
-          Any commitment occurs only on a partner’s website.
+          Images are processed locally by your browser in this MVP.
+          No image data is transmitted, stored, or analyzed.
         </p>
       </div>
 
-      <div class="ai-box">
-        <label class="muted" for="aiq">Ask a neutral question</label>
-        <input id="aiq" type="text" placeholder="Example: What documents are usually needed for international travel?" />
-        <button onclick="aiRespond()">Get information</button>
+      <div class="camera-box">
+        <label class="muted">Capture or upload an image</label>
+        <input type="file" accept="image/*" capture="environment" onchange="cameraStub(this)" />
       </div>
     </div>
 
     <div class="card">
       <h2>Partner-based booking</h2>
       <p class="muted">
-        Choose a partner to continue. LionGate Travels does not process bookings or payments.
+        Continue to a partner to complete any booking under their terms.
       </p>
 
       <div class="partners">
@@ -167,66 +142,36 @@
           <p class="muted">Hotels & stays</p>
           <button onclick="redirectStub('Partner B')">Continue</button>
         </div>
-        <div class="partner">
-          <strong>Partner C</strong>
-          <p class="muted">Car rentals</p>
-          <button onclick="redirectStub('Partner C')">Continue</button>
-        </div>
       </div>
     </div>
 
     <div class="card">
       <h2>Status</h2>
       <ul class="muted">
-        <li>Phase A — Step 1: Foundation ✔</li>
-        <li>Phase A — Step 2: Partner scaffold ✔</li>
-        <li>Phase A — Step 3: AI constraints & awareness ✔</li>
+        <li>Phase A — Foundation ✔</li>
+        <li>Phase B — Step 1: Camera input scaffold ✔</li>
       </ul>
-      <div class="ok">
-        Phase A — Foundation Implementation is complete.
-      </div>
     </div>
   </main>
 
   <footer>
-    © LionGate Travels — Neutral, transparent, partner‑based.
+    © LionGate Travels — Neutral, transparent, partner-based.
   </footer>
 
   <script>
-    // Constrained AI rules (MVP scaffold)
-    const AI_RULES = {
-      allowed: [
-        "General travel information",
-        "Definitions and explanations",
-        "Process overviews",
-        "Neutral clarifications"
-      ],
-      forbidden: [
-        "Making bookings",
-        "Recommending specific partners",
-        "Influencing purchasing decisions",
-        "Collecting payment or identity data"
-      ]
-    };
-
-    function aiRespond() {
-      const q = document.getElementById('aiq').value.trim();
-      if (!q) {
-        alert("Please enter a neutral informational question.");
-        return;
-      }
+    function cameraStub(input) {
+      if (!input.files || !input.files[0]) return;
       alert(
-        "Informational response (MVP stub):\n\n" +
-        "This assistant provides general, neutral information only.\n" +
-        "For bookings or commitments, you will be redirected to a partner."
+        "Image received (MVP stub).\n\n" +
+        "No data is extracted or stored in this phase."
       );
     }
 
     function redirectStub(partner) {
       alert(
         partner +
-        " selection recorded.\n\n" +
-        "You will complete any booking on the partner’s website under their terms."
+        " selected.\n\n" +
+        "You will complete any booking on the partner’s website."
       );
     }
   </script>
