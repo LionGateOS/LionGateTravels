@@ -4,17 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LionGate Travels — MVP (Locked)</title>
-  <meta name="description" content="LionGate Travels MVP — clear partner handoff with third-party terms acknowledgement." />
+  <meta name="description" content="LionGate Travels MVP — accessible, mobile-first, neutral partner-based travel experience." />
   <style>
     :root {
       --bg: #0f1220;
       --panel: #15193a;
       --text: #e6e8ff;
-      --muted: #aab0ff;
+      --muted: #b7bcff;
       --accent: #6c7bff;
       --ok: #38d39f;
       --warn: #f7c948;
-      --border: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.12);
+      --focus: #9aa4ff;
     }
     * { box-sizing: border-box; }
     body {
@@ -22,19 +23,27 @@
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Arial, sans-serif;
       background: linear-gradient(180deg, #0b0e1a, #0f1220 35%);
       color: var(--text);
+      line-height: 1.5;
+    }
+    a { color: inherit; }
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+      border-radius: 6px;
     }
     header {
-      padding: 20px;
+      padding: 16px;
       border-bottom: 1px solid var(--border);
       background: rgba(0,0,0,0.15);
       position: sticky; top: 0;
+      z-index: 10;
     }
     .brand { display: flex; align-items: center; gap: 12px; }
     .logo {
       width: 36px; height: 36px; border-radius: 8px;
       background: radial-gradient(circle at 30% 30%, #9aa4ff, #4c5bff);
     }
-    main { padding: 24px; max-width: 1100px; margin: 0 auto; }
+    main { padding: 16px; max-width: 1100px; margin: 0 auto; }
     .card {
       background: var(--panel);
       border: 1px solid var(--border);
@@ -46,7 +55,7 @@
     .muted { color: var(--muted); }
     .notice {
       border-left: 4px solid var(--warn);
-      background: rgba(247,201,72,0.08);
+      background: rgba(247,201,72,0.10);
       padding: 12px;
       border-radius: 12px;
       margin: 12px 0;
@@ -68,43 +77,48 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 12px;
-      background: rgba(255,255,255,0.03);
+      background: rgba(255,255,255,0.04);
     }
     .partner button {
       margin-top: 8px;
-      padding: 10px 12px;
+      padding: 14px 12px;
       width: 100%;
-      border-radius: 10px;
+      border-radius: 12px;
       border: 1px solid var(--border);
       background: linear-gradient(180deg, #6c7bff, #4c5bff);
       color: #fff;
       cursor: pointer;
+      font-size: 16px;
     }
     footer {
-      padding: 24px;
+      padding: 24px 16px;
       text-align: center;
       color: var(--muted);
       border-top: 1px solid var(--border);
     }
+    @media (max-width: 480px) {
+      header h1 { font-size: 18px; }
+      .partner button { font-size: 17px; }
+    }
   </style>
 </head>
 <body>
-  <header>
+  <header role="banner">
     <div class="brand">
-      <div class="logo"></div>
+      <div class="logo" aria-hidden="true"></div>
       <h1>LionGate Travels <small class="muted">MVP — Locked</small></h1>
     </div>
   </header>
 
-  <main>
-    <div class="card">
-      <h2>Before you continue</h2>
+  <main role="main">
+    <div class="card" role="region" aria-labelledby="before-title">
+      <h2 id="before-title">Before you continue</h2>
       <p class="muted">
         You are about to leave LionGate Travels and continue on a partner’s website.
       </p>
 
-      <div class="notice">
-        <strong>Third‑party terms</strong>
+      <div class="notice" role="note">
+        <strong>Third-party terms</strong>
         <p class="muted">
           LionGate Travels does not control partner content, pricing, availability, or policies.
           Any booking, payment, or agreement occurs solely with the selected partner.
@@ -112,49 +126,48 @@
       </div>
 
       <div class="ack">
-        <input id="ack" type="checkbox" />
-        <label for="ack" class="muted">
-          I understand that I am continuing to a third‑party site and that LionGate Travels
+        <input id="ack" type="checkbox" aria-describedby="ack-desc" />
+        <label for="ack" id="ack-desc" class="muted">
+          I understand that I am continuing to a third-party site and that LionGate Travels
           is not the seller or provider of travel services.
         </label>
       </div>
     </div>
 
-    <div class="card">
-      <h2>Select a partner</h2>
+    <div class="card" role="region" aria-labelledby="partner-title">
+      <h2 id="partner-title">Select a partner</h2>
       <div class="partners">
         <div class="partner">
           <strong>Partner A</strong>
           <p class="muted">Flights & packages</p>
-          <button onclick="handoff('Partner A')">Continue</button>
+          <button onclick="handoff('Partner A')" aria-label="Continue to Partner A">Continue</button>
         </div>
         <div class="partner">
           <strong>Partner B</strong>
           <p class="muted">Hotels & stays</p>
-          <button onclick="handoff('Partner B')">Continue</button>
+          <button onclick="handoff('Partner B')" aria-label="Continue to Partner B">Continue</button>
         </div>
       </div>
     </div>
 
-    <div class="card">
-      <h2>Status</h2>
+    <div class="card" role="region" aria-labelledby="status-title">
+      <h2 id="status-title">Status</h2>
       <ul class="muted">
-        <li>Phase B — Step 1: Camera input scaffold ✔</li>
-        <li>Phase B — Step 2: Traveler autofill scaffold ✔</li>
-        <li>Phase B — Step 3: Partner handoff & terms acknowledgement ✔</li>
+        <li>Phase B — Partner handoff clarity ✔</li>
+        <li>Phase C — Step 1: Accessibility & mobile-first refinements ✔</li>
       </ul>
     </div>
   </main>
 
-  <footer>
-    © LionGate Travels — Neutral, transparent, partner‑based.
+  <footer role="contentinfo">
+    © LionGate Travels — Neutral, transparent, partner-based.
   </footer>
 
   <script>
     function handoff(partner) {
       const ok = document.getElementById('ack').checked;
       if (!ok) {
-        alert("Please acknowledge the third‑party terms before continuing.");
+        alert("Please acknowledge the third-party terms before continuing.");
         return;
       }
       alert(
