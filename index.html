@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LionGate Travels — MVP (Locked)</title>
-  <meta name="description" content="LionGate Travels MVP — non-persistent traveler profile autofill with awareness and partner-based booking." />
+  <meta name="description" content="LionGate Travels MVP — clear partner handoff with third-party terms acknowledgement." />
   <style>
     :root {
       --bg: #0f1220;
@@ -51,27 +51,13 @@
       border-radius: 12px;
       margin: 12px 0;
     }
-    .form {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
+    .ack {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin-top: 10px;
     }
-    .form input, .form select {
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: #0f1220;
-      color: var(--text);
-    }
-    .form button {
-      grid-column: 1 / -1;
-      padding: 12px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: linear-gradient(180deg, #6c7bff, #4c5bff);
-      color: #fff;
-      cursor: pointer;
-    }
+    .ack input { margin-top: 4px; }
     .partners {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -112,49 +98,40 @@
 
   <main>
     <div class="card">
-      <h2>Traveler profile (optional)</h2>
+      <h2>Before you continue</h2>
       <p class="muted">
-        Provide optional information to prefill partner forms.
-        This information is not stored and clears when you leave the page.
+        You are about to leave LionGate Travels and continue on a partner’s website.
       </p>
 
       <div class="notice">
-        <strong>Awareness</strong>
+        <strong>Third‑party terms</strong>
         <p class="muted">
-          Completing this form does not create an account and does not submit data to partners.
-          Any submission happens only after you choose a partner.
+          LionGate Travels does not control partner content, pricing, availability, or policies.
+          Any booking, payment, or agreement occurs solely with the selected partner.
         </p>
       </div>
 
-      <form class="form" onsubmit="autofillStub(); return false;">
-        <input placeholder="First name (optional)" />
-        <input placeholder="Last name (optional)" />
-        <input placeholder="Nationality (optional)" />
-        <select>
-          <option>Travel document type (optional)</option>
-          <option>Passport</option>
-          <option>National ID</option>
-        </select>
-        <button type="submit">Prepare autofill (MVP stub)</button>
-      </form>
+      <div class="ack">
+        <input id="ack" type="checkbox" />
+        <label for="ack" class="muted">
+          I understand that I am continuing to a third‑party site and that LionGate Travels
+          is not the seller or provider of travel services.
+        </label>
+      </div>
     </div>
 
     <div class="card">
-      <h2>Partner-based booking</h2>
-      <p class="muted">
-        Continue to a partner to complete booking under their terms.
-      </p>
-
+      <h2>Select a partner</h2>
       <div class="partners">
         <div class="partner">
           <strong>Partner A</strong>
           <p class="muted">Flights & packages</p>
-          <button onclick="redirectStub('Partner A')">Continue</button>
+          <button onclick="handoff('Partner A')">Continue</button>
         </div>
         <div class="partner">
           <strong>Partner B</strong>
           <p class="muted">Hotels & stays</p>
-          <button onclick="redirectStub('Partner B')">Continue</button>
+          <button onclick="handoff('Partner B')">Continue</button>
         </div>
       </div>
     </div>
@@ -164,26 +141,26 @@
       <ul class="muted">
         <li>Phase B — Step 1: Camera input scaffold ✔</li>
         <li>Phase B — Step 2: Traveler autofill scaffold ✔</li>
+        <li>Phase B — Step 3: Partner handoff & terms acknowledgement ✔</li>
       </ul>
     </div>
   </main>
 
   <footer>
-    © LionGate Travels — Neutral, transparent, partner-based.
+    © LionGate Travels — Neutral, transparent, partner‑based.
   </footer>
 
   <script>
-    function autofillStub() {
-      alert(
-        "Autofill prepared (MVP stub).\n\n" +
-        "No data is stored or transmitted at this stage."
-      );
-    }
-    function redirectStub(partner) {
+    function handoff(partner) {
+      const ok = document.getElementById('ack').checked;
+      if (!ok) {
+        alert("Please acknowledge the third‑party terms before continuing.");
+        return;
+      }
       alert(
         partner +
         " selected.\n\n" +
-        "You will complete any booking on the partner’s website."
+        "You will now continue to the partner’s website to complete any booking."
       );
     }
   </script>
