@@ -4,8 +4,11 @@
 <meta charset="UTF-8">
 <title>LionGate Travels</title>
 <style>
-body{font-family:Arial, sans-serif;background:#0b0f14;color:#fff;margin:0;padding:40px}
-.admin-panel{position:fixed;bottom:20px;right:20px;background:#111;border:1px solid #333;padding:12px 16px;border-radius:8px;font-size:14px}
+body{font-family:Arial,sans-serif;background:#0b0f14;color:#fff;margin:0;padding:40px}
+.card{border:1px solid #333;border-radius:8px;padding:16px;margin-bottom:16px}
+.context span{display:inline-block;background:#222;border:1px solid #444;padding:4px 8px;margin-right:6px;border-radius:4px;font-size:12px}
+button{padding:10px 16px;font-size:14px}
+.admin{position:fixed;bottom:20px;right:20px;background:#111;border:1px solid #333;padding:12px;border-radius:8px;font-size:13px}
 .hidden{display:none}
 </style>
 </head>
@@ -14,31 +17,37 @@ body{font-family:Arial, sans-serif;background:#0b0f14;color:#fff;margin:0;paddin
 <h1>LionGate Travels</h1>
 <p>Select a partner to continue.</p>
 
-<button onclick="track('PartnerA')">Partner A</button>
-<button onclick="track('PartnerB')">Partner B</button>
+<div class="card">
+  <div class="context">
+    <span data-c="price">Best Price</span>
+    <span data-c="flex">Flexible Booking</span>
+    <span data-c="rewards">Rewards Friendly</span>
+  </div>
+  <button onclick="track('Hotels')">Continue to Hotels</button>
+</div>
 
-<div id="admin" class="admin-panel hidden"></div>
+<div id="admin" class="admin hidden"></div>
 
 <script>
-const key = "liongate_clicks";
-const data = JSON.parse(localStorage.getItem(key) || "{}");
+const KEY="lg_clicks";
+const data=JSON.parse(localStorage.getItem(KEY)||"{}");
 
-function track(partner){
-  data[partner] = (data[partner] || 0) + 1;
-  data.last = new Date().toISOString();
-  localStorage.setItem(key, JSON.stringify(data));
-  alert(partner + " selected. Redirect would occur here.");
+function track(p){
+  data[p]=(data[p]||0)+1;
+  data.last=new Date().toISOString();
+  localStorage.setItem(KEY,JSON.stringify(data));
+  alert("Redirect would occur here.");
 }
 
-function renderAdmin(){
-  const div = document.getElementById("admin");
-  div.innerHTML = "<strong>Admin Stats</strong><br>" +
-    Object.entries(data).map(([k,v]) => k + ": " + v).join("<br>");
+function render(){
+  const a=document.getElementById("admin");
+  a.innerHTML="<strong>Admin Stats</strong><br>"+
+    Object.entries(data).map(([k,v])=>k+": "+v).join("<br>");
 }
 
-if (new URLSearchParams(window.location.search).get("admin")==="1"){
+if(new URLSearchParams(location.search).get("admin")==="1"){
   document.getElementById("admin").classList.remove("hidden");
-  renderAdmin();
+  render();
 }
 </script>
 
