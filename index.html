@@ -7,10 +7,11 @@
 body{font-family:Arial,sans-serif;background:#0b0f14;color:#fff;margin:0;padding:40px}
 .card{border:1px solid #333;border-radius:8px;padding:16px;margin-bottom:16px}
 .context span{display:inline-block;background:#222;border:1px solid #444;padding:4px 8px;margin-right:6px;border-radius:4px;font-size:12px}
-button{padding:10px 16px;font-size:14px;margin-right:8px}
-.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);display:none;align-items:center;justify-content:center}
-.modal-content{background:#0f141b;border:1px solid #333;padding:24px;border-radius:10px;max-width:460px}
-.modal-content h3{margin-top:0}
+button{padding:10px 16px;font-size:14px;margin-top:8px}
+.badge{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:10px;font-size:11px;background:#333}
+.available{background:#1f6f43}
+.soon{background:#6b4f1d}
+.pending{background:#444}
 .admin{position:fixed;bottom:20px;right:20px;background:#111;border:1px solid #333;padding:12px;border-radius:8px;font-size:13px}
 .hidden{display:none}
 </style>
@@ -18,31 +19,37 @@ button{padding:10px 16px;font-size:14px;margin-right:8px}
 <body>
 
 <h1>LionGate Travels</h1>
-<p>Select a partner to continue.</p>
+<p>Your Journey Simplified.</p>
+<p style="opacity:0.7">We’re finalizing partnerships with leading travel providers.</p>
 
 <div class="card">
+  <strong>Hotels & Stays</strong>
+  <span class="badge available">Available</span>
   <div class="context">
     <span>Best Price</span>
     <span>Flexible Booking</span>
-    <span>Rewards Friendly</span>
   </div>
-  <button onclick="openPanel('Hotels')">Continue to Hotels</button>
+  <button onclick="track('Hotels')">Continue</button>
 </div>
 
-<div class="modal" id="panel">
-  <div class="modal-content">
-    <h3>You’re leaving LionGate Travels</h3>
-    <p>
-      We selected this partner because they consistently offer broad availability,
-      transparent pricing, and traveler-friendly policies.
-    </p>
-    <p>
-      Your booking will be completed on the partner’s website under their terms.
-      LionGate Travels does not process payments or store personal data.
-    </p>
-    <button onclick="proceed()">Continue to Partner</button>
-    <button onclick="cancel()">Go Back</button>
+<div class="card">
+  <strong>Flights</strong>
+  <span class="badge soon">Coming Soon</span>
+  <div class="context">
+    <span>Route Coverage</span>
+    <span>Seat Options</span>
   </div>
+  <button onclick="track('Flights')">Notify Interest</button>
+</div>
+
+<div class="card">
+  <strong>Car Rentals</strong>
+  <span class="badge pending">Partner Onboarding</span>
+  <div class="context">
+    <span>Pickup Options</span>
+    <span>Insurance</span>
+  </div>
+  <button onclick="track('Cars')">Notify Interest</button>
 </div>
 
 <div id="admin" class="admin hidden"></div>
@@ -50,32 +57,13 @@ button{padding:10px 16px;font-size:14px;margin-right:8px}
 <script>
 const KEY="lg_clicks";
 const data=JSON.parse(localStorage.getItem(KEY)||"{}");
-let current=null;
 
-function openPanel(p){
-  current=p;
+function track(p){
   data[p]=(data[p]||0)+1;
-  data.panelShown=(data.panelShown||0)+1;
   data.last=new Date().toISOString();
   localStorage.setItem(KEY,JSON.stringify(data));
-  document.getElementById("panel").style.display="flex";
-}
-
-function proceed(){
-  data.proceed=(data.proceed||0)+1;
-  localStorage.setItem(KEY,JSON.stringify(data));
-  alert("Redirect would occur here.");
-  closePanel();
-}
-
-function cancel(){
-  data.cancel=(data.cancel||0)+1;
-  localStorage.setItem(KEY,JSON.stringify(data));
-  closePanel();
-}
-
-function closePanel(){
-  document.getElementById("panel").style.display="none";
+  alert(p + " interest recorded.");
+  render();
 }
 
 function render(){
