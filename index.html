@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LionGate Travels — MVP (Locked)</title>
-  <meta name="description" content="LionGate Travels MVP — camera-assisted input scaffold with neutral, partner-based booking." />
+  <meta name="description" content="LionGate Travels MVP — non-persistent traveler profile autofill with awareness and partner-based booking." />
   <style>
     :root {
       --bg: #0f1220;
@@ -51,19 +51,26 @@
       border-radius: 12px;
       margin: 12px 0;
     }
-    .camera-box {
-      border: 1px dashed var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      background: rgba(255,255,255,0.02);
+    .form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
     }
-    .camera-box input {
-      width: 100%;
+    .form input, .form select {
       padding: 10px;
       border-radius: 10px;
       border: 1px solid var(--border);
       background: #0f1220;
       color: var(--text);
+    }
+    .form button {
+      grid-column: 1 / -1;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, #6c7bff, #4c5bff);
+      color: #fff;
+      cursor: pointer;
     }
     .partners {
       display: grid;
@@ -105,30 +112,37 @@
 
   <main>
     <div class="card">
-      <h2>Camera-assisted input (scaffold)</h2>
+      <h2>Traveler profile (optional)</h2>
       <p class="muted">
-        You may optionally capture or upload an image to assist with form filling.
-        This MVP does not extract or store data from images.
+        Provide optional information to prefill partner forms.
+        This information is not stored and clears when you leave the page.
       </p>
 
       <div class="notice">
-        <strong>Privacy & Awareness</strong>
+        <strong>Awareness</strong>
         <p class="muted">
-          Images are processed locally by your browser in this MVP.
-          No image data is transmitted, stored, or analyzed.
+          Completing this form does not create an account and does not submit data to partners.
+          Any submission happens only after you choose a partner.
         </p>
       </div>
 
-      <div class="camera-box">
-        <label class="muted">Capture or upload an image</label>
-        <input type="file" accept="image/*" capture="environment" onchange="cameraStub(this)" />
-      </div>
+      <form class="form" onsubmit="autofillStub(); return false;">
+        <input placeholder="First name (optional)" />
+        <input placeholder="Last name (optional)" />
+        <input placeholder="Nationality (optional)" />
+        <select>
+          <option>Travel document type (optional)</option>
+          <option>Passport</option>
+          <option>National ID</option>
+        </select>
+        <button type="submit">Prepare autofill (MVP stub)</button>
+      </form>
     </div>
 
     <div class="card">
       <h2>Partner-based booking</h2>
       <p class="muted">
-        Continue to a partner to complete any booking under their terms.
+        Continue to a partner to complete booking under their terms.
       </p>
 
       <div class="partners">
@@ -148,8 +162,8 @@
     <div class="card">
       <h2>Status</h2>
       <ul class="muted">
-        <li>Phase A — Foundation ✔</li>
         <li>Phase B — Step 1: Camera input scaffold ✔</li>
+        <li>Phase B — Step 2: Traveler autofill scaffold ✔</li>
       </ul>
     </div>
   </main>
@@ -159,14 +173,12 @@
   </footer>
 
   <script>
-    function cameraStub(input) {
-      if (!input.files || !input.files[0]) return;
+    function autofillStub() {
       alert(
-        "Image received (MVP stub).\n\n" +
-        "No data is extracted or stored in this phase."
+        "Autofill prepared (MVP stub).\n\n" +
+        "No data is stored or transmitted at this stage."
       );
     }
-
     function redirectStub(partner) {
       alert(
         partner +
