@@ -168,7 +168,6 @@
       This MVP provides informational redirection only. No booking, payment, or contractual
       relationship is formed on this site.
     </p>
-  <p class="legal"><strong>Affiliate disclosure:</strong> LionGate Travels may earn a commission when users book through partner links.</p>
   </footer>
 
   
@@ -177,14 +176,14 @@
   const BOOKING_URL = "https://www.booking.com/?aid=" + AWIN_PUBLISHER_ID;
 
   function handoff(partner) {
-    const ok = document.getElementById('ack').checked;
-    if (!ok) {
-      alert("Please acknowledge the third‑party terms before continuing.");
+    const ack = document.getElementById('ack');
+    if (!ack || !ack.checked) {
+      alert("Please acknowledge the third-party terms before continuing.");
       return;
     }
     const msg =
-      partner + " selected.\n\n" +
-      "You will now continue to the partner’s website to complete any booking.\n" +
+      "You will now continue to the partner’s website to complete any booking.
+" +
       "All pricing, availability, payments, refunds, and policies are determined solely by the partner.";
     if (confirm(msg)) {
       window.open(BOOKING_URL, "_blank", "noopener,noreferrer");
@@ -192,21 +191,5 @@
   }
 </script>
 
-<!-- affiliate wired -->
-<script>
-    function _noop() {} // replaced
-
-      const ok = document.getElementById('ack').checked;
-      if (!ok) {
-        alert("Please acknowledge the third‑party terms before continuing.");
-        return;
-      }
-      alert(
-        partner +
-        " selected.\n\n" +
-        "You will now continue to the partner’s website to complete any booking."
-      );
-    }
-  </script>
 </body>
 </html>
