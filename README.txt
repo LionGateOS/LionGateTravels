@@ -1,7 +1,7 @@
-LionGate Travels v86 — Test Mode Feature Flag Stress Tester
+LionGate Travels v87 — Test Mode Auto-Fill Combined Report Generator
 
-Automatically toggles all feature flags for all mock inputs repeatedly
-and logs dashboard and consent outputs to console and test_mode_autofill_flag_stress.json.
+Aggregates batch simulation logs, replay outputs, performance timings,
+and anomaly detections into a single consolidated console report and JSON export.
 
 TEST MODE ONLY.
 No real bookings are affected.
