@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LionGate Travels — MVP (Locked)</title>
-  <meta name="description" content="LionGate Travels MVP — neutral, partner-based travel booking experience." />
+  <meta name="description" content="LionGate Travels MVP — neutral, partner-based travel booking with constrained AI assistance." />
   <style>
     :root {
       --bg: #0f1220;
@@ -14,6 +14,7 @@
       --accent: #6c7bff;
       --ok: #38d39f;
       --warn: #f7c948;
+      --danger: #ff6b6b;
       --border: rgba(255,255,255,0.08);
     }
     * { box-sizing: border-box; }
@@ -42,13 +43,28 @@
       padding: 16px;
       margin-bottom: 16px;
     }
-    h1, h2 { margin-top: 0; }
+    h1, h2, h3 { margin-top: 0; }
     .muted { color: var(--muted); }
     .notice {
       border-left: 4px solid var(--warn);
       background: rgba(247,201,72,0.08);
       padding: 12px;
       border-radius: 12px;
+      margin: 12px 0;
+    }
+    .ok {
+      border-left: 4px solid var(--ok);
+      background: rgba(56,211,159,0.08);
+      padding: 12px;
+      border-radius: 12px;
+      margin: 12px 0;
+    }
+    .danger {
+      border-left: 4px solid var(--danger);
+      background: rgba(255,107,107,0.08);
+      padding: 12px;
+      border-radius: 12px;
+      margin: 12px 0;
     }
     .partners {
       display: grid;
@@ -72,6 +88,29 @@
       color: #fff;
       cursor: pointer;
     }
+    .ai-box {
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: rgba(255,255,255,0.02);
+    }
+    .ai-box input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #0f1220;
+      color: var(--text);
+    }
+    .ai-box button {
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+    }
     footer {
       padding: 24px;
       text-align: center;
@@ -90,19 +129,32 @@
 
   <main>
     <div class="card">
-      <h2>Partner-based booking</h2>
+      <h2>AI assistance (constrained)</h2>
       <p class="muted">
-        LionGate Travels does not sell travel directly.
-        You may choose a partner to continue your booking on their site.
+        AI assistance is limited to neutral information and clarification.
+        It cannot make purchases, recommend specific partners, or influence decisions.
       </p>
 
       <div class="notice">
-        <strong>Important</strong>
+        <strong>Pre‑Commitment Awareness</strong>
         <p class="muted">
-          Selecting a partner will redirect you to a third-party website.
-          Any booking, payment, or agreement happens under that partner’s terms.
+          AI responses are informational only. You are not entering an agreement or making a booking here.
+          Any commitment occurs only on a partner’s website.
         </p>
       </div>
+
+      <div class="ai-box">
+        <label class="muted" for="aiq">Ask a neutral question</label>
+        <input id="aiq" type="text" placeholder="Example: What documents are usually needed for international travel?" />
+        <button onclick="aiRespond()">Get information</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Partner-based booking</h2>
+      <p class="muted">
+        Choose a partner to continue. LionGate Travels does not process bookings or payments.
+      </p>
 
       <div class="partners">
         <div class="partner">
@@ -127,22 +179,54 @@
       <h2>Status</h2>
       <ul class="muted">
         <li>Phase A — Step 1: Foundation ✔</li>
-        <li>Phase A — Step 2: Partner booking scaffold ✔</li>
+        <li>Phase A — Step 2: Partner scaffold ✔</li>
+        <li>Phase A — Step 3: AI constraints & awareness ✔</li>
       </ul>
+      <div class="ok">
+        Phase A — Foundation Implementation is complete.
+      </div>
     </div>
   </main>
 
   <footer>
-    © LionGate Travels — Neutral, transparent, partner-based.
+    © LionGate Travels — Neutral, transparent, partner‑based.
   </footer>
 
   <script>
+    // Constrained AI rules (MVP scaffold)
+    const AI_RULES = {
+      allowed: [
+        "General travel information",
+        "Definitions and explanations",
+        "Process overviews",
+        "Neutral clarifications"
+      ],
+      forbidden: [
+        "Making bookings",
+        "Recommending specific partners",
+        "Influencing purchasing decisions",
+        "Collecting payment or identity data"
+      ]
+    };
+
+    function aiRespond() {
+      const q = document.getElementById('aiq').value.trim();
+      if (!q) {
+        alert("Please enter a neutral informational question.");
+        return;
+      }
+      alert(
+        "Informational response (MVP stub):\n\n" +
+        "This assistant provides general, neutral information only.\n" +
+        "For bookings or commitments, you will be redirected to a partner."
+      );
+    }
+
     function redirectStub(partner) {
       alert(
         partner +
         " selection recorded.\n\n" +
-        "In the MVP, this is a stub.\n" +
-        "Live partner redirection will be enabled later."
+        "You will complete any booking on the partner’s website under their terms."
       );
     }
   </script>
