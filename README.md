@@ -1,3 +1,4 @@
+<img width="1536" height="1024" alt="ChatGPT Image Dec 17, 2025, 05_41_35 AM" src="https://github.com/user-attachments/assets/a9f88fb0-e10b-4ab1-8449-8dcabe505d0f" />
 # LionGate Travels — MVP
 
 **LionGate Travels** is a neutral travel discovery platform designed to help users explore travel options and then continue their journey on trusted third‑party booking partners.  
