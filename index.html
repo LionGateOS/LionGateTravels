@@ -7,11 +7,12 @@
 body{font-family:Arial,sans-serif;background:#0b0f14;color:#fff;margin:0;padding:40px}
 .card{border:1px solid #333;border-radius:8px;padding:16px;margin-bottom:16px}
 .context span{display:inline-block;background:#222;border:1px solid #444;padding:4px 8px;margin-right:6px;border-radius:4px;font-size:12px}
-button{padding:10px 16px;font-size:14px;margin-top:8px}
+button,input{padding:8px 12px;font-size:14px;margin-top:8px}
 .badge{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:10px;font-size:11px;background:#333}
 .available{background:#1f6f43}
 .soon{background:#6b4f1d}
 .pending{background:#444}
+small{opacity:0.7}
 .admin{position:fixed;bottom:20px;right:20px;background:#111;border:1px solid #333;padding:12px;border-radius:8px;font-size:13px}
 .hidden{display:none}
 </style>
@@ -39,7 +40,9 @@ button{padding:10px 16px;font-size:14px;margin-top:8px}
     <span>Route Coverage</span>
     <span>Seat Options</span>
   </div>
-  <button onclick="track('Flights')">Notify Interest</button>
+  <input id="emailFlights" placeholder="Your email">
+  <button onclick="notify('Flights','emailFlights')">Notify Me</button>
+  <small>No spam. Used only to notify availability.</small>
 </div>
 
 <div class="card">
@@ -49,7 +52,9 @@ button{padding:10px 16px;font-size:14px;margin-top:8px}
     <span>Pickup Options</span>
     <span>Insurance</span>
   </div>
-  <button onclick="track('Cars')">Notify Interest</button>
+  <input id="emailCars" placeholder="Your email">
+  <button onclick="notify('Cars','emailCars')">Notify Me</button>
+  <small>No spam. Used only to notify availability.</small>
 </div>
 
 <div id="admin" class="admin hidden"></div>
@@ -62,7 +67,16 @@ function track(p){
   data[p]=(data[p]||0)+1;
   data.last=new Date().toISOString();
   localStorage.setItem(KEY,JSON.stringify(data));
-  alert(p + " interest recorded.");
+  alert(p + " selected.");
+  render();
+}
+
+function notify(p,id){
+  const email=document.getElementById(id).value;
+  if(!email){alert("Enter an email");return;}
+  data[p+"_waitlist"]=(data[p+"_waitlist"]||0)+1;
+  localStorage.setItem(KEY,JSON.stringify(data));
+  window.location.href="mailto:?subject=LionGate Travels – Notify Me&body=Please notify me when "+p+" becomes available. Email: "+email;
   render();
 }
 
