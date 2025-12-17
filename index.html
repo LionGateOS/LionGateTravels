@@ -1,195 +1,84 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LionGate Travels — MVP (Locked)</title>
-  <meta name="description" content="LionGate Travels MVP — neutral, accessible, partner-based travel experience." />
-  <style>
-    :root {
-      --bg: #0f1220;
-      --panel: #15193a;
-      --text: #e6e8ff;
-      --muted: #c2c7ff;
-      --accent: #6c7bff;
-      --ok: #38d39f;
-      --warn: #f7c948;
-      --border: rgba(255,255,255,0.14);
-      --focus: #9aa4ff;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Arial, sans-serif;
-      background: linear-gradient(180deg, #0b0e1a, #0f1220 35%);
-      color: var(--text);
-      line-height: 1.55;
-    }
-    a { color: inherit; text-decoration: underline; }
-    :focus-visible {
-      outline: 3px solid var(--focus);
-      outline-offset: 3px;
-      border-radius: 6px;
-    }
-    header {
-      padding: 16px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(0,0,0,0.15);
-      position: sticky; top: 0; z-index: 10;
-    }
-    .brand { display: flex; align-items: center; gap: 12px; }
-    .logo {
-      width: 36px; height: 36px; border-radius: 8px;
-      background: radial-gradient(circle at 30% 30%, #9aa4ff, #4c5bff);
-    }
-    main { padding: 16px; max-width: 1100px; margin: 0 auto; }
-    .card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 16px;
-    }
-    h1, h2 { margin-top: 0; }
-    .muted { color: var(--muted); }
-    .notice {
-      border-left: 4px solid var(--warn);
-      background: rgba(247,201,72,0.10);
-      padding: 12px;
-      border-radius: 12px;
-      margin: 12px 0;
-    }
-    .ack {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      margin-top: 10px;
-    }
-    .ack input { margin-top: 4px; }
-    .partners {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
-      margin-top: 12px;
-    }
-    .partner {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      background: rgba(255,255,255,0.05);
-    }
-    .partner button {
-      margin-top: 8px;
-      padding: 14px 12px;
-      width: 100%;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: linear-gradient(180deg, #6c7bff, #4c5bff);
-      color: #fff;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    footer {
-      padding: 24px 16px;
-      text-align: center;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
-    }
-    .legal {
-      font-size: 13px;
-      color: var(--muted);
-    }
-  </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>LionGate Travels</title>
+<style>
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  background:#0b0f17;
+  color:#ffffff;
+}
+header{
+  padding:24px;
+  border-bottom:1px solid rgba(255,255,255,.15);
+}
+main{
+  max-width:900px;
+  margin:40px auto;
+  padding:0 20px;
+}
+.card{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:20px;
+}
+button{
+  padding:12px 18px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.25);
+  background:#1e2a44;
+  color:#fff;
+  font-size:15px;
+  cursor:pointer;
+}
+button:hover{background:#26345a;}
+label{display:block;margin:12px 0;font-size:14px;}
+footer{
+  font-size:12px;
+  color:#cccccc;
+  margin-top:40px;
+}
+</style>
+<script>
+const BOOKING_URL = "https://www.booking.com/?aid=2698444";
+function handoff(){
+  const ack = document.getElementById("ack");
+  if(!ack.checked){
+    alert("Please acknowledge third‑party responsibility before continuing.");
+    return;
+  }
+  if(confirm("You are leaving LionGate Travels and continuing to a partner site. Continue?")){
+    window.open(BOOKING_URL,"_blank","noopener,noreferrer");
+  }
+}
+</script>
 </head>
 <body>
-  <header role="banner">
-    <div class="brand">
-      <div class="logo" aria-hidden="true"></div>
-      <h1>LionGate Travels <small class="muted">MVP — Locked</small></h1>
-    </div>
-  </header>
-
-  <main role="main">
-    <div class="card" role="region" aria-labelledby="before-title">
-      <h2 id="before-title">Before you continue</h2>
-      <p class="muted">
-        LionGate Travels helps you discover travel options and continue with trusted partners.
-        We do not sell travel services directly.
-      </p>
-
-      <div class="notice" role="note">
-        <strong>Third‑party terms & responsibility</strong>
-        <p class="muted">
-          When you select a partner, you will leave LionGate Travels.
-          All pricing, availability, payments, refunds, and policies are determined solely by the partner.
-          LionGate Travels is not the seller, agent, or provider of travel services.
-        </p>
-      </div>
-
-      <div class="ack">
-        <input id="ack" type="checkbox" aria-describedby="ack-desc" />
-        <label for="ack" id="ack-desc" class="muted">
-          I understand that I am continuing to a third‑party site and that LionGate Travels
-          does not process bookings or payments.
-        </label>
-      </div>
-    </div>
-
-    <div class="card" role="region" aria-labelledby="partner-title">
-      <h2 id="partner-title">Select a partner</h2>
-      <div class="partners">
-        <div class="partner">
-          <strong>Partner A</strong>
-          <p class="muted">Flights & packages</p>
-          <button onclick="handoff('Partner A')" aria-label="Continue to Partner A">Continue</button>
-        </div>
-        <div class="partner">
-          <strong>Partner B</strong>
-          <p class="muted">Hotels & stays</p>
-          <button onclick="handoff('Partner B')" aria-label="Continue to Partner B">Continue</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card" role="region" aria-labelledby="status-title">
-      <h2 id="status-title">Status</h2>
-      <ul class="muted">
-        <li>Phase A — Foundation ✔</li>
-        <li>Phase B — Partner flows ✔</li>
-        <li>Phase C — Step 1: Accessibility & mobile ✔</li>
-        <li>Phase C — Step 2: Copy & legal clarity ✔</li>
-      </ul>
-    </div>
-  </main>
-
-  <footer role="contentinfo">
-    <p>© LionGate Travels — Neutral, transparent, partner‑based.</p>
-    <p class="legal">
-      This MVP provides informational redirection only. No booking, payment, or contractual
-      relationship is formed on this site.
-    </p>
+<header>
+  <h1>LionGate Travels</h1>
+  <p>Your Journey Simplified.</p>
+</header>
+<main>
+  <div class="card">
+    <h2>Before you continue</h2>
+    <label>
+      <input type="checkbox" id="ack"/>
+      I understand I am continuing to a third‑party website. LionGate Travels does not process payments or bookings.
+    </label>
+  </div>
+  <div class="card">
+    <h2>Partner — Hotels & Stays</h2>
+    <p>You will complete your booking on the partner’s website.</p>
+    <button onclick="handoff()">Continue</button>
+  </div>
+  <footer>
+    <p><strong>Affiliate disclosure:</strong> LionGate Travels may earn a commission when users book through partner links.</p>
   </footer>
-
-  
-<script>
-  const AWIN_PUBLISHER_ID = "2698444";
-  const BOOKING_URL = "https://www.booking.com/?aid=" + AWIN_PUBLISHER_ID;
-
-  function handoff(partner) {
-    const ack = document.getElementById('ack');
-    if (!ack || !ack.checked) {
-      alert("Please acknowledge the third-party terms before continuing.");
-      return;
-    }
-    const msg =
-      "You will now continue to the partner’s website to complete any booking.
-" +
-      "All pricing, availability, payments, refunds, and policies are determined solely by the partner.";
-    if (confirm(msg)) {
-      window.open(BOOKING_URL, "_blank", "noopener,noreferrer");
-    }
-  }
-</script>
-
+</main>
 </body>
 </html>
