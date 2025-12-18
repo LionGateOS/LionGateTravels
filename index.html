@@ -11,8 +11,9 @@
 body{font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);margin:0}
 .container{max-width:980px;margin:0 auto;padding:28px}
 .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px}
-button,input{font-size:14px}
-button{padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--cta);color:#fff;cursor:pointer}
+button{padding:10px 16px;border-radius:10px;border:1px solid var(--border);background:var(--cta);color:#fff;font-size:15px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.spinner{width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
 .admin{position:fixed;right:16px;bottom:16px;background:#020617;border:1px solid var(--border);border-radius:12px;padding:12px;font-size:13px;max-width:260px}
 .hidden{display:none}
 </style>
@@ -24,7 +25,10 @@ button{padding:10px 14px;border-radius:10px;border:1px solid var(--border);backg
 
   <div class="card">
     <h3>Hotels & Stays</h3>
-    <button onclick="go()">Continue</button>
+    <button id="goBtn" onclick="go()">
+      <span>Continue</span>
+      <span class="spinner" id="spin"></span>
+    </button>
   </div>
 </div>
 
@@ -35,10 +39,12 @@ const KEY="lg_clicks";
 const data=JSON.parse(localStorage.getItem(KEY)||"{}");
 
 function go(){
+  const s=document.getElementById("spin");
+  s.style.display="inline-block";
   data.hotels=(data.hotels||0)+1;
   data.last=new Date().toISOString();
   localStorage.setItem(KEY,JSON.stringify(data));
-  window.location.href="https://www.booking.com/";
+  setTimeout(()=>{ window.location.href="https://www.booking.com/"; },150);
 }
 
 function renderAdmin(){
