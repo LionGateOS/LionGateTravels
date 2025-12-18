@@ -5,12 +5,12 @@
 <title>LionGate Travels</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-:root{
-  --bg:#0b0f14; --panel:#111827; --border:#1f2937; --text:#e5e7eb; --muted:#9ca3af; --cta:#2563eb;
-}
+:root{--bg:#0b0f14;--panel:#111827;--border:#1f2937;--text:#e5e7eb;--muted:#9ca3af;--cta:#2563eb;}
 body{font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);margin:0}
 .container{max-width:980px;margin:0 auto;padding:28px}
 .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px}
+label{display:block;color:var(--muted);margin:10px 0 6px}
+select{background:#020617;color:var(--text);border:1px solid var(--border);border-radius:10px;padding:10px;font-size:14px}
 button{padding:10px 16px;border-radius:10px;border:1px solid var(--border);background:var(--cta);color:#fff;font-size:15px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
 .spinner{width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;display:none}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -21,10 +21,20 @@ button{padding:10px 16px;border-radius:10px;border:1px solid var(--border);backg
 <body>
 <div class="container">
   <h1>LionGate Travels</h1>
-  <p class="muted">Your Journey Simplified.</p>
+  <p style="color:var(--muted);margin-top:4px">Your Journey Simplified.</p>
 
   <div class="card">
-    <h3>Hotels & Stays</h3>
+    <h3 style="margin-top:0">Travel Region</h3>
+    <p style="color:var(--muted);margin-top:6px">Select your region to improve partner routing.</p>
+    <label for="region">Region</label>
+    <select id="region">
+      <option value="CA">Canada</option>
+      <option value="US">United States</option>
+    </select>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">Hotels & Stays</h3>
     <button id="goBtn" onclick="go()">
       <span>Continue</span>
       <span class="spinner" id="spin"></span>
@@ -36,12 +46,25 @@ button{padding:10px 16px;border-radius:10px;border:1px solid var(--border);backg
 
 <script>
 const KEY="lg_clicks";
+const REGION_KEY="lg_region";
 const data=JSON.parse(localStorage.getItem(KEY)||"{}");
+
+const regionSelect=document.getElementById("region");
+regionSelect.value=localStorage.getItem(REGION_KEY)||"CA";
+regionSelect.addEventListener("change", ()=>{
+  localStorage.setItem(REGION_KEY, regionSelect.value);
+  data["region_"+regionSelect.value]=(data["region_"+regionSelect.value]||0)+1;
+  data.last=new Date().toISOString();
+  localStorage.setItem(KEY,JSON.stringify(data));
+  renderAdmin();
+});
 
 function go(){
   const s=document.getElementById("spin");
   s.style.display="inline-block";
+  const r=regionSelect.value;
   data.hotels=(data.hotels||0)+1;
+  data["hotels_"+r]=(data["hotels_"+r]||0)+1;
   data.last=new Date().toISOString();
   localStorage.setItem(KEY,JSON.stringify(data));
   setTimeout(()=>{ window.location.href="https://www.booking.com/"; },150);
