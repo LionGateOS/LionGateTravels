@@ -1,1 +1,45 @@
-<!-- Booking redirect enabled -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LionGate Travels</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{font-family:system-ui,Arial,sans-serif;background:#0b0f14;color:#e5e7eb;margin:0;padding:32px}
+.card{background:#111827;border:1px solid #1f2937;border-radius:12px;padding:20px;max-width:520px;margin:40px auto;text-align:center}
+button{padding:12px 18px;border-radius:10px;border:1px solid #1f2937;background:#2563eb;color:#fff;font-size:15px;cursor:pointer}
+small{color:#9ca3af}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="card">
+  <h2>Opening partner…</h2>
+  <p>Please wait while we redirect you.</p>
+  <button id="retry" class="hidden" onclick="retry()">Retry</button>
+  <br><br>
+  <small>If nothing happens, your browser may have blocked the redirect.</small>
+</div>
+
+<script>
+const TARGET="https://www.booking.com/";
+let attempted=false;
+
+function go(){
+  attempted=true;
+  window.location.href=TARGET;
+  setTimeout(()=>{
+    if(attempted){
+      document.getElementById('retry').classList.remove('hidden');
+    }
+  },1500);
+}
+
+function retry(){
+  window.location.href=TARGET;
+}
+
+go();
+</script>
+</body>
+</html>
