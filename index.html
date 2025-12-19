@@ -8,26 +8,34 @@
 
 <style>
   :root{
-    --text:#f1f5f9;
-    --muted:#cbd5f5;
-    --muted2:rgba(203,210,245,.82);
+    --text:#f8fafc;
+    --muted:rgba(226,232,240,.88);
+    --muted2:rgba(226,232,240,.78);
+
     --cta:#3b82f6;
     --cta2:#60a5fa;
-    --danger:#fb7185;
 
-    --glass:rgba(15,23,42,.55);
-    --glass2:rgba(2,6,23,.45);
-    --border:rgba(255,255,255,.14);
-    --border2:rgba(255,255,255,.10);
-    --glow:rgba(96,165,250,.35);
+    --gold:#d6b35a;
+    --gold2:#f1d08a;
 
-    --shadow:0 30px 60px rgba(0,0,0,.58);
-    --shadow2:0 44px 90px rgba(0,0,0,.78);
+    --glass:rgba(15,23,42,.46);
+    --glass2:rgba(2,6,23,.28);
+
+    --border:rgba(255,255,255,.16);
+    --border2:rgba(255,255,255,.12);
+
+    --glow:rgba(96,165,250,.34);
+    --glowGold:rgba(214,179,90,.24);
+
+    --shadow:0 26px 56px rgba(0,0,0,.45);
+    --shadow2:0 42px 94px rgba(0,0,0,.62);
+
     --radius:22px;
   }
 
   *{ box-sizing:border-box }
   html,body{ height:100% }
+
   body{
     margin:0;
     font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
@@ -37,44 +45,35 @@
   }
 
   /* Cinematic background */
-  .bg{
-    position:fixed;
-    inset:0;
-    z-index:-3;
-  }
+  .bg{ position:fixed; inset:0; z-index:-3; }
   .bg img{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
+    position:absolute; inset:0; width:100%; height:100%;
     object-fit:cover;
     opacity:0;
-    transition:opacity 2.8s ease;
-    filter:brightness(.42) saturate(1.05);
+    transition:opacity 2.6s ease;
+    filter:brightness(.58) saturate(1.12) contrast(1.03);
     transform:scale(1.03);
   }
   .bg img.active{ opacity:1 }
+
+  /* Brighter “travel” overlay with warm + cool balance */
   .overlay{
-    position:fixed;
-    inset:0;
-    z-index:-2;
+    position:fixed; inset:0; z-index:-2;
     background:
-      radial-gradient(900px 520px at 50% 8%, rgba(59,130,246,.24), transparent 60%),
-      radial-gradient(720px 420px at 12% 32%, rgba(14,165,233,.12), transparent 62%),
-      radial-gradient(780px 480px at 88% 44%, rgba(56,189,248,.10), transparent 60%),
-      linear-gradient(180deg, rgba(2,6,23,.35), rgba(2,6,23,.88));
-  }
-  .grain{
-    position:fixed;
-    inset:0;
-    z-index:-1;
-    pointer-events:none;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
-    mix-blend-mode:overlay;
-    opacity:.35;
+      radial-gradient(980px 560px at 50% 8%, rgba(96,165,250,.28), transparent 62%),
+      radial-gradient(900px 520px at 18% 30%, rgba(241,208,138,.14), transparent 60%),
+      radial-gradient(820px 520px at 86% 42%, rgba(56,189,248,.16), transparent 62%),
+      linear-gradient(180deg, rgba(2,6,23,.20), rgba(2,6,23,.72));
   }
 
-  /* Layout */
+  /* Subtle grain */
+  .grain{
+    position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+    mix-blend-mode:overlay;
+    opacity:.28;
+  }
+
   .container{
     max-width:1180px;
     margin:0 auto;
@@ -89,30 +88,49 @@
     gap:14px;
     padding:14px 16px;
     border:1px solid var(--border2);
-    background:linear-gradient(180deg, rgba(255,255,255,.04), transparent), var(--glass2);
-    backdrop-filter:blur(14px);
+    background:linear-gradient(180deg, rgba(255,255,255,.05), transparent), var(--glass2);
+    backdrop-filter:blur(16px);
     border-radius:999px;
-    box-shadow:0 18px 40px rgba(0,0,0,.38);
+    box-shadow:0 18px 44px rgba(0,0,0,.34);
   }
+
   .brand{
     display:flex;
     align-items:center;
     gap:12px;
     min-width:0;
   }
-  .mark{
-    width:40px;
-    height:40px;
-    border-radius:12px;
+
+  /* LOGO (travel-optimized presentation, same asset) */
+  .logoWrap{
+    width:44px;
+    height:44px;
+    border-radius:14px;
+    padding:2px;
     background:
-      radial-gradient(circle at 30% 30%, rgba(96,165,250,.9), rgba(59,130,246,.15) 60%),
-      linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.02));
+      radial-gradient(circle at 30% 30%, rgba(96,165,250,.40), transparent 56%),
+      radial-gradient(circle at 70% 70%, rgba(241,208,138,.22), transparent 60%),
+      rgba(255,255,255,.06);
     border:1px solid rgba(255,255,255,.18);
-    box-shadow:0 0 30px rgba(96,165,250,.18);
+    box-shadow:
+      0 0 34px rgba(96,165,250,.18),
+      0 0 22px rgba(214,179,90,.12);
+    overflow:hidden;
+    flex:0 0 auto;
   }
-  .brand h2{
+  .logoWrap img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:12px;
+    filter:saturate(1.08) brightness(1.05);
+    transform:scale(1.04);
+  }
+
+  .brandText{ min-width:0; }
+  .brandText h2{
     margin:0;
-    font-size:1.05rem;
+    font-size:1.06rem;
     letter-spacing:.2px;
     white-space:nowrap;
   }
@@ -123,10 +141,17 @@
     padding:7px 10px;
     border-radius:999px;
     border:1px solid rgba(255,255,255,.16);
-    background:rgba(255,255,255,.06);
-    color:var(--muted);
+    background:rgba(255,255,255,.07);
+    color:rgba(226,232,240,.88);
     font-size:.85rem;
+    width:max-content;
   }
+  .pill .spark{
+    width:8px; height:8px; border-radius:99px;
+    background:rgba(241,208,138,.92);
+    box-shadow:0 0 14px rgba(241,208,138,.55);
+  }
+
   .nav{
     display:flex;
     gap:8px;
@@ -141,25 +166,25 @@
     color:#e0e7ff;
     cursor:pointer;
     transition:transform .15s ease, background .2s ease, box-shadow .2s ease;
-    font-weight:600;
+    font-weight:800;
     font-size:.9rem;
   }
   .nav button:hover{
     transform:translateY(-1px);
-    background:rgba(255,255,255,.06);
-    box-shadow:0 0 28px rgba(96,165,250,.16);
+    background:rgba(255,255,255,.08);
+    box-shadow:0 0 30px rgba(96,165,250,.14);
   }
   .nav button.active{
-    background:linear-gradient(180deg, rgba(59,130,246,.9), rgba(29,78,216,.8));
-    border-color:rgba(255,255,255,.22);
-    box-shadow:0 0 34px rgba(59,130,246,.35);
+    background:linear-gradient(180deg, rgba(59,130,246,.92), rgba(29,78,216,.84));
+    border-color:rgba(255,255,255,.24);
+    box-shadow:0 0 38px rgba(59,130,246,.30);
   }
 
   /* Hero */
   .hero{
     margin-top:26px;
     display:grid;
-    grid-template-columns: 1.25fr .75fr;
+    grid-template-columns: 1.22fr .78fr;
     gap:22px;
     align-items:stretch;
   }
@@ -170,21 +195,16 @@
   .heroCard{
     border-radius:var(--radius);
     border:1px solid var(--border);
-    background:linear-gradient(180deg, rgba(255,255,255,.05), transparent), var(--glass);
-    backdrop-filter:blur(16px);
+    background:
+      radial-gradient(600px 240px at 20% 0%, rgba(241,208,138,.12), transparent 58%),
+      radial-gradient(760px 340px at 55% 0%, rgba(96,165,250,.18), transparent 62%),
+      linear-gradient(180deg, rgba(255,255,255,.06), transparent),
+      var(--glass);
+    backdrop-filter:blur(18px);
     box-shadow:var(--shadow);
     padding:30px;
     position:relative;
     overflow:hidden;
-  }
-  .heroCard:before{
-    content:"";
-    position:absolute;
-    inset:-60px -80px auto -80px;
-    height:200px;
-    background:radial-gradient(circle at 50% 50%, rgba(96,165,250,.22), transparent 62%);
-    filter:blur(10px);
-    pointer-events:none;
   }
   .kicker{
     display:inline-flex;
@@ -193,15 +213,20 @@
     padding:8px 12px;
     border-radius:999px;
     border:1px solid rgba(255,255,255,.18);
-    background:rgba(255,255,255,.06);
-    color:#dbeafe;
-    font-weight:700;
+    background:rgba(255,255,255,.07);
+    color:#e0e7ff;
+    font-weight:900;
     letter-spacing:.3px;
     font-size:.86rem;
   }
+  .kicker .goldDot{
+    width:9px; height:9px; border-radius:99px;
+    background:rgba(241,208,138,.92);
+    box-shadow:0 0 16px rgba(241,208,138,.55);
+  }
   .hero h1{
     margin:16px 0 10px;
-    font-size:3.1rem;
+    font-size:3.05rem;
     letter-spacing:-.03em;
     line-height:1.05;
   }
@@ -213,35 +238,47 @@
     max-width:70ch;
   }
 
+  /* Make the “steps” real (clickable) */
   .flow{
     margin-top:18px;
     display:flex;
     gap:10px;
     flex-wrap:wrap;
   }
-  .step{
-    display:flex;
+  .stepBtn{
+    display:inline-flex;
     align-items:center;
     gap:10px;
     padding:10px 12px;
     border-radius:16px;
-    border:1px solid rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.14);
     background:rgba(2,6,23,.18);
-    color:#dbeafe;
+    color:#e0e7ff;
     font-size:.92rem;
+    font-weight:900;
+    cursor:pointer;
+    transition:transform .15s ease, background .2s ease, box-shadow .2s ease;
+  }
+  .stepBtn:hover{
+    transform:translateY(-1px);
+    background:rgba(255,255,255,.07);
+    box-shadow:0 0 30px rgba(241,208,138,.14);
   }
   .dot{
-    width:10px;height:10px;border-radius:999px;
-    background:rgba(96,165,250,.85);
-    box-shadow:0 0 18px rgba(96,165,250,.55);
+    width:10px;height:10px;border-radius:99px;
+    background:rgba(96,165,250,.88);
+    box-shadow:0 0 18px rgba(96,165,250,.50);
   }
 
   /* Explore panel */
   .exploreCard{
     border-radius:var(--radius);
     border:1px solid var(--border);
-    background:linear-gradient(180deg, rgba(255,255,255,.05), transparent), rgba(2,6,23,.32);
-    backdrop-filter:blur(16px);
+    background:
+      radial-gradient(520px 280px at 75% 10%, rgba(96,165,250,.18), transparent 62%),
+      linear-gradient(180deg, rgba(255,255,255,.06), transparent),
+      rgba(2,6,23,.22);
+    backdrop-filter:blur(18px);
     box-shadow:var(--shadow);
     padding:22px;
     display:flex;
@@ -252,37 +289,37 @@
     margin:0;
     font-size:1.05rem;
     color:#e0e7ff;
+    font-weight:950;
   }
-  .searchRow{
-    display:flex;
-    gap:10px;
-  }
+  .searchRow{ display:flex; gap:10px; }
   .searchRow input{
     flex:1;
     padding:13px 14px;
     border-radius:14px;
     border:1px solid rgba(255,255,255,.14);
-    background:rgba(2,6,23,.35);
+    background:rgba(2,6,23,.28);
     color:var(--text);
     outline:none;
   }
-  .searchRow input::placeholder{ color:rgba(203,210,245,.65) }
+  .searchRow input::placeholder{ color:rgba(226,232,240,.68) }
+
   .primaryBtn{
     padding:13px 14px;
     border-radius:14px;
     border:none;
     cursor:pointer;
     color:#fff;
-    font-weight:800;
+    font-weight:950;
     background:linear-gradient(180deg,var(--cta),#1d4ed8);
-    box-shadow:0 14px 40px rgba(59,130,246,.38);
+    box-shadow:0 14px 40px rgba(59,130,246,.34);
     transition:transform .15s ease, box-shadow .15s ease;
     white-space:nowrap;
   }
   .primaryBtn:hover{
     transform:translateY(-1px);
-    box-shadow:0 18px 52px rgba(96,165,250,.55);
+    box-shadow:0 18px 52px rgba(96,165,250,.50);
   }
+
   .hint{
     margin:0;
     color:var(--muted2);
@@ -302,33 +339,29 @@
     padding:14px 14px;
     border-radius:16px;
     border:1px solid rgba(255,255,255,.14);
-    background:rgba(255,255,255,.06);
+    background:rgba(255,255,255,.08);
     cursor:pointer;
     transition:transform .15s ease, box-shadow .2s ease, background .2s ease;
   }
   .intent:hover{
     transform:translateY(-2px);
-    box-shadow:0 0 34px rgba(96,165,250,.18);
-    background:rgba(255,255,255,.08);
+    box-shadow:0 0 38px rgba(96,165,250,.14);
+    background:rgba(255,255,255,.10);
   }
-  .intent .t{
-    font-weight:900;
-    letter-spacing:.2px;
-  }
-  .intent .s{
-    margin-top:4px;
-    color:var(--muted2);
-    font-size:.9rem;
-    line-height:1.45;
-  }
+  .intent .t{ font-weight:950; letter-spacing:.2px; }
+  .intent .s{ margin-top:4px; color:var(--muted2); font-size:.9rem; line-height:1.45; }
 
   /* Sections */
   .section{
     margin-top:30px;
     border-radius:26px;
     border:1px solid rgba(255,255,255,.12);
-    background:linear-gradient(180deg, rgba(255,255,255,.04), transparent), rgba(2,6,23,.28);
-    backdrop-filter:blur(16px);
+    background:
+      radial-gradient(820px 420px at 15% 0%, rgba(241,208,138,.10), transparent 62%),
+      radial-gradient(860px 440px at 85% 10%, rgba(96,165,250,.12), transparent 62%),
+      linear-gradient(180deg, rgba(255,255,255,.05), transparent),
+      rgba(2,6,23,.22);
+    backdrop-filter:blur(18px);
     box-shadow:var(--shadow);
     overflow:hidden;
   }
@@ -361,16 +394,17 @@
     padding:9px 12px;
     border-radius:999px;
     border:1px solid rgba(255,255,255,.14);
-    background:rgba(2,6,23,.18);
+    background:rgba(2,6,23,.16);
     color:#e0e7ff;
     cursor:pointer;
-    font-weight:800;
+    font-weight:900;
     font-size:.88rem;
-    transition:transform .15s ease, background .2s ease;
+    transition:transform .15s ease, background .2s ease, box-shadow .2s ease;
   }
   .chip:hover{
     transform:translateY(-1px);
-    background:rgba(255,255,255,.06);
+    background:rgba(255,255,255,.07);
+    box-shadow:0 0 30px rgba(241,208,138,.12);
   }
 
   .cards{
@@ -384,16 +418,14 @@
   .choice{
     border-radius:20px;
     border:1px solid rgba(255,255,255,.14);
-    background:rgba(255,255,255,.06);
+    background:rgba(255,255,255,.08);
     padding:18px;
-    position:relative;
-    overflow:hidden;
     transition:transform .18s ease, box-shadow .25s ease, background .25s ease;
   }
   .choice:hover{
     transform:translateY(-3px);
-    background:rgba(255,255,255,.08);
-    box-shadow:0 0 40px rgba(96,165,250,.14);
+    background:rgba(255,255,255,.10);
+    box-shadow:0 0 42px rgba(96,165,250,.12);
   }
   .choice .k{
     font-weight:950;
@@ -415,69 +447,160 @@
     border:none;
     cursor:pointer;
     color:#fff;
-    font-weight:900;
+    font-weight:950;
     background:linear-gradient(180deg,var(--cta),#1d4ed8);
-    box-shadow:0 12px 34px rgba(59,130,246,.32);
+    box-shadow:0 12px 34px rgba(59,130,246,.28);
     transition:transform .15s ease, box-shadow .15s ease;
   }
   .choice .go:hover{
     transform:translateY(-1px);
-    box-shadow:0 16px 44px rgba(96,165,250,.48);
+    box-shadow:0 16px 44px rgba(96,165,250,.44);
   }
   .subtle{
     margin-top:10px;
-    color:rgba(203,210,245,.72);
+    color:rgba(226,232,240,.72);
     font-size:.82rem;
   }
 
-  /* “Stay longer” micro-interactions */
   .fadeIn{
     opacity:0;
     transform:translateY(12px);
     animation:in .65s ease forwards;
   }
-  @keyframes in{
-    to{ opacity:1; transform:translateY(0) }
-  }
+  @keyframes in{ to{ opacity:1; transform:translateY(0) } }
 
-  /* Footer */
   .legal{
     margin-top:38px;
     text-align:center;
-    color:rgba(203,210,245,.80);
+    color:rgba(226,232,240,.84);
     font-size:.92rem;
     line-height:1.6;
   }
   .legal strong{ color:#e0e7ff }
+
+  /* Modal: Continue to partner */
+  .modalBackdrop{
+    position:fixed; inset:0;
+    background:rgba(2,6,23,.62);
+    backdrop-filter:blur(8px);
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+    z-index:50;
+    padding:18px;
+  }
+  .modalBackdrop.show{ display:flex; }
+  .modal{
+    width:min(920px, 100%);
+    border-radius:24px;
+    border:1px solid rgba(255,255,255,.14);
+    background:
+      radial-gradient(800px 380px at 20% 0%, rgba(241,208,138,.14), transparent 60%),
+      radial-gradient(860px 420px at 80% 10%, rgba(96,165,250,.16), transparent 62%),
+      linear-gradient(180deg, rgba(255,255,255,.06), transparent),
+      rgba(2,6,23,.38);
+    box-shadow:var(--shadow2);
+    padding:18px 18px 16px;
+    max-height:86vh;
+    overflow:auto;
+  }
+  .modalTop{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    padding:4px 4px 12px;
+    border-bottom:1px solid rgba(255,255,255,.10);
+  }
+  .modalTop h4{
+    margin:0;
+    font-size:1.25rem;
+    letter-spacing:-.01em;
+  }
+  .modalTop p{
+    margin:6px 0 0;
+    color:var(--muted2);
+    line-height:1.55;
+    max-width:72ch;
+    font-size:.95rem;
+  }
+  .closeBtn{
+    border:1px solid rgba(255,255,255,.16);
+    background:rgba(255,255,255,.08);
+    color:#e0e7ff;
+    border-radius:12px;
+    padding:10px 12px;
+    cursor:pointer;
+    font-weight:950;
+    transition:transform .15s ease, background .2s ease;
+  }
+  .closeBtn:hover{ transform:translateY(-1px); background:rgba(255,255,255,.10); }
+
+  .modalGrid{
+    margin-top:14px;
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:12px;
+  }
+  @media (max-width: 760px){ .modalGrid{ grid-template-columns:1fr; } }
+  .modalItem{
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.08);
+    border-radius:18px;
+    padding:14px;
+  }
+  .modalItem .title{
+    font-weight:950;
+    margin:0 0 6px;
+  }
+  .modalItem .desc{
+    margin:0;
+    color:var(--muted2);
+    line-height:1.5;
+    font-size:.92rem;
+  }
+  .modalItem .btn{
+    margin-top:10px;
+    width:100%;
+    padding:12px 12px;
+    border-radius:14px;
+    border:none;
+    cursor:pointer;
+    color:#fff;
+    font-weight:950;
+    background:linear-gradient(180deg,var(--cta),#1d4ed8);
+    box-shadow:0 12px 34px rgba(59,130,246,.26);
+  }
 
   /* Admin */
   .admin{
     position:fixed;
     right:16px;
     bottom:16px;
-    background:rgba(2,6,23,.78);
+    background:rgba(2,6,23,.72);
     border:1px solid rgba(255,255,255,.14);
     border-radius:16px;
     padding:12px 12px;
     font-size:13px;
-    max-width:300px;
-    box-shadow:0 18px 40px rgba(0,0,0,.55);
+    max-width:320px;
+    box-shadow:0 18px 40px rgba(0,0,0,.52);
   }
   .hidden{ display:none }
-
-  /* Accessibility helpers */
-  .sr{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
 </style>
 </head>
 
 <body>
 
-<!-- Cinematic background imagery (royalty-free Unsplash) -->
+<!-- Brighter, more travel-forward imagery -->
 <div class="bg" aria-hidden="true">
-  <img class="active" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2200&q=80" alt="">
-  <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=2200&q=80" alt="">
-  <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=2200&q=80" alt="">
-  <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=2200&q=80" alt="">
+  <!-- Beach / ocean -->
+  <img class="active" src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=2400&q=80" alt="">
+  <!-- City / lights -->
+  <img src="https://images.unsplash.com/photo-1496307653780-42ee777d4833?auto=format&fit=crop&w=2400&q=80" alt="">
+  <!-- Mountains / daylight -->
+  <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=2400&q=80" alt="">
+  <!-- Sunset / warm -->
+  <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=2400&q=80" alt="">
 </div>
 <div class="overlay" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
@@ -486,11 +609,15 @@
 
   <div class="topbar fadeIn" style="animation-delay:.05s">
     <div class="brand">
-      <div class="mark" aria-hidden="true"></div>
-      <div style="min-width:0">
-        <h2 style="margin:0">LionGate Travels</h2>
-        <div class="pill" title="We keep you here longer. Expedia is the checkout engine.">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:99px;background:rgba(96,165,250,.9);box-shadow:0 0 14px rgba(96,165,250,.6)"></span>
+      <div class="logoWrap" title="LionGate Travels">
+        <!-- Embedded, optimized logo (same asset, smaller for performance) -->
+        <img alt="LionGate Travels Logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAA...TRIMMED_FOR_READABILITY...==" />
+      </div>
+
+      <div class="brandText">
+        <h2>LionGate Travels</h2>
+        <div class="pill" title="Explore here. Checkout on Expedia.">
+          <span class="spark" aria-hidden="true"></span>
           Experience-first · Redirect-last
         </div>
       </div>
@@ -507,17 +634,18 @@
 
   <div class="hero">
     <div class="heroCard fadeIn" style="animation-delay:.12s">
-      <span class="kicker">Your next trip starts here</span>
+      <span class="kicker"><span class="goldDot" aria-hidden="true"></span>Your next trip starts here</span>
       <h1>Explore first.<br>Book when ready.</h1>
       <p>
         LionGate Travels is your exploration layer: ideas, intent, and direction.
         When you’re ready to book, we send you to Expedia (our partner) for secure checkout.
       </p>
 
+      <!-- These are now REAL actions -->
       <div class="flow" aria-label="How it works">
-        <div class="step"><span class="dot" aria-hidden="true"></span>Pick a vibe</div>
-        <div class="step"><span class="dot" aria-hidden="true"></span>Narrow your plan</div>
-        <div class="step"><span class="dot" aria-hidden="true"></span>Continue to partner</div>
+        <button class="stepBtn" onclick="focusVibe()"><span class="dot" aria-hidden="true"></span>Pick a vibe</button>
+        <button class="stepBtn" onclick="focusPlan()"><span class="dot" aria-hidden="true"></span>Narrow your plan</button>
+        <button class="stepBtn" onclick="openPartner()"><span class="dot" aria-hidden="true"></span>Continue to partner</button>
       </div>
     </div>
 
@@ -528,21 +656,21 @@
         <button class="primaryBtn" onclick="quickStart()">Start</button>
       </div>
       <p class="hint">
-        This is a guided experience (not a booking engine). Choose a path below, then continue when you’re ready.
+        Browse here first. When you’re ready, continue to Expedia for booking and checkout.
       </p>
 
-      <div class="intentGrid" aria-label="Intent shortcuts">
+      <div class="intentGrid" id="intentGrid" aria-label="Intent shortcuts">
         <div class="intent" onclick="goIntent('vacation')">
           <div class="t">Plan a Vacation</div>
-          <div class="s">Packages, hotels, and the easy way to start.</div>
+          <div class="s">Packages, hotels, and an easy start.</div>
         </div>
         <div class="intent" onclick="goIntent('deals')">
           <div class="t">Find Deals</div>
-          <div class="s">Start with discounts and value-based picks.</div>
+          <div class="s">Start with value-based picks.</div>
         </div>
         <div class="intent" onclick="goIntent('things')">
           <div class="t">Things To Do</div>
-          <div class="s">Activities, attractions, and experiences.</div>
+          <div class="s">Attractions, tours, experiences.</div>
         </div>
         <div class="intent" onclick="goIntent('cruises')">
           <div class="t">Cruises & Getaways</div>
@@ -552,7 +680,7 @@
     </div>
   </div>
 
-  <!-- HOME: experience hub (no redirects until user chooses) -->
+  <!-- HOME -->
   <div class="section fadeIn" id="sec_home" style="animation-delay:.25s">
     <div class="sectionHeader">
       <div>
@@ -566,25 +694,26 @@
         <button class="chip" onclick="showSection('deals')">Deals</button>
         <button class="chip" onclick="showSection('things')">Things To Do</button>
         <button class="chip" onclick="showSection('cruises')">Cruises</button>
+        <button class="chip" onclick="openPartner()">Continue</button>
       </div>
     </div>
 
     <div class="cards">
       <div class="choice">
         <div class="k">Weekend Reset</div>
-        <p class="d">Pick a destination, find a stay, then add a flight only if you need it.</p>
+        <p class="d">Pick a destination, lock a great stay, then add transport only if needed.</p>
         <button class="go" onclick="showSection('vacation'); setMood('weekend')">Build my weekend</button>
         <div class="subtle">Best for: quick trips · city breaks · short stays</div>
       </div>
       <div class="choice">
         <div class="k">Big Vacation</div>
-        <p class="d">Start with packages or cruises to reduce planning stress.</p>
+        <p class="d">Start with packages or cruises to reduce planning stress and move faster.</p>
         <button class="go" onclick="showSection('vacation'); setMood('vacation')">Plan a vacation</button>
         <div class="subtle">Best for: families · all-in-one trips · easy planning</div>
       </div>
       <div class="choice">
         <div class="k">Explore & Do</div>
-        <p class="d">Choose your “things to do” first, then build the trip around it.</p>
+        <p class="d">Choose activities first, then build the trip around what you want to experience.</p>
         <button class="go" onclick="showSection('things'); setMood('explore')">Find experiences</button>
         <div class="subtle">Best for: attractions · activities · day plans</div>
       </div>
@@ -604,6 +733,7 @@
         <button class="chip" onclick="showSection('home')">Back to Explore</button>
         <button class="chip" onclick="showSection('deals')">Deals</button>
         <button class="chip" onclick="showSection('cruises')">Cruises</button>
+        <button class="chip" onclick="openPartner()">Continue</button>
       </div>
     </div>
 
@@ -635,13 +765,13 @@
       <div class="choice">
         <div class="k">Cruises</div>
         <p class="d">High-value “one decision” vacations with less planning stress.</p>
-        <button class="go" onclick="showSection('cruises')">Explore Cruises</button>
+        <button class="go" onclick="continueTo('cruises','Cruises')">Continue to Cruises</button>
         <div class="subtle">Great for: couples · families · relaxed trips</div>
       </div>
       <div class="choice">
         <div class="k">Things To Do</div>
         <p class="d">Pick experiences first, then build the trip around them.</p>
-        <button class="go" onclick="showSection('things')">Explore Activities</button>
+        <button class="go" onclick="continueTo('things','Things To Do')">Continue to Activities</button>
         <div class="subtle">Perfect for: city trips · day plans</div>
       </div>
     </div>
@@ -660,6 +790,7 @@
         <button class="chip" onclick="showSection('home')">Back to Explore</button>
         <button class="chip" onclick="showSection('vacation')">Vacation</button>
         <button class="chip" onclick="showSection('things')">Things To Do</button>
+        <button class="chip" onclick="openPartner()">Continue</button>
       </div>
     </div>
 
@@ -698,6 +829,7 @@
         <button class="chip" onclick="showSection('home')">Back to Explore</button>
         <button class="chip" onclick="showSection('vacation')">Vacation</button>
         <button class="chip" onclick="showSection('deals')">Deals</button>
+        <button class="chip" onclick="openPartner()">Continue</button>
       </div>
     </div>
 
@@ -736,6 +868,7 @@
         <button class="chip" onclick="showSection('home')">Back to Explore</button>
         <button class="chip" onclick="showSection('vacation')">Vacation</button>
         <button class="chip" onclick="showSection('deals')">Deals</button>
+        <button class="chip" onclick="openPartner()">Continue</button>
       </div>
     </div>
 
@@ -769,14 +902,76 @@
 
 </div>
 
+<!-- Partner modal -->
+<div class="modalBackdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-label="Continue to partner">
+  <div class="modal">
+    <div class="modalTop">
+      <div>
+        <h4>Ready to book on Expedia?</h4>
+        <p>
+          You’ll be redirected to Expedia (our partner) for secure booking and checkout.
+          Choose what you want to book now.
+        </p>
+      </div>
+      <button class="closeBtn" onclick="closePartner()">Close</button>
+    </div>
+
+    <div class="modalGrid">
+      <div class="modalItem">
+        <p class="title">Hotels & Stays</p>
+        <p class="desc">Resorts, hotels, and short-term stays.</p>
+        <button class="btn" onclick="continueTo('hotels','Hotels & Stays')">Continue</button>
+      </div>
+
+      <div class="modalItem">
+        <p class="title">Flights</p>
+        <p class="desc">Search and book flights with trusted providers.</p>
+        <button class="btn" onclick="continueTo('flights','Flights')">Continue</button>
+      </div>
+
+      <div class="modalItem">
+        <p class="title">Car Rentals</p>
+        <p class="desc">Rentals from major brands worldwide.</p>
+        <button class="btn" onclick="continueTo('cars','Car Rentals')">Continue</button>
+      </div>
+
+      <div class="modalItem">
+        <p class="title">Vacation Packages</p>
+        <p class="desc">Bundle planning to reduce friction and move faster.</p>
+        <button class="btn" onclick="continueTo('packages','Vacation Packages')">Continue</button>
+      </div>
+
+      <div class="modalItem">
+        <p class="title">Cruises</p>
+        <p class="desc">High-value vacations with less planning stress.</p>
+        <button class="btn" onclick="continueTo('cruises','Cruises')">Continue</button>
+      </div>
+
+      <div class="modalItem">
+        <p class="title">Deals</p>
+        <p class="desc">Start with value and discounted opportunities.</p>
+        <button class="btn" onclick="continueTo('deals','Deals')">Continue</button>
+      </div>
+
+      <div class="modalItem">
+        <p class="title">Things To Do</p>
+        <p class="desc">Tours, attractions, and experiences.</p>
+        <button class="btn" onclick="continueTo('things','Things To Do')">Continue</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="admin" class="admin hidden"></div>
 
 <script>
   /* =========================
-     EXPERIENCE LAYER v1
-     - No pricing, no inventory
-     - Multi-step exploration
-     - Redirect only when user intentionally continues
+     Experience Layer v1.1
+     - Brighter travel mood
+     - Logo integrated
+     - “Steps” are real actions
+     - Includes all affiliate links provided (CA/US)
+     - No prices/inventory; redirect only when user chooses
      ========================= */
 
   // Background rotation
@@ -793,7 +988,6 @@
   // Local admin stats (device-only) — preserved and extended
   const KEY = "lg_stats";
   const data = JSON.parse(localStorage.getItem(KEY) || "{}");
-
   function save(){ localStorage.setItem(KEY, JSON.stringify(data)); }
 
   // Locale routing: CA -> CA links, otherwise US
@@ -803,7 +997,7 @@
     return lang.includes("en-ca") || langs.includes("en-ca") || lang.includes("fr-ca") || langs.includes("fr-ca");
   }
 
-  // All affiliate links provided (CA + USA)
+  // All affiliate links (CA + USA)
   const LINKS = {
     hotels:   { ca:"https://expedia.com/affiliate/G4xFvTY",  us:"https://expedia.com/affiliate/c2kTkZ2" },
     flights:  { ca:"https://expedia.com/affiliate/6pjpOsp",  us:"https://expedia.com/affiliate/HUJIj2eI" },
@@ -831,25 +1025,22 @@
   };
 
   function showSection(name){
-    // stats
     data.section_views = data.section_views || {};
     data.section_views[name] = (data.section_views[name] || 0) + 1;
     data.last = new Date().toISOString();
     save();
 
-    // hide/show
     Object.values(secIds).forEach(id => {
       const el = document.getElementById(id);
       if (el) el.style.display = "none";
     });
+
     const target = document.getElementById(secIds[name]);
     if (target){
       target.style.display = "block";
-      // small scroll cue
       target.scrollIntoView({behavior:"smooth", block:"start"});
     }
 
-    // nav active
     ["home","vacation","deals","things","cruises"].forEach(k=>{
       const b=document.getElementById("nav_"+k);
       if(b) b.classList.toggle("active", k===name);
@@ -868,12 +1059,10 @@
       data.destination_count = (data.destination_count || 0) + 1;
       save();
     }
-    // Choose a sensible default path
     showSection("vacation");
   }
 
   function continueTo(kind, label){
-    // stats: clicks
     data.clicks = data.clicks || {};
     data.clicks[kind] = (data.clicks[kind] || 0) + 1;
     data.last_click = label;
@@ -882,12 +1071,34 @@
 
     const url = (isCA() ? LINKS[kind].ca : LINKS[kind].us);
 
-    // gentle “you are leaving” moment (micro-delay)
-    // keeps it feeling intentional, not abrupt
-    setTimeout(() => {
-      window.location.href = url;
-    }, 220);
+    // gentle micro-delay so it feels intentional
+    setTimeout(() => { window.location.href = url; }, 220);
   }
+
+  // Step actions (now functional)
+  function focusVibe(){
+    document.getElementById("intentGrid").scrollIntoView({behavior:"smooth", block:"center"});
+  }
+  function focusPlan(){
+    showSection("vacation");
+  }
+
+  // Partner modal
+  function openPartner(){
+    data.partner_modal_open = (data.partner_modal_open || 0) + 1;
+    data.last = new Date().toISOString();
+    save();
+    document.getElementById("modalBackdrop").classList.add("show");
+  }
+  function closePartner(){
+    document.getElementById("modalBackdrop").classList.remove("show");
+  }
+  document.getElementById("modalBackdrop").addEventListener("click", (e)=>{
+    if(e.target.id === "modalBackdrop") closePartner();
+  });
+  document.addEventListener("keydown", (e)=>{
+    if(e.key === "Escape") closePartner();
+  });
 
   // Admin stats panel (device-only)
   function renderAdmin(){
@@ -896,28 +1107,24 @@
       try { return JSON.stringify(obj, null, 2).replace(/\n/g,"<br>").replace(/ /g,"&nbsp;"); }
       catch { return String(obj); }
     };
-
     a.innerHTML =
-      "<strong>Admin Stats</strong><br><span style='color:rgba(203,210,245,.85)'>Device-only (localStorage)</span><br><br>" +
+      "<strong>Admin Stats</strong><br><span style='color:rgba(226,232,240,.82)'>Device-only (localStorage)</span><br><br>" +
       "<strong>Last</strong><br>" +
       "last: " + (data.last || "-") + "<br>" +
       "mood: " + (data.mood || "-") + "<br>" +
-      "destination_last: " + (data.destination_last || "-") + "<br><br>" +
-      "<strong>Clicks</strong><br>" +
-      pretty(data.clicks || {}) + "<br><br>" +
-      "<strong>Section Views</strong><br>" +
-      pretty(data.section_views || {});
+      "destination_last: " + (data.destination_last || "-") + "<br>" +
+      "partner_modal_open: " + (data.partner_modal_open || 0) + "<br><br>" +
+      "<strong>Clicks</strong><br>" + pretty(data.clicks || {}) + "<br><br>" +
+      "<strong>Section Views</strong><br>" + pretty(data.section_views || {});
   }
 
   (function init(){
-    // Default view
     Object.values(secIds).forEach(id => {
       const el = document.getElementById(id);
       if (el) el.style.display = "none";
     });
     showSection("home");
 
-    // Admin toggle
     if(new URLSearchParams(location.search).get("admin")==="1"){
       document.getElementById("admin").classList.remove("hidden");
       renderAdmin();
@@ -927,4 +1134,3 @@
 
 </body>
 </html>
-
