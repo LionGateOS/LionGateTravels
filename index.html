@@ -185,28 +185,29 @@ footer{
           Browse hotels, resorts, and short-term stays from established travel platforms.
           You’ll be redirected to our partner to complete your booking.
         </p>
-
         <div class="trust">
           <div>No booking fees from LionGate Travels</div>
           <div>Payments handled securely by our partner</div>
           <div>We never see your card or payment details</div>
         </div>
       </div>
-
       <button onclick="goHotels()">Continue</button>
     </div>
 
-    <!-- FLIGHTS -->
+    <!-- FLIGHTS (ACTIVE) -->
     <div class="card">
       <div>
         <h3>Flights</h3>
         <p>
-          Direct access to flight search and booking through our partner network.
+          Search and book flights directly with major airlines and trusted platforms.
         </p>
-        <button class="secondary" disabled>Coming Soon</button>
-        <input placeholder="Email for updates" oninput="capture('flights')" />
-        <div class="small">We’ll notify you when flights go live.</div>
+        <div class="trust">
+          <div>No booking fees from LionGate Travels</div>
+          <div>Secure checkout on partner site</div>
+          <div>Direct airline or platform booking</div>
+        </div>
       </div>
+      <button onclick="goFlights()">Continue</button>
     </div>
 
     <!-- CARS -->
@@ -257,6 +258,13 @@ function goHotels(){
   window.location.href="https://expedia.com/affiliate/m08ECMk";
 }
 
+function goFlights(){
+  data.flights=(data.flights||0)+1;
+  data.last=new Date().toISOString();
+  save();
+  window.location.href="https://www.expedia.com/Flights";
+}
+
 function capture(type){
   data[type+"_interest"]=(data[type+"_interest"]||0)+1;
   save();
@@ -275,4 +283,3 @@ if(new URLSearchParams(location.search).get("admin")==="1"){
 </script>
 </body>
 </html>
-
