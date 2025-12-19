@@ -1,245 +1,930 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <meta name="agd-partner-manual-verification" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LionGate Travels</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-:root{
-  --text:#f1f5f9;
-  --muted:#cbd5f5;
-  --cta:#3b82f6;
-  --cta-hover:#60a5fa;
-  --glass:rgba(15,23,42,.55);
-  --border:rgba(255,255,255,.15);
-  --glow:rgba(96,165,250,.35);
-}
+  :root{
+    --text:#f1f5f9;
+    --muted:#cbd5f5;
+    --muted2:rgba(203,210,245,.82);
+    --cta:#3b82f6;
+    --cta2:#60a5fa;
+    --danger:#fb7185;
 
-*{box-sizing:border-box}
+    --glass:rgba(15,23,42,.55);
+    --glass2:rgba(2,6,23,.45);
+    --border:rgba(255,255,255,.14);
+    --border2:rgba(255,255,255,.10);
+    --glow:rgba(96,165,250,.35);
 
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  color:var(--text);
-  min-height:100vh;
-  overflow-x:hidden;
-}
+    --shadow:0 30px 60px rgba(0,0,0,.58);
+    --shadow2:0 44px 90px rgba(0,0,0,.78);
+    --radius:22px;
+  }
 
-/* BACKGROUND SLIDES */
-.bg{
-  position:fixed;
-  inset:0;
-  z-index:-2;
-}
-.bg img{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  opacity:0;
-  transition:opacity 3s ease;
-  filter:brightness(.45);
-}
-.bg img.active{opacity:1}
+  *{ box-sizing:border-box }
+  html,body{ height:100% }
+  body{
+    margin:0;
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    color:var(--text);
+    overflow-x:hidden;
+    background:#020617;
+  }
 
-/* OVERLAY */
-.overlay{
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(800px 400px at 50% 10%, rgba(59,130,246,.25), transparent 60%),
-    linear-gradient(180deg, rgba(2,6,23,.4), rgba(2,6,23,.85));
-  z-index:-1;
-}
+  /* Cinematic background */
+  .bg{
+    position:fixed;
+    inset:0;
+    z-index:-3;
+  }
+  .bg img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition:opacity 2.8s ease;
+    filter:brightness(.42) saturate(1.05);
+    transform:scale(1.03);
+  }
+  .bg img.active{ opacity:1 }
+  .overlay{
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    background:
+      radial-gradient(900px 520px at 50% 8%, rgba(59,130,246,.24), transparent 60%),
+      radial-gradient(720px 420px at 12% 32%, rgba(14,165,233,.12), transparent 62%),
+      radial-gradient(780px 480px at 88% 44%, rgba(56,189,248,.10), transparent 60%),
+      linear-gradient(180deg, rgba(2,6,23,.35), rgba(2,6,23,.88));
+  }
+  .grain{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+    mix-blend-mode:overlay;
+    opacity:.35;
+  }
 
-/* CONTENT */
-.container{
-  max-width:1100px;
-  margin:0 auto;
-  padding:80px 28px 120px;
-}
+  /* Layout */
+  .container{
+    max-width:1180px;
+    margin:0 auto;
+    padding:54px 24px 120px;
+  }
 
-header{
-  text-align:center;
-  margin-bottom:64px;
-}
-header h1{
-  font-size:3.5rem;
-  margin:0 0 14px;
-}
-header p{
-  font-size:1.2rem;
-  color:var(--muted);
-  max-width:720px;
-  margin:0 auto;
-}
+  /* Top bar */
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding:14px 16px;
+    border:1px solid var(--border2);
+    background:linear-gradient(180deg, rgba(255,255,255,.04), transparent), var(--glass2);
+    backdrop-filter:blur(14px);
+    border-radius:999px;
+    box-shadow:0 18px 40px rgba(0,0,0,.38);
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-width:0;
+  }
+  .mark{
+    width:40px;
+    height:40px;
+    border-radius:12px;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(96,165,250,.9), rgba(59,130,246,.15) 60%),
+      linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.18);
+    box-shadow:0 0 30px rgba(96,165,250,.18);
+  }
+  .brand h2{
+    margin:0;
+    font-size:1.05rem;
+    letter-spacing:.2px;
+    white-space:nowrap;
+  }
+  .pill{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:7px 10px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.16);
+    background:rgba(255,255,255,.06);
+    color:var(--muted);
+    font-size:.85rem;
+  }
+  .nav{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+  }
+  .nav button{
+    padding:9px 12px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(2,6,23,.12);
+    color:#e0e7ff;
+    cursor:pointer;
+    transition:transform .15s ease, background .2s ease, box-shadow .2s ease;
+    font-weight:600;
+    font-size:.9rem;
+  }
+  .nav button:hover{
+    transform:translateY(-1px);
+    background:rgba(255,255,255,.06);
+    box-shadow:0 0 28px rgba(96,165,250,.16);
+  }
+  .nav button.active{
+    background:linear-gradient(180deg, rgba(59,130,246,.9), rgba(29,78,216,.8));
+    border-color:rgba(255,255,255,.22);
+    box-shadow:0 0 34px rgba(59,130,246,.35);
+  }
 
-/* CARDS */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:32px;
-}
-.card{
-  background:var(--glass);
-  backdrop-filter:blur(14px);
-  border:1px solid var(--border);
-  border-radius:22px;
-  padding:28px;
-  box-shadow:
-    0 30px 60px rgba(0,0,0,.55),
-    inset 0 1px 0 rgba(255,255,255,.15);
-  transition:transform .4s ease, box-shadow .4s ease;
-}
-.card:hover{
-  transform:translateY(-10px);
-  box-shadow:
-    0 40px 80px rgba(0,0,0,.75),
-    0 0 40px var(--glow);
-}
-.card h3{
-  font-size:1.6rem;
-  margin:0 0 12px;
-}
-.card p{
-  color:var(--muted);
-  line-height:1.6;
-}
-.trust{
-  margin-top:16px;
-  font-size:13px;
-  color:#e0e7ff;
-}
+  /* Hero */
+  .hero{
+    margin-top:26px;
+    display:grid;
+    grid-template-columns: 1.25fr .75fr;
+    gap:22px;
+    align-items:stretch;
+  }
+  @media (max-width: 980px){
+    .hero{ grid-template-columns:1fr; }
+  }
 
-/* BUTTON */
-button{
-  margin-top:22px;
-  padding:16px 22px;
-  border-radius:16px;
-  border:none;
-  background:linear-gradient(180deg,var(--cta),#1d4ed8);
-  color:white;
-  font-size:15px;
-  font-weight:600;
-  cursor:pointer;
-  box-shadow:0 14px 40px rgba(59,130,246,.45);
-  transition:transform .2s ease, box-shadow .2s ease;
-}
-button:hover{
-  transform:translateY(-2px);
-  box-shadow:0 18px 50px rgba(96,165,250,.6);
-}
+  .heroCard{
+    border-radius:var(--radius);
+    border:1px solid var(--border);
+    background:linear-gradient(180deg, rgba(255,255,255,.05), transparent), var(--glass);
+    backdrop-filter:blur(16px);
+    box-shadow:var(--shadow);
+    padding:30px;
+    position:relative;
+    overflow:hidden;
+  }
+  .heroCard:before{
+    content:"";
+    position:absolute;
+    inset:-60px -80px auto -80px;
+    height:200px;
+    background:radial-gradient(circle at 50% 50%, rgba(96,165,250,.22), transparent 62%);
+    filter:blur(10px);
+    pointer-events:none;
+  }
+  .kicker{
+    display:inline-flex;
+    gap:10px;
+    align-items:center;
+    padding:8px 12px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.18);
+    background:rgba(255,255,255,.06);
+    color:#dbeafe;
+    font-weight:700;
+    letter-spacing:.3px;
+    font-size:.86rem;
+  }
+  .hero h1{
+    margin:16px 0 10px;
+    font-size:3.1rem;
+    letter-spacing:-.03em;
+    line-height:1.05;
+  }
+  .hero p{
+    margin:0;
+    color:var(--muted);
+    font-size:1.05rem;
+    line-height:1.7;
+    max-width:70ch;
+  }
 
-/* FOOTER */
-footer{
-  margin-top:100px;
-  text-align:center;
-  font-size:.9rem;
-  color:#c7d2fe;
-}
+  .flow{
+    margin-top:18px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .step{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 12px;
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(2,6,23,.18);
+    color:#dbeafe;
+    font-size:.92rem;
+  }
+  .dot{
+    width:10px;height:10px;border-radius:999px;
+    background:rgba(96,165,250,.85);
+    box-shadow:0 0 18px rgba(96,165,250,.55);
+  }
 
-/* ADMIN */
-.admin{
-  position:fixed;
-  right:16px;
-  bottom:16px;
-  background:rgba(2,6,23,.75);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:12px;
-  font-size:13px;
-}
-.hidden{display:none}
+  /* Explore panel */
+  .exploreCard{
+    border-radius:var(--radius);
+    border:1px solid var(--border);
+    background:linear-gradient(180deg, rgba(255,255,255,.05), transparent), rgba(2,6,23,.32);
+    backdrop-filter:blur(16px);
+    box-shadow:var(--shadow);
+    padding:22px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .searchTitle{
+    margin:0;
+    font-size:1.05rem;
+    color:#e0e7ff;
+  }
+  .searchRow{
+    display:flex;
+    gap:10px;
+  }
+  .searchRow input{
+    flex:1;
+    padding:13px 14px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(2,6,23,.35);
+    color:var(--text);
+    outline:none;
+  }
+  .searchRow input::placeholder{ color:rgba(203,210,245,.65) }
+  .primaryBtn{
+    padding:13px 14px;
+    border-radius:14px;
+    border:none;
+    cursor:pointer;
+    color:#fff;
+    font-weight:800;
+    background:linear-gradient(180deg,var(--cta),#1d4ed8);
+    box-shadow:0 14px 40px rgba(59,130,246,.38);
+    transition:transform .15s ease, box-shadow .15s ease;
+    white-space:nowrap;
+  }
+  .primaryBtn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 18px 52px rgba(96,165,250,.55);
+  }
+  .hint{
+    margin:0;
+    color:var(--muted2);
+    font-size:.92rem;
+    line-height:1.55;
+  }
+
+  .intentGrid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+  }
+  @media (max-width: 980px){
+    .intentGrid{ grid-template-columns:1fr; }
+  }
+  .intent{
+    padding:14px 14px;
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.06);
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .intent:hover{
+    transform:translateY(-2px);
+    box-shadow:0 0 34px rgba(96,165,250,.18);
+    background:rgba(255,255,255,.08);
+  }
+  .intent .t{
+    font-weight:900;
+    letter-spacing:.2px;
+  }
+  .intent .s{
+    margin-top:4px;
+    color:var(--muted2);
+    font-size:.9rem;
+    line-height:1.45;
+  }
+
+  /* Sections */
+  .section{
+    margin-top:30px;
+    border-radius:26px;
+    border:1px solid rgba(255,255,255,.12);
+    background:linear-gradient(180deg, rgba(255,255,255,.04), transparent), rgba(2,6,23,.28);
+    backdrop-filter:blur(16px);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .sectionHeader{
+    padding:22px 22px 16px;
+    border-bottom:1px solid rgba(255,255,255,.10);
+    display:flex;
+    flex-wrap:wrap;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:10px;
+  }
+  .sectionHeader h3{
+    margin:0;
+    font-size:1.55rem;
+    letter-spacing:-.01em;
+  }
+  .sectionHeader p{
+    margin:4px 0 0;
+    color:var(--muted2);
+    max-width:70ch;
+    line-height:1.55;
+  }
+  .miniActions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .chip{
+    padding:9px 12px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(2,6,23,.18);
+    color:#e0e7ff;
+    cursor:pointer;
+    font-weight:800;
+    font-size:.88rem;
+    transition:transform .15s ease, background .2s ease;
+  }
+  .chip:hover{
+    transform:translateY(-1px);
+    background:rgba(255,255,255,.06);
+  }
+
+  .cards{
+    padding:20px 22px 26px;
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0,1fr));
+    gap:14px;
+  }
+  @media (max-width: 980px){ .cards{ grid-template-columns:1fr; } }
+
+  .choice{
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.06);
+    padding:18px;
+    position:relative;
+    overflow:hidden;
+    transition:transform .18s ease, box-shadow .25s ease, background .25s ease;
+  }
+  .choice:hover{
+    transform:translateY(-3px);
+    background:rgba(255,255,255,.08);
+    box-shadow:0 0 40px rgba(96,165,250,.14);
+  }
+  .choice .k{
+    font-weight:950;
+    letter-spacing:.2px;
+    margin:0 0 6px;
+    font-size:1.05rem;
+  }
+  .choice .d{
+    margin:0;
+    color:var(--muted2);
+    line-height:1.55;
+    font-size:.92rem;
+  }
+  .choice .go{
+    margin-top:14px;
+    width:100%;
+    padding:13px 14px;
+    border-radius:14px;
+    border:none;
+    cursor:pointer;
+    color:#fff;
+    font-weight:900;
+    background:linear-gradient(180deg,var(--cta),#1d4ed8);
+    box-shadow:0 12px 34px rgba(59,130,246,.32);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .choice .go:hover{
+    transform:translateY(-1px);
+    box-shadow:0 16px 44px rgba(96,165,250,.48);
+  }
+  .subtle{
+    margin-top:10px;
+    color:rgba(203,210,245,.72);
+    font-size:.82rem;
+  }
+
+  /* “Stay longer” micro-interactions */
+  .fadeIn{
+    opacity:0;
+    transform:translateY(12px);
+    animation:in .65s ease forwards;
+  }
+  @keyframes in{
+    to{ opacity:1; transform:translateY(0) }
+  }
+
+  /* Footer */
+  .legal{
+    margin-top:38px;
+    text-align:center;
+    color:rgba(203,210,245,.80);
+    font-size:.92rem;
+    line-height:1.6;
+  }
+  .legal strong{ color:#e0e7ff }
+
+  /* Admin */
+  .admin{
+    position:fixed;
+    right:16px;
+    bottom:16px;
+    background:rgba(2,6,23,.78);
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:16px;
+    padding:12px 12px;
+    font-size:13px;
+    max-width:300px;
+    box-shadow:0 18px 40px rgba(0,0,0,.55);
+  }
+  .hidden{ display:none }
+
+  /* Accessibility helpers */
+  .sr{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
 </style>
 </head>
 
 <body>
 
-<div class="bg">
-  <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" class="active">
-  <img src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad">
-  <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
+<!-- Cinematic background imagery (royalty-free Unsplash) -->
+<div class="bg" aria-hidden="true">
+  <img class="active" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2200&q=80" alt="">
+  <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=2200&q=80" alt="">
+  <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=2200&q=80" alt="">
+  <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=2200&q=80" alt="">
 </div>
-<div class="overlay"></div>
+<div class="overlay" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
 
 <div class="container">
 
-<header>
-  <h1>Where will you go next?</h1>
-  <p>
-    Discover places. Imagine yourself there.
-    Book directly with trusted travel partners.
-  </p>
-</header>
+  <div class="topbar fadeIn" style="animation-delay:.05s">
+    <div class="brand">
+      <div class="mark" aria-hidden="true"></div>
+      <div style="min-width:0">
+        <h2 style="margin:0">LionGate Travels</h2>
+        <div class="pill" title="We keep you here longer. Expedia is the checkout engine.">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:99px;background:rgba(96,165,250,.9);box-shadow:0 0 14px rgba(96,165,250,.6)"></span>
+          Experience-first · Redirect-last
+        </div>
+      </div>
+    </div>
 
-<div class="grid">
-
-  <div class="card">
-    <h3>Hotels & Stays</h3>
-    <p>Resorts, hotels, and unforgettable stays around the world.</p>
-    <div class="trust">No booking fees · Secure partner checkout</div>
-    <button onclick="goHotels()">Explore Stays</button>
+    <div class="nav" role="navigation" aria-label="Primary">
+      <button class="active" id="nav_home" onclick="showSection('home')">Explore</button>
+      <button id="nav_vacation" onclick="showSection('vacation')">Vacation</button>
+      <button id="nav_deals" onclick="showSection('deals')">Deals</button>
+      <button id="nav_things" onclick="showSection('things')">Things To Do</button>
+      <button id="nav_cruises" onclick="showSection('cruises')">Cruises</button>
+    </div>
   </div>
 
-  <div class="card">
-    <h3>Flights</h3>
-    <p>Find flights that take you where you want to be.</p>
-    <div class="trust">Direct airline or platform booking</div>
-    <button onclick="goFlights()">Find Flights</button>
+  <div class="hero">
+    <div class="heroCard fadeIn" style="animation-delay:.12s">
+      <span class="kicker">Your next trip starts here</span>
+      <h1>Explore first.<br>Book when ready.</h1>
+      <p>
+        LionGate Travels is your exploration layer: ideas, intent, and direction.
+        When you’re ready to book, we send you to Expedia (our partner) for secure checkout.
+      </p>
+
+      <div class="flow" aria-label="How it works">
+        <div class="step"><span class="dot" aria-hidden="true"></span>Pick a vibe</div>
+        <div class="step"><span class="dot" aria-hidden="true"></span>Narrow your plan</div>
+        <div class="step"><span class="dot" aria-hidden="true"></span>Continue to partner</div>
+      </div>
+    </div>
+
+    <div class="exploreCard fadeIn" style="animation-delay:.18s">
+      <h3 class="searchTitle">Start with a destination (optional)</h3>
+      <div class="searchRow">
+        <input id="dest" placeholder="e.g., Toronto, Miami, Paris, Cancun" />
+        <button class="primaryBtn" onclick="quickStart()">Start</button>
+      </div>
+      <p class="hint">
+        This is a guided experience (not a booking engine). Choose a path below, then continue when you’re ready.
+      </p>
+
+      <div class="intentGrid" aria-label="Intent shortcuts">
+        <div class="intent" onclick="goIntent('vacation')">
+          <div class="t">Plan a Vacation</div>
+          <div class="s">Packages, hotels, and the easy way to start.</div>
+        </div>
+        <div class="intent" onclick="goIntent('deals')">
+          <div class="t">Find Deals</div>
+          <div class="s">Start with discounts and value-based picks.</div>
+        </div>
+        <div class="intent" onclick="goIntent('things')">
+          <div class="t">Things To Do</div>
+          <div class="s">Activities, attractions, and experiences.</div>
+        </div>
+        <div class="intent" onclick="goIntent('cruises')">
+          <div class="t">Cruises & Getaways</div>
+          <div class="s">High-impact trips, low planning stress.</div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <h3>Car Rentals</h3>
-    <p>Freedom to explore at your own pace.</p>
-    <div class="trust">Trusted rental brands worldwide</div>
-    <button onclick="goCars()">Rent a Car</button>
+  <!-- HOME: experience hub (no redirects until user chooses) -->
+  <div class="section fadeIn" id="sec_home" style="animation-delay:.25s">
+    <div class="sectionHeader">
+      <div>
+        <h3>Explore Paths</h3>
+        <p>
+          Pick a path that matches what you want right now. You’ll browse here first, then continue to Expedia only when you decide.
+        </p>
+      </div>
+      <div class="miniActions">
+        <button class="chip" onclick="showSection('vacation')">Vacation</button>
+        <button class="chip" onclick="showSection('deals')">Deals</button>
+        <button class="chip" onclick="showSection('things')">Things To Do</button>
+        <button class="chip" onclick="showSection('cruises')">Cruises</button>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="choice">
+        <div class="k">Weekend Reset</div>
+        <p class="d">Pick a destination, find a stay, then add a flight only if you need it.</p>
+        <button class="go" onclick="showSection('vacation'); setMood('weekend')">Build my weekend</button>
+        <div class="subtle">Best for: quick trips · city breaks · short stays</div>
+      </div>
+      <div class="choice">
+        <div class="k">Big Vacation</div>
+        <p class="d">Start with packages or cruises to reduce planning stress.</p>
+        <button class="go" onclick="showSection('vacation'); setMood('vacation')">Plan a vacation</button>
+        <div class="subtle">Best for: families · all-in-one trips · easy planning</div>
+      </div>
+      <div class="choice">
+        <div class="k">Explore & Do</div>
+        <p class="d">Choose your “things to do” first, then build the trip around it.</p>
+        <button class="go" onclick="showSection('things'); setMood('explore')">Find experiences</button>
+        <div class="subtle">Best for: attractions · activities · day plans</div>
+      </div>
+    </div>
   </div>
 
-</div>
+  <!-- VACATION -->
+  <div class="section" id="sec_vacation">
+    <div class="sectionHeader">
+      <div>
+        <h3>Vacation Builder</h3>
+        <p>
+          Start with the easiest “win”: packages and great stays. Add flights and cars only when you need them.
+        </p>
+      </div>
+      <div class="miniActions">
+        <button class="chip" onclick="showSection('home')">Back to Explore</button>
+        <button class="chip" onclick="showSection('deals')">Deals</button>
+        <button class="chip" onclick="showSection('cruises')">Cruises</button>
+      </div>
+    </div>
 
-<footer>
-  Affiliate disclosure: LionGate Travels may earn commissions from partner links.
-  Powered by LionGateOS.
-</footer>
+    <div class="cards">
+      <div class="choice">
+        <div class="k">Vacation Packages</div>
+        <p class="d">Bundle-style planning to reduce friction and get moving faster.</p>
+        <button class="go" onclick="continueTo('packages','Vacation Packages')">Continue to Packages</button>
+        <div class="subtle">Expedia handles booking & checkout.</div>
+      </div>
+      <div class="choice">
+        <div class="k">Hotels & Stays</div>
+        <p class="d">Find stays first. This is usually the biggest “decision anchor.”</p>
+        <button class="go" onclick="continueTo('hotels','Hotels & Stays')">Continue to Hotels</button>
+        <div class="subtle">Secure checkout on partner site.</div>
+      </div>
+      <div class="choice">
+        <div class="k">Flights</div>
+        <p class="d">Add flights when you’re ready. Keep planning simple.</p>
+        <button class="go" onclick="continueTo('flights','Flights')">Continue to Flights</button>
+        <div class="subtle">Direct airline or platform booking.</div>
+      </div>
+      <div class="choice">
+        <div class="k">Car Rentals</div>
+        <p class="d">Freedom to explore. Add a car once dates are roughly decided.</p>
+        <button class="go" onclick="continueTo('cars','Car Rentals')">Continue to Car Rentals</button>
+        <div class="subtle">Trusted rental brands worldwide.</div>
+      </div>
+      <div class="choice">
+        <div class="k">Cruises</div>
+        <p class="d">High-value “one decision” vacations with less planning stress.</p>
+        <button class="go" onclick="showSection('cruises')">Explore Cruises</button>
+        <div class="subtle">Great for: couples · families · relaxed trips</div>
+      </div>
+      <div class="choice">
+        <div class="k">Things To Do</div>
+        <p class="d">Pick experiences first, then build the trip around them.</p>
+        <button class="go" onclick="showSection('things')">Explore Activities</button>
+        <div class="subtle">Perfect for: city trips · day plans</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEALS -->
+  <div class="section" id="sec_deals">
+    <div class="sectionHeader">
+      <div>
+        <h3>Deals First</h3>
+        <p>
+          Start with value. You can still build a premium trip — you just start by finding the best opportunities.
+        </p>
+      </div>
+      <div class="miniActions">
+        <button class="chip" onclick="showSection('home')">Back to Explore</button>
+        <button class="chip" onclick="showSection('vacation')">Vacation</button>
+        <button class="chip" onclick="showSection('things')">Things To Do</button>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="choice">
+        <div class="k">Explore Deals</div>
+        <p class="d">Your best entry point for discounted travel opportunities.</p>
+        <button class="go" onclick="continueTo('deals','Deals')">Continue to Deals</button>
+        <div class="subtle">You’ll complete booking on Expedia.</div>
+      </div>
+      <div class="choice">
+        <div class="k">Deal + Hotel Anchor</div>
+        <p class="d">Find a strong deal, then lock your stay.</p>
+        <button class="go" onclick="continueTo('hotels','Hotels & Stays')">Continue to Hotels</button>
+        <div class="subtle">Tip: stays often sell the trip emotionally.</div>
+      </div>
+      <div class="choice">
+        <div class="k">Deal + Flights</div>
+        <p class="d">If your dates are flexible, flights can unlock value.</p>
+        <button class="go" onclick="continueTo('flights','Flights')">Continue to Flights</button>
+        <div class="subtle">Direct booking with airlines/platforms.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THINGS TO DO -->
+  <div class="section" id="sec_things">
+    <div class="sectionHeader">
+      <div>
+        <h3>Things To Do</h3>
+        <p>
+          This is where trips become memorable. Pick experiences first — then decide where you’ll stay and how you’ll get there.
+        </p>
+      </div>
+      <div class="miniActions">
+        <button class="chip" onclick="showSection('home')">Back to Explore</button>
+        <button class="chip" onclick="showSection('vacation')">Vacation</button>
+        <button class="chip" onclick="showSection('deals')">Deals</button>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="choice">
+        <div class="k">Activities & Attractions</div>
+        <p class="d">Tours, attractions, and experiences that define your trip.</p>
+        <button class="go" onclick="continueTo('things','Things To Do')">Continue to Activities</button>
+        <div class="subtle">Complete booking on Expedia.</div>
+      </div>
+      <div class="choice">
+        <div class="k">Pair with a Stay</div>
+        <p class="d">Once you pick experiences, anchor your trip with a great stay.</p>
+        <button class="go" onclick="continueTo('hotels','Hotels & Stays')">Continue to Hotels</button>
+        <div class="subtle">Secure checkout on partner site.</div>
+      </div>
+      <div class="choice">
+        <div class="k">Add Transportation</div>
+        <p class="d">Then add flights or a car only when you need them.</p>
+        <button class="go" onclick="showSection('vacation')">Open Vacation Builder</button>
+        <div class="subtle">Keep planning simple.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CRUISES -->
+  <div class="section" id="sec_cruises">
+    <div class="sectionHeader">
+      <div>
+        <h3>Cruises & Getaways</h3>
+        <p>
+          For many travelers, cruises are the simplest high-value vacation: one decision unlocks the whole trip.
+        </p>
+      </div>
+      <div class="miniActions">
+        <button class="chip" onclick="showSection('home')">Back to Explore</button>
+        <button class="chip" onclick="showSection('vacation')">Vacation</button>
+        <button class="chip" onclick="showSection('deals')">Deals</button>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="choice">
+        <div class="k">Explore Cruises</div>
+        <p class="d">Browse cruise options and choose what fits your style.</p>
+        <button class="go" onclick="continueTo('cruises','Cruises')">Continue to Cruises</button>
+        <div class="subtle">Booking is handled on Expedia.</div>
+      </div>
+      <div class="choice">
+        <div class="k">Cruise + Pre/Post Stay</div>
+        <p class="d">Add a hotel stay before or after your cruise.</p>
+        <button class="go" onclick="continueTo('hotels','Hotels & Stays')">Continue to Hotels</button>
+        <div class="subtle">Great for: relaxing starts and endings.</div>
+      </div>
+      <div class="choice">
+        <div class="k">Cruise + Flights</div>
+        <p class="d">If you’re traveling to the port city, add flights when ready.</p>
+        <button class="go" onclick="continueTo('flights','Flights')">Continue to Flights</button>
+        <div class="subtle">Direct airline/platform booking.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legal fadeIn" style="animation-delay:.45s">
+    <strong>Affiliate disclosure:</strong> LionGate Travels may earn a commission from partner links at no extra cost to you.
+    We do not process payments and we do not sell travel—Expedia is the checkout and booking provider.
+    <br><span style="opacity:.9">Powered by LionGateOS.</span>
+  </div>
 
 </div>
 
 <div id="admin" class="admin hidden"></div>
 
 <script>
-/* BACKGROUND ROTATION */
-const slides=document.querySelectorAll(".bg img");
-let i=0;
-setInterval(()=>{
-  slides[i].classList.remove("active");
-  i=(i+1)%slides.length;
-  slides[i].classList.add("active");
-},8000);
+  /* =========================
+     EXPERIENCE LAYER v1
+     - No pricing, no inventory
+     - Multi-step exploration
+     - Redirect only when user intentionally continues
+     ========================= */
 
-/* STATS + LINKS */
-const KEY="lg_stats";
-const data=JSON.parse(localStorage.getItem(KEY)||"{}");
-function save(){localStorage.setItem(KEY,JSON.stringify(data))}
-function isCA(){return navigator.language?.toLowerCase().includes("en-ca")}
+  // Background rotation
+  (function(){
+    const slides = document.querySelectorAll(".bg img");
+    let i = 0;
+    setInterval(() => {
+      slides[i].classList.remove("active");
+      i = (i + 1) % slides.length;
+      slides[i].classList.add("active");
+    }, 9000);
+  })();
 
-const LINKS={
- hotels:{ca:"https://expedia.com/affiliate/G4xFvTY",us:"https://expedia.com/affiliate/c2kTkZ2"},
- flights:{ca:"https://expedia.com/affiliate/6pjpOsp",us:"https://expedia.com/affiliate/HUJIj2eI"},
- cars:{ca:"https://expedia.com/affiliate/L426xQ7",us:"https://expedia.com/affiliate/UZjj6qy"}
-};
+  // Local admin stats (device-only) — preserved and extended
+  const KEY = "lg_stats";
+  const data = JSON.parse(localStorage.getItem(KEY) || "{}");
 
-function goHotels(){data.hotels=(data.hotels||0)+1;save();location.href=isCA()?LINKS.hotels.ca:LINKS.hotels.us}
-function goFlights(){data.flights=(data.flights||0)+1;save();location.href=isCA()?LINKS.flights.ca:LINKS.flights.us}
-function goCars(){data.cars=(data.cars||0)+1;save();location.href=isCA()?LINKS.cars.ca:LINKS.cars.us}
+  function save(){ localStorage.setItem(KEY, JSON.stringify(data)); }
 
-if(new URLSearchParams(location.search).get("admin")==="1"){
- document.getElementById("admin").classList.remove("hidden");
- document.getElementById("admin").innerHTML="<strong>Admin Stats</strong><br>"+Object.entries(data).map(([k,v])=>k+": "+v).join("<br>");
-}
+  // Locale routing: CA -> CA links, otherwise US
+  function isCA(){
+    const lang = (navigator.language || "").toLowerCase();
+    const langs = (navigator.languages || []).join(",").toLowerCase();
+    return lang.includes("en-ca") || langs.includes("en-ca") || lang.includes("fr-ca") || langs.includes("fr-ca");
+  }
+
+  // All affiliate links provided (CA + USA)
+  const LINKS = {
+    hotels:   { ca:"https://expedia.com/affiliate/G4xFvTY",  us:"https://expedia.com/affiliate/c2kTkZ2" },
+    flights:  { ca:"https://expedia.com/affiliate/6pjpOsp",  us:"https://expedia.com/affiliate/HUJIj2eI" },
+    cars:     { ca:"https://expedia.com/affiliate/L426xQ7",  us:"https://expedia.com/affiliate/UZjj6qy" },
+    packages: { ca:"https://expedia.com/affiliate/FQGnDRq",  us:"https://expedia.com/affiliate/EFMm2UR" },
+    cruises:  { ca:"https://expedia.com/affiliate/0MijKyC",  us:"https://expedia.com/affiliate/KXa1TMG" },
+    deals:    { ca:"https://expedia.com/affiliate/vseNebd",  us:"https://expedia.com/affiliate/NsM1cRl" },
+    things:   { ca:"https://expedia.com/affiliate/QB6Un15",  us:"https://expedia.com/affiliate/ucqc4xU" }
+  };
+
+  // “Stay longer” state
+  function setMood(m){
+    data.mood = m;
+    data.mood_last = new Date().toISOString();
+    save();
+  }
+
+  // Section routing
+  const secIds = {
+    home: "sec_home",
+    vacation: "sec_vacation",
+    deals: "sec_deals",
+    things: "sec_things",
+    cruises: "sec_cruises"
+  };
+
+  function showSection(name){
+    // stats
+    data.section_views = data.section_views || {};
+    data.section_views[name] = (data.section_views[name] || 0) + 1;
+    data.last = new Date().toISOString();
+    save();
+
+    // hide/show
+    Object.values(secIds).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = "none";
+    });
+    const target = document.getElementById(secIds[name]);
+    if (target){
+      target.style.display = "block";
+      // small scroll cue
+      target.scrollIntoView({behavior:"smooth", block:"start"});
+    }
+
+    // nav active
+    ["home","vacation","deals","things","cruises"].forEach(k=>{
+      const b=document.getElementById("nav_"+k);
+      if(b) b.classList.toggle("active", k===name);
+    });
+  }
+
+  function goIntent(name){
+    setMood(name);
+    showSection(name);
+  }
+
+  function quickStart(){
+    const d = (document.getElementById("dest").value || "").trim();
+    if(d){
+      data.destination_last = d;
+      data.destination_count = (data.destination_count || 0) + 1;
+      save();
+    }
+    // Choose a sensible default path
+    showSection("vacation");
+  }
+
+  function continueTo(kind, label){
+    // stats: clicks
+    data.clicks = data.clicks || {};
+    data.clicks[kind] = (data.clicks[kind] || 0) + 1;
+    data.last_click = label;
+    data.last = new Date().toISOString();
+    save();
+
+    const url = (isCA() ? LINKS[kind].ca : LINKS[kind].us);
+
+    // gentle “you are leaving” moment (micro-delay)
+    // keeps it feeling intentional, not abrupt
+    setTimeout(() => {
+      window.location.href = url;
+    }, 220);
+  }
+
+  // Admin stats panel (device-only)
+  function renderAdmin(){
+    const a = document.getElementById("admin");
+    const pretty = (obj) => {
+      try { return JSON.stringify(obj, null, 2).replace(/\n/g,"<br>").replace(/ /g,"&nbsp;"); }
+      catch { return String(obj); }
+    };
+
+    a.innerHTML =
+      "<strong>Admin Stats</strong><br><span style='color:rgba(203,210,245,.85)'>Device-only (localStorage)</span><br><br>" +
+      "<strong>Last</strong><br>" +
+      "last: " + (data.last || "-") + "<br>" +
+      "mood: " + (data.mood || "-") + "<br>" +
+      "destination_last: " + (data.destination_last || "-") + "<br><br>" +
+      "<strong>Clicks</strong><br>" +
+      pretty(data.clicks || {}) + "<br><br>" +
+      "<strong>Section Views</strong><br>" +
+      pretty(data.section_views || {});
+  }
+
+  (function init(){
+    // Default view
+    Object.values(secIds).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = "none";
+    });
+    showSection("home");
+
+    // Admin toggle
+    if(new URLSearchParams(location.search).get("admin")==="1"){
+      document.getElementById("admin").classList.remove("hidden");
+      renderAdmin();
+    }
+  })();
 </script>
 
 </body>
 </html>
+
