@@ -13,6 +13,7 @@
   --text:#e5e7eb;
   --muted:#9ca3af;
   --cta:#2563eb;
+  --coming:#374151;
 }
 body{
   font-family:system-ui,Arial,sans-serif;
@@ -21,22 +22,29 @@ body{
   margin:0;
 }
 .container{
-  max-width:980px;
+  max-width:1100px;
   margin:0 auto;
   padding:28px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:16px;
 }
 .card{
   background:var(--panel);
   border:1px solid var(--border);
-  border-radius:14px;
-  padding:18px;
-  margin-bottom:16px;
+  border-radius:16px;
+  padding:20px;
+}
+.card h3{
+  margin-top:0;
 }
 .trust{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:10px;
-  margin-top:12px;
+  grid-template-columns:1fr;
+  gap:8px;
+  margin-top:14px;
 }
 .trust div{
   background:#020617;
@@ -47,13 +55,25 @@ body{
   color:var(--muted);
 }
 button{
-  padding:12px 20px;
+  padding:12px 18px;
   border-radius:10px;
   border:1px solid var(--border);
   background:var(--cta);
   color:#fff;
-  font-size:16px;
+  font-size:15px;
   cursor:pointer;
+}
+button.secondary{
+  background:var(--coming);
+}
+input{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:#020617;
+  color:var(--text);
+  margin-top:10px;
 }
 .admin{
   position:fixed;
@@ -67,41 +87,72 @@ button{
   max-width:260px;
 }
 .hidden{display:none}
+.small{
+  font-size:13px;
+  color:var(--muted);
+  margin-top:8px;
+}
 </style>
 </head>
 
 <body>
 <div class="container">
   <h1>LionGate Travels</h1>
-  <p style="color:var(--muted);margin-top:4px">
-    Your Journey Simplified.
-  </p>
+  <p class="small">Your Journey Simplified.</p>
 
-  <div class="card">
-    <h3>Hotels & Stays</h3>
-    <button onclick="go()">Continue</button>
+  <div class="grid">
 
-    <div class="trust">
-      <div>No booking fees from LionGate Travels</div>
-      <div>Payments handled securely by our partner</div>
-      <div>We never see your card or payment details</div>
+    <!-- HOTELS -->
+    <div class="card">
+      <h3>Hotels & Stays</h3>
+      <button onclick="goHotels()">Continue</button>
+
+      <div class="trust">
+        <div>No booking fees from LionGate Travels</div>
+        <div>Payments handled securely by our partner</div>
+        <div>We never see your card or payment details</div>
+      </div>
     </div>
+
+    <!-- FLIGHTS -->
+    <div class="card">
+      <h3>Flights</h3>
+      <button class="secondary" disabled>Coming Soon</button>
+      <input placeholder="Email for updates" oninput="capture('flights')" />
+      <div class="small">We’ll notify you when flights go live.</div>
+    </div>
+
+    <!-- CARS -->
+    <div class="card">
+      <h3>Car Rentals</h3>
+      <button class="secondary" disabled>Coming Soon</button>
+      <input placeholder="Email for updates" oninput="capture('cars')" />
+      <div class="small">We’ll notify you when rentals go live.</div>
+    </div>
+
   </div>
 </div>
 
 <div id="admin" class="admin hidden"></div>
 
 <script>
-const KEY="lg_clicks";
+const KEY="lg_stats";
 const data=JSON.parse(localStorage.getItem(KEY)||"{}");
 
-function go(){
+function save(){
+  localStorage.setItem(KEY,JSON.stringify(data));
+}
+
+function goHotels(){
   data.hotels=(data.hotels||0)+1;
   data.last=new Date().toISOString();
-  localStorage.setItem(KEY,JSON.stringify(data));
-
-  // 🔴 🔴 🔴 PASTE YOUR EXPEDIA AFFILIATE LINK ON THE NEXT LINE 🔴 🔴 🔴
+  save();
   window.location.href="https://expedia.com/affiliate/m08ECMk";
+}
+
+function capture(type){
+  data[type+"_interest"]=(data[type+"_interest"]||0)+1;
+  save();
 }
 
 function renderAdmin(){
@@ -117,4 +168,3 @@ if(new URLSearchParams(location.search).get("admin")==="1"){
 </script>
 </body>
 </html>
-
