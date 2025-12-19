@@ -8,20 +8,22 @@
 
 <style>
 :root{
-  --bg:#0b0f14;
-  --panel:#111827;
-  --panel-soft:#0f172a;
-  --border:#1f2937;
+  --bg:#070b12;
+  --panel:#0f172a;
+  --panel-soft:#020617;
+  --border:#1e293b;
   --text:#e5e7eb;
   --muted:#9ca3af;
   --cta:#2563eb;
   --cta-hover:#3b82f6;
-  --coming:#374151;
+  --glow:rgba(37,99,235,.35);
 }
 *{box-sizing:border-box}
 body{
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  background:linear-gradient(180deg,#070b12 0%, var(--bg) 100%);
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgba(37,99,235,.08), transparent 60%),
+    linear-gradient(180deg,#05070c 0%, var(--bg) 100%);
   color:var(--text);
   margin:0;
   min-height:100vh;
@@ -29,49 +31,57 @@ body{
 .container{
   max-width:1100px;
   margin:0 auto;
-  padding:40px 28px 80px;
+  padding:48px 28px 96px;
 }
 header{
   text-align:center;
-  margin-bottom:48px;
+  margin-bottom:56px;
 }
 header h1{
-  font-size:3rem;
-  margin:0 0 10px;
+  font-size:3.2rem;
+  margin:0 0 12px;
   letter-spacing:-0.02em;
 }
 header p{
   color:var(--muted);
-  font-size:1.05rem;
-  max-width:720px;
+  font-size:1.1rem;
+  max-width:760px;
   margin:0 auto;
-  line-height:1.6;
+  line-height:1.65;
 }
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:24px;
+  gap:28px;
 }
 .card{
-  background:linear-gradient(180deg,var(--panel),var(--panel-soft));
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.03), transparent),
+    var(--panel);
   border:1px solid var(--border);
-  border-radius:18px;
-  padding:24px;
+  border-radius:20px;
+  padding:26px;
   display:flex;
   flex-direction:column;
   justify-content:space-between;
+  box-shadow:
+    0 20px 40px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.04);
   transition:transform .25s ease, box-shadow .25s ease;
 }
 .card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 18px 36px rgba(0,0,0,.35);
+  transform:translateY(-6px);
+  box-shadow:
+    0 30px 60px rgba(0,0,0,.6),
+    0 0 0 1px var(--border),
+    0 0 40px var(--glow);
 }
 .card h3{
   margin:0 0 10px;
-  font-size:1.35rem;
+  font-size:1.45rem;
 }
 .card p{
-  font-size:.9rem;
+  font-size:.95rem;
   color:var(--muted);
   line-height:1.6;
 }
@@ -81,7 +91,7 @@ header p{
   margin-top:16px;
 }
 .trust div{
-  background:#020617;
+  background:var(--panel-soft);
   border:1px solid var(--border);
   border-radius:10px;
   padding:10px;
@@ -89,71 +99,55 @@ header p{
   color:var(--muted);
 }
 button{
-  margin-top:20px;
-  padding:14px 18px;
-  border-radius:12px;
+  margin-top:22px;
+  padding:15px 20px;
+  border-radius:14px;
   border:1px solid var(--border);
-  background:var(--cta);
+  background:linear-gradient(180deg,var(--cta),#1e40af);
   color:#fff;
   font-size:15px;
   font-weight:600;
   cursor:pointer;
-  transition:background .2s ease, transform .15s ease;
+  box-shadow:0 10px 30px rgba(37,99,235,.35);
+  transition:background .2s ease, transform .15s ease, box-shadow .15s ease;
 }
 button:hover{
-  background:var(--cta-hover);
+  background:linear-gradient(180deg,var(--cta-hover),#1e3a8a);
   transform:translateY(-1px);
-}
-button.secondary{
-  background:var(--coming);
-  cursor:not-allowed;
-}
-input{
-  width:100%;
-  padding:11px;
-  border-radius:10px;
-  border:1px solid var(--border);
-  background:#020617;
-  color:var(--text);
-  margin-top:12px;
-}
-.small{
-  font-size:13px;
-  color:var(--muted);
-  margin-top:8px;
+  box-shadow:0 14px 36px rgba(37,99,235,.5);
 }
 .explain{
-  margin-top:64px;
-  padding:32px;
-  background:rgba(255,255,255,.03);
+  margin-top:72px;
+  padding:36px;
+  background:rgba(255,255,255,.035);
   border:1px solid var(--border);
-  border-radius:18px;
+  border-radius:22px;
   text-align:center;
 }
 .explain h4{
-  margin:0 0 10px;
-  font-size:1.4rem;
+  margin:0 0 12px;
+  font-size:1.5rem;
 }
 .explain p{
   color:var(--muted);
-  font-size:.95rem;
-  max-width:760px;
+  font-size:1rem;
+  max-width:780px;
   margin:0 auto;
-  line-height:1.6;
+  line-height:1.65;
 }
 footer{
-  margin-top:72px;
-  padding-top:24px;
+  margin-top:80px;
+  padding-top:28px;
   border-top:1px solid var(--border);
   text-align:center;
-  font-size:.8rem;
+  font-size:.85rem;
   color:var(--muted);
 }
 .admin{
   position:fixed;
   right:16px;
   bottom:16px;
-  background:#020617;
+  background:var(--panel-soft);
   border:1px solid var(--border);
   border-radius:14px;
   padding:12px;
@@ -167,77 +161,69 @@ footer{
 <body>
 <div class="container">
 
-  <header>
-    <h1>LionGate Travels</h1>
-    <p>
-      We don’t sell travel or process payments.
-      We guide you directly to trusted travel providers so you can book securely with them.
-    </p>
-  </header>
+<header>
+  <h1>LionGate Travels</h1>
+  <p>
+    We don’t sell travel or process payments.
+    We connect you directly to trusted providers so you can book securely with them.
+  </p>
+</header>
 
-  <div class="grid">
+<div class="grid">
 
-    <!-- HOTELS -->
-    <div class="card">
-      <div>
-        <h3>Hotels & Stays</h3>
-        <p>
-          Browse hotels, resorts, and short-term stays from established travel platforms.
-          You’ll be redirected to our partner to complete your booking.
-        </p>
-        <div class="trust">
-          <div>No booking fees from LionGate Travels</div>
-          <div>Payments handled securely by our partner</div>
-          <div>We never see your card or payment details</div>
-        </div>
-      </div>
-      <button onclick="goHotels()">Continue</button>
-    </div>
-
-    <!-- FLIGHTS (ACTIVE) -->
-    <div class="card">
-      <div>
-        <h3>Flights</h3>
-        <p>
-          Search and book flights directly with major airlines and trusted platforms.
-        </p>
-        <div class="trust">
-          <div>No booking fees from LionGate Travels</div>
-          <div>Secure checkout on partner site</div>
-          <div>Direct airline or platform booking</div>
-        </div>
-      </div>
-      <button onclick="goFlights()">Continue</button>
-    </div>
-
-    <!-- CARS -->
-    <div class="card">
-      <div>
-        <h3>Car Rentals</h3>
-        <p>
-          Find rental vehicles from major providers when this category launches.
-        </p>
-        <button class="secondary" disabled>Coming Soon</button>
-        <input placeholder="Email for updates" oninput="capture('cars')" />
-        <div class="small">We’ll notify you when rentals go live.</div>
+  <div class="card">
+    <div>
+      <h3>Hotels & Stays</h3>
+      <p>Hotels, resorts, and short-term stays from established travel platforms.</p>
+      <div class="trust">
+        <div>No booking fees from LionGate Travels</div>
+        <div>Secure checkout on partner site</div>
+        <div>We never see your payment details</div>
       </div>
     </div>
-
+    <button onclick="goHotels()">Continue</button>
   </div>
 
-  <div class="explain">
-    <h4>How LionGate Travels Works</h4>
-    <p>
-      LionGate Travels is an affiliate-based platform.
-      When you continue to a partner, we may earn a commission at no extra cost to you.
-      This allows us to keep the service simple, transparent, and free to use.
-    </p>
+  <div class="card">
+    <div>
+      <h3>Flights</h3>
+      <p>Search and book flights with airlines and major travel platforms.</p>
+      <div class="trust">
+        <div>No booking fees from LionGate Travels</div>
+        <div>Direct airline or platform booking</div>
+        <div>Secure checkout</div>
+      </div>
+    </div>
+    <button onclick="goFlights()">Continue</button>
   </div>
 
-  <footer>
-    Affiliate disclosure: LionGate Travels may earn commissions from partner links.
-    Powered by LionGateOS.
-  </footer>
+  <div class="card">
+    <div>
+      <h3>Car Rentals</h3>
+      <p>Rental vehicles from major providers worldwide.</p>
+      <div class="trust">
+        <div>No booking fees from LionGate Travels</div>
+        <div>Secure checkout on partner site</div>
+        <div>Trusted rental brands</div>
+      </div>
+    </div>
+    <button onclick="goCars()">Continue</button>
+  </div>
+
+</div>
+
+<div class="explain">
+  <h4>How LionGate Travels Works</h4>
+  <p>
+    LionGate Travels is an affiliate-based platform.
+    When you continue to a partner, we may earn a commission at no extra cost to you.
+  </p>
+</div>
+
+<footer>
+  Affiliate disclosure: LionGate Travels may earn commissions from partner links.
+  Powered by LionGateOS.
+</footer>
 
 </div>
 
@@ -246,36 +232,45 @@ footer{
 <script>
 const KEY="lg_stats";
 const data=JSON.parse(localStorage.getItem(KEY)||"{}");
+function save(){ localStorage.setItem(KEY,JSON.stringify(data)); }
 
-function save(){
-  localStorage.setItem(KEY,JSON.stringify(data));
+function isCA(){
+  return navigator.language && navigator.language.toLowerCase().includes("en-ca");
 }
+
+// AFFILIATE LINKS
+const LINKS={
+  hotels:{
+    ca:"https://expedia.com/affiliate/G4xFvTY",
+    us:"https://expedia.com/affiliate/c2kTkZ2"
+  },
+  flights:{
+    ca:"https://expedia.com/affiliate/6pjpOsp",
+    us:"https://expedia.com/affiliate/HUJIj2eI"
+  },
+  cars:{
+    ca:"https://expedia.com/affiliate/L426xQ7",
+    us:"https://expedia.com/affiliate/UZjj6qy"
+  }
+};
 
 function goHotels(){
-  data.hotels=(data.hotels||0)+1;
-  data.last=new Date().toISOString();
-  save();
-  window.location.href="https://expedia.com/affiliate/m08ECMk";
+  data.hotels=(data.hotels||0)+1; data.last=new Date().toISOString(); save();
+  location.href=isCA()?LINKS.hotels.ca:LINKS.hotels.us;
 }
-
 function goFlights(){
-  data.flights=(data.flights||0)+1;
-  data.last=new Date().toISOString();
-  save();
-  window.location.href="https://www.expedia.com/Flights";
+  data.flights=(data.flights||0)+1; data.last=new Date().toISOString(); save();
+  location.href=isCA()?LINKS.flights.ca:LINKS.flights.us;
 }
-
-function capture(type){
-  data[type+"_interest"]=(data[type+"_interest"]||0)+1;
-  save();
+function goCars(){
+  data.cars=(data.cars||0)+1; data.last=new Date().toISOString(); save();
+  location.href=isCA()?LINKS.cars.ca:LINKS.cars.us;
 }
 
 function renderAdmin(){
   const a=document.getElementById("admin");
-  a.innerHTML="<strong>Admin Stats</strong><br>"+
-    Object.entries(data).map(([k,v])=>k+": "+v).join("<br>");
+  a.innerHTML="<strong>Admin Stats</strong><br>"+Object.entries(data).map(([k,v])=>k+": "+v).join("<br>");
 }
-
 if(new URLSearchParams(location.search).get("admin")==="1"){
   document.getElementById("admin").classList.remove("hidden");
   renderAdmin();
