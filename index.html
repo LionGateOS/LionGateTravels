@@ -2,1134 +2,334 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="agd-partner-manual-verification" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>LionGate Travels</title>
+<title>LionGate Travels — Experience Layer v1.2</title>
 
 <style>
-  :root{
-    --text:#f8fafc;
-    --muted:rgba(226,232,240,.88);
-    --muted2:rgba(226,232,240,.78);
+:root{
+  --text:#f8fafc;
+  --muted:rgba(226,232,240,.88);
+  --muted2:rgba(226,232,240,.72);
+  --cta:#3b82f6;
+  --ctaGlow:rgba(59,130,246,.45);
+  --gold:#f1d08a;
+  --glass:rgba(15,23,42,.42);
+  --border:rgba(255,255,255,.14);
+  --radius:22px;
+}
 
-    --cta:#3b82f6;
-    --cta2:#60a5fa;
+*{box-sizing:border-box}
+html,body{height:100%}
 
-    --gold:#d6b35a;
-    --gold2:#f1d08a;
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--text);
+  background:#020617;
+  overflow-x:hidden;
+}
 
-    --glass:rgba(15,23,42,.46);
-    --glass2:rgba(2,6,23,.28);
+/* Background */
+.bg{position:fixed; inset:0; z-index:-3}
+.bg img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  opacity:0;
+  transition:opacity 2.5s ease;
+  filter:brightness(.65) saturate(1.15);
+}
+.bg img.active{opacity:1}
 
-    --border:rgba(255,255,255,.16);
-    --border2:rgba(255,255,255,.12);
+.overlay{
+  position:fixed; inset:0; z-index:-2;
+  background:
+    radial-gradient(900px 500px at 50% 0%, rgba(96,165,250,.28), transparent 60%),
+    radial-gradient(800px 500px at 15% 30%, rgba(241,208,138,.18), transparent 60%),
+    linear-gradient(180deg, rgba(2,6,23,.15), rgba(2,6,23,.75));
+}
 
-    --glow:rgba(96,165,250,.34);
-    --glowGold:rgba(214,179,90,.24);
+/* Layout */
+.container{
+  max-width:1180px;
+  margin:0 auto;
+  padding:48px 22px 110px;
+}
 
-    --shadow:0 26px 56px rgba(0,0,0,.45);
-    --shadow2:0 42px 94px rgba(0,0,0,.62);
+/* Top Bar */
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  padding:14px 18px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:var(--glass);
+  backdrop-filter:blur(18px);
+}
 
-    --radius:22px;
-  }
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
 
-  *{ box-sizing:border-box }
-  html,body{ height:100% }
+.logo{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#3b82f6,#60a5fa);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  letter-spacing:.5px;
+}
 
-  body{
-    margin:0;
-    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-    color:var(--text);
-    overflow-x:hidden;
-    background:#020617;
-  }
+.nav{
+  display:flex;
+  gap:8px;
+}
 
-  /* Cinematic background */
-  .bg{ position:fixed; inset:0; z-index:-3; }
-  .bg img{
-    position:absolute; inset:0; width:100%; height:100%;
-    object-fit:cover;
-    opacity:0;
-    transition:opacity 2.6s ease;
-    filter:brightness(.58) saturate(1.12) contrast(1.03);
-    transform:scale(1.03);
-  }
-  .bg img.active{ opacity:1 }
+.nav button{
+  padding:9px 14px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:transparent;
+  color:#e0e7ff;
+  cursor:pointer;
+  font-weight:800;
+}
 
-  /* Brighter “travel” overlay with warm + cool balance */
-  .overlay{
-    position:fixed; inset:0; z-index:-2;
-    background:
-      radial-gradient(980px 560px at 50% 8%, rgba(96,165,250,.28), transparent 62%),
-      radial-gradient(900px 520px at 18% 30%, rgba(241,208,138,.14), transparent 60%),
-      radial-gradient(820px 520px at 86% 42%, rgba(56,189,248,.16), transparent 62%),
-      linear-gradient(180deg, rgba(2,6,23,.20), rgba(2,6,23,.72));
-  }
+.nav button.active{
+  background:linear-gradient(180deg,#3b82f6,#1d4ed8);
+  box-shadow:0 0 28px var(--ctaGlow);
+}
 
-  /* Subtle grain */
-  .grain{
-    position:fixed; inset:0; z-index:-1; pointer-events:none;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
-    mix-blend-mode:overlay;
-    opacity:.28;
-  }
+/* Hero */
+.hero{
+  margin-top:28px;
+  display:grid;
+  grid-template-columns:1.25fr .75fr;
+  gap:22px;
+}
 
-  .container{
-    max-width:1180px;
-    margin:0 auto;
-    padding:54px 24px 120px;
-  }
+@media(max-width:960px){
+  .hero{grid-template-columns:1fr}
+}
 
-  /* Top bar */
-  .topbar{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:14px;
-    padding:14px 16px;
-    border:1px solid var(--border2);
-    background:linear-gradient(180deg, rgba(255,255,255,.05), transparent), var(--glass2);
-    backdrop-filter:blur(16px);
-    border-radius:999px;
-    box-shadow:0 18px 44px rgba(0,0,0,.34);
-  }
+.card{
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  background:var(--glass);
+  backdrop-filter:blur(18px);
+  padding:28px;
+}
 
-  .brand{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    min-width:0;
-  }
+.hero h1{
+  margin:10px 0;
+  font-size:3rem;
+  line-height:1.05;
+}
 
-  /* LOGO (travel-optimized presentation, same asset) */
-  .logoWrap{
-    width:44px;
-    height:44px;
-    border-radius:14px;
-    padding:2px;
-    background:
-      radial-gradient(circle at 30% 30%, rgba(96,165,250,.40), transparent 56%),
-      radial-gradient(circle at 70% 70%, rgba(241,208,138,.22), transparent 60%),
-      rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.18);
-    box-shadow:
-      0 0 34px rgba(96,165,250,.18),
-      0 0 22px rgba(214,179,90,.12);
-    overflow:hidden;
-    flex:0 0 auto;
-  }
-  .logoWrap img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    border-radius:12px;
-    filter:saturate(1.08) brightness(1.05);
-    transform:scale(1.04);
-  }
+.hero p{
+  color:var(--muted);
+  max-width:65ch;
+}
 
-  .brandText{ min-width:0; }
-  .brandText h2{
-    margin:0;
-    font-size:1.06rem;
-    letter-spacing:.2px;
-    white-space:nowrap;
-  }
-  .pill{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    padding:7px 10px;
-    border-radius:999px;
-    border:1px solid rgba(255,255,255,.16);
-    background:rgba(255,255,255,.07);
-    color:rgba(226,232,240,.88);
-    font-size:.85rem;
-    width:max-content;
-  }
-  .pill .spark{
-    width:8px; height:8px; border-radius:99px;
-    background:rgba(241,208,138,.92);
-    box-shadow:0 0 14px rgba(241,208,138,.55);
-  }
+.flow{
+  margin-top:18px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
 
-  .nav{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-    justify-content:flex-end;
-  }
-  .nav button{
-    padding:9px 12px;
-    border-radius:999px;
-    border:1px solid rgba(255,255,255,.14);
-    background:rgba(2,6,23,.12);
-    color:#e0e7ff;
-    cursor:pointer;
-    transition:transform .15s ease, background .2s ease, box-shadow .2s ease;
-    font-weight:800;
-    font-size:.9rem;
-  }
-  .nav button:hover{
-    transform:translateY(-1px);
-    background:rgba(255,255,255,.08);
-    box-shadow:0 0 30px rgba(96,165,250,.14);
-  }
-  .nav button.active{
-    background:linear-gradient(180deg, rgba(59,130,246,.92), rgba(29,78,216,.84));
-    border-color:rgba(255,255,255,.24);
-    box-shadow:0 0 38px rgba(59,130,246,.30);
-  }
+.flow button{
+  padding:10px 14px;
+  border-radius:16px;
+  border:1px solid var(--border);
+  background:rgba(2,6,23,.35);
+  color:#e0e7ff;
+  cursor:pointer;
+  font-weight:800;
+}
 
-  /* Hero */
-  .hero{
-    margin-top:26px;
-    display:grid;
-    grid-template-columns: 1.22fr .78fr;
-    gap:22px;
-    align-items:stretch;
-  }
-  @media (max-width: 980px){
-    .hero{ grid-template-columns:1fr; }
-  }
+/* Intent Grid */
+.intentGrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
 
-  .heroCard{
-    border-radius:var(--radius);
-    border:1px solid var(--border);
-    background:
-      radial-gradient(600px 240px at 20% 0%, rgba(241,208,138,.12), transparent 58%),
-      radial-gradient(760px 340px at 55% 0%, rgba(96,165,250,.18), transparent 62%),
-      linear-gradient(180deg, rgba(255,255,255,.06), transparent),
-      var(--glass);
-    backdrop-filter:blur(18px);
-    box-shadow:var(--shadow);
-    padding:30px;
-    position:relative;
-    overflow:hidden;
-  }
-  .kicker{
-    display:inline-flex;
-    gap:10px;
-    align-items:center;
-    padding:8px 12px;
-    border-radius:999px;
-    border:1px solid rgba(255,255,255,.18);
-    background:rgba(255,255,255,.07);
-    color:#e0e7ff;
-    font-weight:900;
-    letter-spacing:.3px;
-    font-size:.86rem;
-  }
-  .kicker .goldDot{
-    width:9px; height:9px; border-radius:99px;
-    background:rgba(241,208,138,.92);
-    box-shadow:0 0 16px rgba(241,208,138,.55);
-  }
-  .hero h1{
-    margin:16px 0 10px;
-    font-size:3.05rem;
-    letter-spacing:-.03em;
-    line-height:1.05;
-  }
-  .hero p{
-    margin:0;
-    color:var(--muted);
-    font-size:1.05rem;
-    line-height:1.7;
-    max-width:70ch;
-  }
+.intent{
+  padding:16px;
+  border-radius:18px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.06);
+  cursor:pointer;
+}
 
-  /* Make the “steps” real (clickable) */
-  .flow{
-    margin-top:18px;
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-  }
-  .stepBtn{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    padding:10px 12px;
-    border-radius:16px;
-    border:1px solid rgba(255,255,255,.14);
-    background:rgba(2,6,23,.18);
-    color:#e0e7ff;
-    font-size:.92rem;
-    font-weight:900;
-    cursor:pointer;
-    transition:transform .15s ease, background .2s ease, box-shadow .2s ease;
-  }
-  .stepBtn:hover{
-    transform:translateY(-1px);
-    background:rgba(255,255,255,.07);
-    box-shadow:0 0 30px rgba(241,208,138,.14);
-  }
-  .dot{
-    width:10px;height:10px;border-radius:99px;
-    background:rgba(96,165,250,.88);
-    box-shadow:0 0 18px rgba(96,165,250,.50);
-  }
+.intent:hover{
+  box-shadow:0 0 30px rgba(96,165,250,.25);
+}
 
-  /* Explore panel */
-  .exploreCard{
-    border-radius:var(--radius);
-    border:1px solid var(--border);
-    background:
-      radial-gradient(520px 280px at 75% 10%, rgba(96,165,250,.18), transparent 62%),
-      linear-gradient(180deg, rgba(255,255,255,.06), transparent),
-      rgba(2,6,23,.22);
-    backdrop-filter:blur(18px);
-    box-shadow:var(--shadow);
-    padding:22px;
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-  }
-  .searchTitle{
-    margin:0;
-    font-size:1.05rem;
-    color:#e0e7ff;
-    font-weight:950;
-  }
-  .searchRow{ display:flex; gap:10px; }
-  .searchRow input{
-    flex:1;
-    padding:13px 14px;
-    border-radius:14px;
-    border:1px solid rgba(255,255,255,.14);
-    background:rgba(2,6,23,.28);
-    color:var(--text);
-    outline:none;
-  }
-  .searchRow input::placeholder{ color:rgba(226,232,240,.68) }
+/* Sections */
+.section{
+  margin-top:30px;
+  border-radius:26px;
+  border:1px solid var(--border);
+  background:var(--glass);
+  backdrop-filter:blur(18px);
+  display:none;
+}
 
-  .primaryBtn{
-    padding:13px 14px;
-    border-radius:14px;
-    border:none;
-    cursor:pointer;
-    color:#fff;
-    font-weight:950;
-    background:linear-gradient(180deg,var(--cta),#1d4ed8);
-    box-shadow:0 14px 40px rgba(59,130,246,.34);
-    transition:transform .15s ease, box-shadow .15s ease;
-    white-space:nowrap;
-  }
-  .primaryBtn:hover{
-    transform:translateY(-1px);
-    box-shadow:0 18px 52px rgba(96,165,250,.50);
-  }
+.sectionHeader{
+  padding:22px;
+  border-bottom:1px solid var(--border);
+}
 
-  .hint{
-    margin:0;
-    color:var(--muted2);
-    font-size:.92rem;
-    line-height:1.55;
-  }
+.cards{
+  padding:22px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
 
-  .intentGrid{
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:10px;
-  }
-  @media (max-width: 980px){
-    .intentGrid{ grid-template-columns:1fr; }
-  }
-  .intent{
-    padding:14px 14px;
-    border-radius:16px;
-    border:1px solid rgba(255,255,255,.14);
-    background:rgba(255,255,255,.08);
-    cursor:pointer;
-    transition:transform .15s ease, box-shadow .2s ease, background .2s ease;
-  }
-  .intent:hover{
-    transform:translateY(-2px);
-    box-shadow:0 0 38px rgba(96,165,250,.14);
-    background:rgba(255,255,255,.10);
-  }
-  .intent .t{ font-weight:950; letter-spacing:.2px; }
-  .intent .s{ margin-top:4px; color:var(--muted2); font-size:.9rem; line-height:1.45; }
+@media(max-width:960px){
+  .cards{grid-template-columns:1fr}
+}
 
-  /* Sections */
-  .section{
-    margin-top:30px;
-    border-radius:26px;
-    border:1px solid rgba(255,255,255,.12);
-    background:
-      radial-gradient(820px 420px at 15% 0%, rgba(241,208,138,.10), transparent 62%),
-      radial-gradient(860px 440px at 85% 10%, rgba(96,165,250,.12), transparent 62%),
-      linear-gradient(180deg, rgba(255,255,255,.05), transparent),
-      rgba(2,6,23,.22);
-    backdrop-filter:blur(18px);
-    box-shadow:var(--shadow);
-    overflow:hidden;
-  }
-  .sectionHeader{
-    padding:22px 22px 16px;
-    border-bottom:1px solid rgba(255,255,255,.10);
-    display:flex;
-    flex-wrap:wrap;
-    align-items:flex-end;
-    justify-content:space-between;
-    gap:10px;
-  }
-  .sectionHeader h3{
-    margin:0;
-    font-size:1.55rem;
-    letter-spacing:-.01em;
-  }
-  .sectionHeader p{
-    margin:4px 0 0;
-    color:var(--muted2);
-    max-width:70ch;
-    line-height:1.55;
-  }
-  .miniActions{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-  }
-  .chip{
-    padding:9px 12px;
-    border-radius:999px;
-    border:1px solid rgba(255,255,255,.14);
-    background:rgba(2,6,23,.16);
-    color:#e0e7ff;
-    cursor:pointer;
-    font-weight:900;
-    font-size:.88rem;
-    transition:transform .15s ease, background .2s ease, box-shadow .2s ease;
-  }
-  .chip:hover{
-    transform:translateY(-1px);
-    background:rgba(255,255,255,.07);
-    box-shadow:0 0 30px rgba(241,208,138,.12);
-  }
+.choice{
+  padding:18px;
+  border-radius:18px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.06);
+}
 
-  .cards{
-    padding:20px 22px 26px;
-    display:grid;
-    grid-template-columns:repeat(3, minmax(0,1fr));
-    gap:14px;
-  }
-  @media (max-width: 980px){ .cards{ grid-template-columns:1fr; } }
+.choice button{
+  margin-top:12px;
+  width:100%;
+  padding:12px;
+  border-radius:14px;
+  border:none;
+  background:linear-gradient(180deg,#3b82f6,#1d4ed8);
+  color:#fff;
+  font-weight:900;
+  cursor:pointer;
+}
 
-  .choice{
-    border-radius:20px;
-    border:1px solid rgba(255,255,255,.14);
-    background:rgba(255,255,255,.08);
-    padding:18px;
-    transition:transform .18s ease, box-shadow .25s ease, background .25s ease;
-  }
-  .choice:hover{
-    transform:translateY(-3px);
-    background:rgba(255,255,255,.10);
-    box-shadow:0 0 42px rgba(96,165,250,.12);
-  }
-  .choice .k{
-    font-weight:950;
-    letter-spacing:.2px;
-    margin:0 0 6px;
-    font-size:1.05rem;
-  }
-  .choice .d{
-    margin:0;
-    color:var(--muted2);
-    line-height:1.55;
-    font-size:.92rem;
-  }
-  .choice .go{
-    margin-top:14px;
-    width:100%;
-    padding:13px 14px;
-    border-radius:14px;
-    border:none;
-    cursor:pointer;
-    color:#fff;
-    font-weight:950;
-    background:linear-gradient(180deg,var(--cta),#1d4ed8);
-    box-shadow:0 12px 34px rgba(59,130,246,.28);
-    transition:transform .15s ease, box-shadow .15s ease;
-  }
-  .choice .go:hover{
-    transform:translateY(-1px);
-    box-shadow:0 16px 44px rgba(96,165,250,.44);
-  }
-  .subtle{
-    margin-top:10px;
-    color:rgba(226,232,240,.72);
-    font-size:.82rem;
-  }
-
-  .fadeIn{
-    opacity:0;
-    transform:translateY(12px);
-    animation:in .65s ease forwards;
-  }
-  @keyframes in{ to{ opacity:1; transform:translateY(0) } }
-
-  .legal{
-    margin-top:38px;
-    text-align:center;
-    color:rgba(226,232,240,.84);
-    font-size:.92rem;
-    line-height:1.6;
-  }
-  .legal strong{ color:#e0e7ff }
-
-  /* Modal: Continue to partner */
-  .modalBackdrop{
-    position:fixed; inset:0;
-    background:rgba(2,6,23,.62);
-    backdrop-filter:blur(8px);
-    display:none;
-    align-items:flex-end;
-    justify-content:center;
-    z-index:50;
-    padding:18px;
-  }
-  .modalBackdrop.show{ display:flex; }
-  .modal{
-    width:min(920px, 100%);
-    border-radius:24px;
-    border:1px solid rgba(255,255,255,.14);
-    background:
-      radial-gradient(800px 380px at 20% 0%, rgba(241,208,138,.14), transparent 60%),
-      radial-gradient(860px 420px at 80% 10%, rgba(96,165,250,.16), transparent 62%),
-      linear-gradient(180deg, rgba(255,255,255,.06), transparent),
-      rgba(2,6,23,.38);
-    box-shadow:var(--shadow2);
-    padding:18px 18px 16px;
-    max-height:86vh;
-    overflow:auto;
-  }
-  .modalTop{
-    display:flex;
-    align-items:flex-start;
-    justify-content:space-between;
-    gap:12px;
-    padding:4px 4px 12px;
-    border-bottom:1px solid rgba(255,255,255,.10);
-  }
-  .modalTop h4{
-    margin:0;
-    font-size:1.25rem;
-    letter-spacing:-.01em;
-  }
-  .modalTop p{
-    margin:6px 0 0;
-    color:var(--muted2);
-    line-height:1.55;
-    max-width:72ch;
-    font-size:.95rem;
-  }
-  .closeBtn{
-    border:1px solid rgba(255,255,255,.16);
-    background:rgba(255,255,255,.08);
-    color:#e0e7ff;
-    border-radius:12px;
-    padding:10px 12px;
-    cursor:pointer;
-    font-weight:950;
-    transition:transform .15s ease, background .2s ease;
-  }
-  .closeBtn:hover{ transform:translateY(-1px); background:rgba(255,255,255,.10); }
-
-  .modalGrid{
-    margin-top:14px;
-    display:grid;
-    grid-template-columns:repeat(2, minmax(0,1fr));
-    gap:12px;
-  }
-  @media (max-width: 760px){ .modalGrid{ grid-template-columns:1fr; } }
-  .modalItem{
-    border:1px solid rgba(255,255,255,.14);
-    background:rgba(255,255,255,.08);
-    border-radius:18px;
-    padding:14px;
-  }
-  .modalItem .title{
-    font-weight:950;
-    margin:0 0 6px;
-  }
-  .modalItem .desc{
-    margin:0;
-    color:var(--muted2);
-    line-height:1.5;
-    font-size:.92rem;
-  }
-  .modalItem .btn{
-    margin-top:10px;
-    width:100%;
-    padding:12px 12px;
-    border-radius:14px;
-    border:none;
-    cursor:pointer;
-    color:#fff;
-    font-weight:950;
-    background:linear-gradient(180deg,var(--cta),#1d4ed8);
-    box-shadow:0 12px 34px rgba(59,130,246,.26);
-  }
-
-  /* Admin */
-  .admin{
-    position:fixed;
-    right:16px;
-    bottom:16px;
-    background:rgba(2,6,23,.72);
-    border:1px solid rgba(255,255,255,.14);
-    border-radius:16px;
-    padding:12px 12px;
-    font-size:13px;
-    max-width:320px;
-    box-shadow:0 18px 40px rgba(0,0,0,.52);
-  }
-  .hidden{ display:none }
+/* Footer */
+.legal{
+  margin-top:38px;
+  text-align:center;
+  font-size:.9rem;
+  color:var(--muted2);
+}
 </style>
 </head>
 
 <body>
 
-<!-- Brighter, more travel-forward imagery -->
-<div class="bg" aria-hidden="true">
-  <!-- Beach / ocean -->
-  <img class="active" src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=2400&q=80" alt="">
-  <!-- City / lights -->
-  <img src="https://images.unsplash.com/photo-1496307653780-42ee777d4833?auto=format&fit=crop&w=2400&q=80" alt="">
-  <!-- Mountains / daylight -->
-  <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=2400&q=80" alt="">
-  <!-- Sunset / warm -->
-  <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=2400&q=80" alt="">
+<div class="bg">
+  <img class="active" src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=2400&q=80">
+  <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=2400&q=80">
 </div>
-<div class="overlay" aria-hidden="true"></div>
-<div class="grain" aria-hidden="true"></div>
+<div class="overlay"></div>
 
 <div class="container">
 
-  <div class="topbar fadeIn" style="animation-delay:.05s">
+  <div class="topbar">
     <div class="brand">
-      <div class="logoWrap" title="LionGate Travels">
-        <!-- Embedded, optimized logo (same asset, smaller for performance) -->
-        <img alt="LionGate Travels Logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAA...TRIMMED_FOR_READABILITY...==" />
-      </div>
-
-      <div class="brandText">
-        <h2>LionGate Travels</h2>
-        <div class="pill" title="Explore here. Checkout on Expedia.">
-          <span class="spark" aria-hidden="true"></span>
-          Experience-first · Redirect-last
-        </div>
-      </div>
+      <div class="logo">LG</div>
+      <strong>LionGate Travels</strong>
     </div>
-
-    <div class="nav" role="navigation" aria-label="Primary">
-      <button class="active" id="nav_home" onclick="showSection('home')">Explore</button>
-      <button id="nav_vacation" onclick="showSection('vacation')">Vacation</button>
-      <button id="nav_deals" onclick="showSection('deals')">Deals</button>
-      <button id="nav_things" onclick="showSection('things')">Things To Do</button>
-      <button id="nav_cruises" onclick="showSection('cruises')">Cruises</button>
+    <div class="nav">
+      <button class="active" onclick="showSection('home')">Explore</button>
+      <button onclick="showSection('vacation')">Vacation</button>
+      <button onclick="showSection('deals')">Deals</button>
     </div>
   </div>
 
   <div class="hero">
-    <div class="heroCard fadeIn" style="animation-delay:.12s">
-      <span class="kicker"><span class="goldDot" aria-hidden="true"></span>Your next trip starts here</span>
+    <div class="card">
       <h1>Explore first.<br>Book when ready.</h1>
       <p>
-        LionGate Travels is your exploration layer: ideas, intent, and direction.
-        When you’re ready to book, we send you to Expedia (our partner) for secure checkout.
+        LionGate Travels helps you explore ideas and intent.
+        When you decide, we send you to our trusted partners to book securely.
       </p>
-
-      <!-- These are now REAL actions -->
-      <div class="flow" aria-label="How it works">
-        <button class="stepBtn" onclick="focusVibe()"><span class="dot" aria-hidden="true"></span>Pick a vibe</button>
-        <button class="stepBtn" onclick="focusPlan()"><span class="dot" aria-hidden="true"></span>Narrow your plan</button>
-        <button class="stepBtn" onclick="openPartner()"><span class="dot" aria-hidden="true"></span>Continue to partner</button>
+      <div class="flow">
+        <button onclick="showSection('home')">Pick a vibe</button>
+        <button onclick="showSection('vacation')">Build a plan</button>
+        <button onclick="alert('Partner redirect demo')">Continue</button>
       </div>
     </div>
 
-    <div class="exploreCard fadeIn" style="animation-delay:.18s">
-      <h3 class="searchTitle">Start with a destination (optional)</h3>
-      <div class="searchRow">
-        <input id="dest" placeholder="e.g., Toronto, Miami, Paris, Cancun" />
-        <button class="primaryBtn" onclick="quickStart()">Start</button>
-      </div>
-      <p class="hint">
-        Browse here first. When you’re ready, continue to Expedia for booking and checkout.
-      </p>
-
-      <div class="intentGrid" id="intentGrid" aria-label="Intent shortcuts">
-        <div class="intent" onclick="goIntent('vacation')">
-          <div class="t">Plan a Vacation</div>
-          <div class="s">Packages, hotels, and an easy start.</div>
-        </div>
-        <div class="intent" onclick="goIntent('deals')">
-          <div class="t">Find Deals</div>
-          <div class="s">Start with value-based picks.</div>
-        </div>
-        <div class="intent" onclick="goIntent('things')">
-          <div class="t">Things To Do</div>
-          <div class="s">Attractions, tours, experiences.</div>
-        </div>
-        <div class="intent" onclick="goIntent('cruises')">
-          <div class="t">Cruises & Getaways</div>
-          <div class="s">High-impact trips, low planning stress.</div>
-        </div>
+    <div class="card">
+      <h3>Choose your path</h3>
+      <div class="intentGrid">
+        <div class="intent" onclick="showSection('vacation')"><strong>Vacation</strong><br><small>Packages & stays</small></div>
+        <div class="intent" onclick="showSection('deals')"><strong>Deals</strong><br><small>Value-first picks</small></div>
+        <div class="intent"><strong>Things To Do</strong><br><small>Experiences first</small></div>
+        <div class="intent"><strong>Cruises</strong><br><small>Low-stress trips</small></div>
       </div>
     </div>
   </div>
 
-  <!-- HOME -->
-  <div class="section fadeIn" id="sec_home" style="animation-delay:.25s">
+  <div class="section" id="home" style="display:block">
     <div class="sectionHeader">
-      <div>
-        <h3>Explore Paths</h3>
-        <p>
-          Pick a path that matches what you want right now. You’ll browse here first, then continue to Expedia only when you decide.
-        </p>
-      </div>
-      <div class="miniActions">
-        <button class="chip" onclick="showSection('vacation')">Vacation</button>
-        <button class="chip" onclick="showSection('deals')">Deals</button>
-        <button class="chip" onclick="showSection('things')">Things To Do</button>
-        <button class="chip" onclick="showSection('cruises')">Cruises</button>
-        <button class="chip" onclick="openPartner()">Continue</button>
-      </div>
+      <h2>Explore Paths</h2>
     </div>
+  </div>
 
+  <div class="section" id="vacation">
+    <div class="sectionHeader">
+      <h2>Vacation Builder</h2>
+    </div>
     <div class="cards">
       <div class="choice">
-        <div class="k">Weekend Reset</div>
-        <p class="d">Pick a destination, lock a great stay, then add transport only if needed.</p>
-        <button class="go" onclick="showSection('vacation'); setMood('weekend')">Build my weekend</button>
-        <div class="subtle">Best for: quick trips · city breaks · short stays</div>
+        <strong>Hotels</strong>
+        <p>Anchor your trip with the perfect stay.</p>
+        <button>Continue</button>
       </div>
       <div class="choice">
-        <div class="k">Big Vacation</div>
-        <p class="d">Start with packages or cruises to reduce planning stress and move faster.</p>
-        <button class="go" onclick="showSection('vacation'); setMood('vacation')">Plan a vacation</button>
-        <div class="subtle">Best for: families · all-in-one trips · easy planning</div>
+        <strong>Flights</strong>
+        <p>Add flights once dates are set.</p>
+        <button>Continue</button>
       </div>
       <div class="choice">
-        <div class="k">Explore & Do</div>
-        <p class="d">Choose activities first, then build the trip around what you want to experience.</p>
-        <button class="go" onclick="showSection('things'); setMood('explore')">Find experiences</button>
-        <div class="subtle">Best for: attractions · activities · day plans</div>
+        <strong>Packages</strong>
+        <p>Bundle planning made easy.</p>
+        <button>Continue</button>
       </div>
     </div>
   </div>
 
-  <!-- VACATION -->
-  <div class="section" id="sec_vacation">
+  <div class="section" id="deals">
     <div class="sectionHeader">
-      <div>
-        <h3>Vacation Builder</h3>
-        <p>
-          Start with the easiest “win”: packages and great stays. Add flights and cars only when you need them.
-        </p>
-      </div>
-      <div class="miniActions">
-        <button class="chip" onclick="showSection('home')">Back to Explore</button>
-        <button class="chip" onclick="showSection('deals')">Deals</button>
-        <button class="chip" onclick="showSection('cruises')">Cruises</button>
-        <button class="chip" onclick="openPartner()">Continue</button>
-      </div>
+      <h2>Deals First</h2>
     </div>
-
     <div class="cards">
       <div class="choice">
-        <div class="k">Vacation Packages</div>
-        <p class="d">Bundle-style planning to reduce friction and get moving faster.</p>
-        <button class="go" onclick="continueTo('packages','Vacation Packages')">Continue to Packages</button>
-        <div class="subtle">Expedia handles booking & checkout.</div>
-      </div>
-      <div class="choice">
-        <div class="k">Hotels & Stays</div>
-        <p class="d">Find stays first. This is usually the biggest “decision anchor.”</p>
-        <button class="go" onclick="continueTo('hotels','Hotels & Stays')">Continue to Hotels</button>
-        <div class="subtle">Secure checkout on partner site.</div>
-      </div>
-      <div class="choice">
-        <div class="k">Flights</div>
-        <p class="d">Add flights when you’re ready. Keep planning simple.</p>
-        <button class="go" onclick="continueTo('flights','Flights')">Continue to Flights</button>
-        <div class="subtle">Direct airline or platform booking.</div>
-      </div>
-      <div class="choice">
-        <div class="k">Car Rentals</div>
-        <p class="d">Freedom to explore. Add a car once dates are roughly decided.</p>
-        <button class="go" onclick="continueTo('cars','Car Rentals')">Continue to Car Rentals</button>
-        <div class="subtle">Trusted rental brands worldwide.</div>
-      </div>
-      <div class="choice">
-        <div class="k">Cruises</div>
-        <p class="d">High-value “one decision” vacations with less planning stress.</p>
-        <button class="go" onclick="continueTo('cruises','Cruises')">Continue to Cruises</button>
-        <div class="subtle">Great for: couples · families · relaxed trips</div>
-      </div>
-      <div class="choice">
-        <div class="k">Things To Do</div>
-        <p class="d">Pick experiences first, then build the trip around them.</p>
-        <button class="go" onclick="continueTo('things','Things To Do')">Continue to Activities</button>
-        <div class="subtle">Perfect for: city trips · day plans</div>
+        <strong>Top Deals</strong>
+        <p>Start with the best value available.</p>
+        <button>Continue</button>
       </div>
     </div>
   </div>
 
-  <!-- DEALS -->
-  <div class="section" id="sec_deals">
-    <div class="sectionHeader">
-      <div>
-        <h3>Deals First</h3>
-        <p>
-          Start with value. You can still build a premium trip — you just start by finding the best opportunities.
-        </p>
-      </div>
-      <div class="miniActions">
-        <button class="chip" onclick="showSection('home')">Back to Explore</button>
-        <button class="chip" onclick="showSection('vacation')">Vacation</button>
-        <button class="chip" onclick="showSection('things')">Things To Do</button>
-        <button class="chip" onclick="openPartner()">Continue</button>
-      </div>
-    </div>
-
-    <div class="cards">
-      <div class="choice">
-        <div class="k">Explore Deals</div>
-        <p class="d">Your best entry point for discounted travel opportunities.</p>
-        <button class="go" onclick="continueTo('deals','Deals')">Continue to Deals</button>
-        <div class="subtle">You’ll complete booking on Expedia.</div>
-      </div>
-      <div class="choice">
-        <div class="k">Deal + Hotel Anchor</div>
-        <p class="d">Find a strong deal, then lock your stay.</p>
-        <button class="go" onclick="continueTo('hotels','Hotels & Stays')">Continue to Hotels</button>
-        <div class="subtle">Tip: stays often sell the trip emotionally.</div>
-      </div>
-      <div class="choice">
-        <div class="k">Deal + Flights</div>
-        <p class="d">If your dates are flexible, flights can unlock value.</p>
-        <button class="go" onclick="continueTo('flights','Flights')">Continue to Flights</button>
-        <div class="subtle">Direct booking with airlines/platforms.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- THINGS TO DO -->
-  <div class="section" id="sec_things">
-    <div class="sectionHeader">
-      <div>
-        <h3>Things To Do</h3>
-        <p>
-          This is where trips become memorable. Pick experiences first — then decide where you’ll stay and how you’ll get there.
-        </p>
-      </div>
-      <div class="miniActions">
-        <button class="chip" onclick="showSection('home')">Back to Explore</button>
-        <button class="chip" onclick="showSection('vacation')">Vacation</button>
-        <button class="chip" onclick="showSection('deals')">Deals</button>
-        <button class="chip" onclick="openPartner()">Continue</button>
-      </div>
-    </div>
-
-    <div class="cards">
-      <div class="choice">
-        <div class="k">Activities & Attractions</div>
-        <p class="d">Tours, attractions, and experiences that define your trip.</p>
-        <button class="go" onclick="continueTo('things','Things To Do')">Continue to Activities</button>
-        <div class="subtle">Complete booking on Expedia.</div>
-      </div>
-      <div class="choice">
-        <div class="k">Pair with a Stay</div>
-        <p class="d">Once you pick experiences, anchor your trip with a great stay.</p>
-        <button class="go" onclick="continueTo('hotels','Hotels & Stays')">Continue to Hotels</button>
-        <div class="subtle">Secure checkout on partner site.</div>
-      </div>
-      <div class="choice">
-        <div class="k">Add Transportation</div>
-        <p class="d">Then add flights or a car only when you need them.</p>
-        <button class="go" onclick="showSection('vacation')">Open Vacation Builder</button>
-        <div class="subtle">Keep planning simple.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CRUISES -->
-  <div class="section" id="sec_cruises">
-    <div class="sectionHeader">
-      <div>
-        <h3>Cruises & Getaways</h3>
-        <p>
-          For many travelers, cruises are the simplest high-value vacation: one decision unlocks the whole trip.
-        </p>
-      </div>
-      <div class="miniActions">
-        <button class="chip" onclick="showSection('home')">Back to Explore</button>
-        <button class="chip" onclick="showSection('vacation')">Vacation</button>
-        <button class="chip" onclick="showSection('deals')">Deals</button>
-        <button class="chip" onclick="openPartner()">Continue</button>
-      </div>
-    </div>
-
-    <div class="cards">
-      <div class="choice">
-        <div class="k">Explore Cruises</div>
-        <p class="d">Browse cruise options and choose what fits your style.</p>
-        <button class="go" onclick="continueTo('cruises','Cruises')">Continue to Cruises</button>
-        <div class="subtle">Booking is handled on Expedia.</div>
-      </div>
-      <div class="choice">
-        <div class="k">Cruise + Pre/Post Stay</div>
-        <p class="d">Add a hotel stay before or after your cruise.</p>
-        <button class="go" onclick="continueTo('hotels','Hotels & Stays')">Continue to Hotels</button>
-        <div class="subtle">Great for: relaxing starts and endings.</div>
-      </div>
-      <div class="choice">
-        <div class="k">Cruise + Flights</div>
-        <p class="d">If you’re traveling to the port city, add flights when ready.</p>
-        <button class="go" onclick="continueTo('flights','Flights')">Continue to Flights</button>
-        <div class="subtle">Direct airline/platform booking.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="legal fadeIn" style="animation-delay:.45s">
-    <strong>Affiliate disclosure:</strong> LionGate Travels may earn a commission from partner links at no extra cost to you.
-    We do not process payments and we do not sell travel—Expedia is the checkout and booking provider.
-    <br><span style="opacity:.9">Powered by LionGateOS.</span>
+  <div class="legal">
+    Affiliate disclosure: LionGate Travels may earn a commission from partner links.<br>
+    Powered by LionGateOS.
   </div>
 
 </div>
-
-<!-- Partner modal -->
-<div class="modalBackdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-label="Continue to partner">
-  <div class="modal">
-    <div class="modalTop">
-      <div>
-        <h4>Ready to book on Expedia?</h4>
-        <p>
-          You’ll be redirected to Expedia (our partner) for secure booking and checkout.
-          Choose what you want to book now.
-        </p>
-      </div>
-      <button class="closeBtn" onclick="closePartner()">Close</button>
-    </div>
-
-    <div class="modalGrid">
-      <div class="modalItem">
-        <p class="title">Hotels & Stays</p>
-        <p class="desc">Resorts, hotels, and short-term stays.</p>
-        <button class="btn" onclick="continueTo('hotels','Hotels & Stays')">Continue</button>
-      </div>
-
-      <div class="modalItem">
-        <p class="title">Flights</p>
-        <p class="desc">Search and book flights with trusted providers.</p>
-        <button class="btn" onclick="continueTo('flights','Flights')">Continue</button>
-      </div>
-
-      <div class="modalItem">
-        <p class="title">Car Rentals</p>
-        <p class="desc">Rentals from major brands worldwide.</p>
-        <button class="btn" onclick="continueTo('cars','Car Rentals')">Continue</button>
-      </div>
-
-      <div class="modalItem">
-        <p class="title">Vacation Packages</p>
-        <p class="desc">Bundle planning to reduce friction and move faster.</p>
-        <button class="btn" onclick="continueTo('packages','Vacation Packages')">Continue</button>
-      </div>
-
-      <div class="modalItem">
-        <p class="title">Cruises</p>
-        <p class="desc">High-value vacations with less planning stress.</p>
-        <button class="btn" onclick="continueTo('cruises','Cruises')">Continue</button>
-      </div>
-
-      <div class="modalItem">
-        <p class="title">Deals</p>
-        <p class="desc">Start with value and discounted opportunities.</p>
-        <button class="btn" onclick="continueTo('deals','Deals')">Continue</button>
-      </div>
-
-      <div class="modalItem">
-        <p class="title">Things To Do</p>
-        <p class="desc">Tours, attractions, and experiences.</p>
-        <button class="btn" onclick="continueTo('things','Things To Do')">Continue</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="admin" class="admin hidden"></div>
 
 <script>
-  /* =========================
-     Experience Layer v1.1
-     - Brighter travel mood
-     - Logo integrated
-     - “Steps” are real actions
-     - Includes all affiliate links provided (CA/US)
-     - No prices/inventory; redirect only when user chooses
-     ========================= */
-
-  // Background rotation
-  (function(){
-    const slides = document.querySelectorAll(".bg img");
-    let i = 0;
-    setInterval(() => {
-      slides[i].classList.remove("active");
-      i = (i + 1) % slides.length;
-      slides[i].classList.add("active");
-    }, 9000);
-  })();
-
-  // Local admin stats (device-only) — preserved and extended
-  const KEY = "lg_stats";
-  const data = JSON.parse(localStorage.getItem(KEY) || "{}");
-  function save(){ localStorage.setItem(KEY, JSON.stringify(data)); }
-
-  // Locale routing: CA -> CA links, otherwise US
-  function isCA(){
-    const lang = (navigator.language || "").toLowerCase();
-    const langs = (navigator.languages || []).join(",").toLowerCase();
-    return lang.includes("en-ca") || langs.includes("en-ca") || lang.includes("fr-ca") || langs.includes("fr-ca");
-  }
-
-  // All affiliate links (CA + USA)
-  const LINKS = {
-    hotels:   { ca:"https://expedia.com/affiliate/G4xFvTY",  us:"https://expedia.com/affiliate/c2kTkZ2" },
-    flights:  { ca:"https://expedia.com/affiliate/6pjpOsp",  us:"https://expedia.com/affiliate/HUJIj2eI" },
-    cars:     { ca:"https://expedia.com/affiliate/L426xQ7",  us:"https://expedia.com/affiliate/UZjj6qy" },
-    packages: { ca:"https://expedia.com/affiliate/FQGnDRq",  us:"https://expedia.com/affiliate/EFMm2UR" },
-    cruises:  { ca:"https://expedia.com/affiliate/0MijKyC",  us:"https://expedia.com/affiliate/KXa1TMG" },
-    deals:    { ca:"https://expedia.com/affiliate/vseNebd",  us:"https://expedia.com/affiliate/NsM1cRl" },
-    things:   { ca:"https://expedia.com/affiliate/QB6Un15",  us:"https://expedia.com/affiliate/ucqc4xU" }
-  };
-
-  // “Stay longer” state
-  function setMood(m){
-    data.mood = m;
-    data.mood_last = new Date().toISOString();
-    save();
-  }
-
-  // Section routing
-  const secIds = {
-    home: "sec_home",
-    vacation: "sec_vacation",
-    deals: "sec_deals",
-    things: "sec_things",
-    cruises: "sec_cruises"
-  };
-
-  function showSection(name){
-    data.section_views = data.section_views || {};
-    data.section_views[name] = (data.section_views[name] || 0) + 1;
-    data.last = new Date().toISOString();
-    save();
-
-    Object.values(secIds).forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = "none";
-    });
-
-    const target = document.getElementById(secIds[name]);
-    if (target){
-      target.style.display = "block";
-      target.scrollIntoView({behavior:"smooth", block:"start"});
-    }
-
-    ["home","vacation","deals","things","cruises"].forEach(k=>{
-      const b=document.getElementById("nav_"+k);
-      if(b) b.classList.toggle("active", k===name);
-    });
-  }
-
-  function goIntent(name){
-    setMood(name);
-    showSection(name);
-  }
-
-  function quickStart(){
-    const d = (document.getElementById("dest").value || "").trim();
-    if(d){
-      data.destination_last = d;
-      data.destination_count = (data.destination_count || 0) + 1;
-      save();
-    }
-    showSection("vacation");
-  }
-
-  function continueTo(kind, label){
-    data.clicks = data.clicks || {};
-    data.clicks[kind] = (data.clicks[kind] || 0) + 1;
-    data.last_click = label;
-    data.last = new Date().toISOString();
-    save();
-
-    const url = (isCA() ? LINKS[kind].ca : LINKS[kind].us);
-
-    // gentle micro-delay so it feels intentional
-    setTimeout(() => { window.location.href = url; }, 220);
-  }
-
-  // Step actions (now functional)
-  function focusVibe(){
-    document.getElementById("intentGrid").scrollIntoView({behavior:"smooth", block:"center"});
-  }
-  function focusPlan(){
-    showSection("vacation");
-  }
-
-  // Partner modal
-  function openPartner(){
-    data.partner_modal_open = (data.partner_modal_open || 0) + 1;
-    data.last = new Date().toISOString();
-    save();
-    document.getElementById("modalBackdrop").classList.add("show");
-  }
-  function closePartner(){
-    document.getElementById("modalBackdrop").classList.remove("show");
-  }
-  document.getElementById("modalBackdrop").addEventListener("click", (e)=>{
-    if(e.target.id === "modalBackdrop") closePartner();
-  });
-  document.addEventListener("keydown", (e)=>{
-    if(e.key === "Escape") closePartner();
-  });
-
-  // Admin stats panel (device-only)
-  function renderAdmin(){
-    const a = document.getElementById("admin");
-    const pretty = (obj) => {
-      try { return JSON.stringify(obj, null, 2).replace(/\n/g,"<br>").replace(/ /g,"&nbsp;"); }
-      catch { return String(obj); }
-    };
-    a.innerHTML =
-      "<strong>Admin Stats</strong><br><span style='color:rgba(226,232,240,.82)'>Device-only (localStorage)</span><br><br>" +
-      "<strong>Last</strong><br>" +
-      "last: " + (data.last || "-") + "<br>" +
-      "mood: " + (data.mood || "-") + "<br>" +
-      "destination_last: " + (data.destination_last || "-") + "<br>" +
-      "partner_modal_open: " + (data.partner_modal_open || 0) + "<br><br>" +
-      "<strong>Clicks</strong><br>" + pretty(data.clicks || {}) + "<br><br>" +
-      "<strong>Section Views</strong><br>" + pretty(data.section_views || {});
-  }
-
-  (function init(){
-    Object.values(secIds).forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = "none";
-    });
-    showSection("home");
-
-    if(new URLSearchParams(location.search).get("admin")==="1"){
-      document.getElementById("admin").classList.remove("hidden");
-      renderAdmin();
-    }
-  })();
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.style.display='none');
+  document.getElementById(id).style.display='block';
+}
 </script>
 
 </body>
