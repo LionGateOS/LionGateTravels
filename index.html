@@ -4,22 +4,78 @@
 <meta charset="UTF-8">
 <title>LionGate Travels</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
-:root{--bg:#0b0f14;--panel:#111827;--border:#1f2937;--text:#e5e7eb;--muted:#9ca3af;--cta:#2563eb;}
-body{font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);margin:0}
-.container{max-width:980px;margin:0 auto;padding:28px}
-.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px}
-.trust{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:12px}
-.trust div{background:#020617;border:1px solid var(--border);border-radius:10px;padding:10px;font-size:13px;color:var(--muted)}
-button{padding:10px 16px;border-radius:10px;border:1px solid var(--border);background:var(--cta);color:#fff;font-size:15px;cursor:pointer}
-.admin{position:fixed;right:16px;bottom:16px;background:#020617;border:1px solid var(--border);border-radius:12px;padding:12px;font-size:13px;max-width:260px}
+:root{
+  --bg:#0b0f14;
+  --panel:#111827;
+  --border:#1f2937;
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+  --cta:#2563eb;
+}
+body{
+  font-family:system-ui,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  margin:0;
+}
+.container{
+  max-width:980px;
+  margin:0 auto;
+  padding:28px;
+}
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:18px;
+  margin-bottom:16px;
+}
+.trust{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:10px;
+  margin-top:12px;
+}
+.trust div{
+  background:#020617;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:10px;
+  font-size:13px;
+  color:var(--muted);
+}
+button{
+  padding:12px 20px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:var(--cta);
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+}
+.admin{
+  position:fixed;
+  right:16px;
+  bottom:16px;
+  background:#020617;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+  font-size:13px;
+  max-width:260px;
+}
 .hidden{display:none}
 </style>
 </head>
+
 <body>
 <div class="container">
   <h1>LionGate Travels</h1>
-  <p style="color:var(--muted);margin-top:4px">Your Journey Simplified.</p>
+  <p style="color:var(--muted);margin-top:4px">
+    Your Journey Simplified.
+  </p>
 
   <div class="card">
     <h3>Hotels & Stays</h3>
@@ -43,7 +99,9 @@ function go(){
   data.hotels=(data.hotels||0)+1;
   data.last=new Date().toISOString();
   localStorage.setItem(KEY,JSON.stringify(data));
-  window.location.href="https://www.booking.com/";
+
+  // 🔴 🔴 🔴 PASTE YOUR EXPEDIA AFFILIATE LINK ON THE NEXT LINE 🔴 🔴 🔴
+  window.location.href="PASTE_EXPEDIA_AFFILIATE_LINK_HERE";
 }
 
 function renderAdmin(){
@@ -59,3 +117,4 @@ if(new URLSearchParams(location.search).get("admin")==="1"){
 </script>
 </body>
 </html>
+
