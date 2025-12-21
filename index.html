@@ -3,334 +3,139 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>LionGate Travels — Experience Layer v1.2</title>
+<title>LionGate Travels</title>
+<meta name="description" content="Explore destinations with LionGate Travels and book securely with trusted partners like Booking.com and Expedia." />
 
 <style>
 :root{
+  --bg:#0b1220;
+  --panel:#111a2e;
+  --panel-soft:#0b1326;
+  --border:#22304d;
   --text:#f8fafc;
-  --muted:rgba(226,232,240,.88);
-  --muted2:rgba(226,232,240,.72);
+  --muted:#c7d2fe;
   --cta:#3b82f6;
-  --ctaGlow:rgba(59,130,246,.45);
-  --gold:#f1d08a;
-  --glass:rgba(15,23,42,.42);
-  --border:rgba(255,255,255,.14);
-  --radius:22px;
+  --cta-hover:#60a5fa;
 }
-
 *{box-sizing:border-box}
-html,body{height:100%}
-
 body{
   margin:0;
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:linear-gradient(180deg,#060b18,var(--bg));
   color:var(--text);
-  background:#020617;
-  overflow-x:hidden;
 }
-
-/* Background */
-.bg{position:fixed; inset:0; z-index:-3}
-.bg img{
-  position:absolute; inset:0;
-  width:100%; height:100%;
-  object-fit:cover;
-  opacity:0;
-  transition:opacity 2.5s ease;
-  filter:brightness(.65) saturate(1.15);
-}
-.bg img.active{opacity:1}
-
-.overlay{
-  position:fixed; inset:0; z-index:-2;
-  background:
-    radial-gradient(900px 500px at 50% 0%, rgba(96,165,250,.28), transparent 60%),
-    radial-gradient(800px 500px at 15% 30%, rgba(241,208,138,.18), transparent 60%),
-    linear-gradient(180deg, rgba(2,6,23,.15), rgba(2,6,23,.75));
-}
-
-/* Layout */
 .container{
-  max-width:1180px;
+  max-width:1100px;
   margin:0 auto;
-  padding:48px 22px 110px;
+  padding:48px 24px 96px;
 }
-
-/* Top Bar */
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:14px;
-  padding:14px 18px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  background:var(--glass);
-  backdrop-filter:blur(18px);
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.logo{
-  width:44px;
-  height:44px;
-  border-radius:14px;
-  background:linear-gradient(135deg,#3b82f6,#60a5fa);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:900;
-  letter-spacing:.5px;
-}
-
-.nav{
-  display:flex;
-  gap:8px;
-}
-
-.nav button{
-  padding:9px 14px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  background:transparent;
-  color:#e0e7ff;
-  cursor:pointer;
-  font-weight:800;
-}
-
-.nav button.active{
-  background:linear-gradient(180deg,#3b82f6,#1d4ed8);
-  box-shadow:0 0 28px var(--ctaGlow);
-}
-
-/* Hero */
-.hero{
-  margin-top:28px;
-  display:grid;
-  grid-template-columns:1.25fr .75fr;
-  gap:22px;
-}
-
-@media(max-width:960px){
-  .hero{grid-template-columns:1fr}
-}
-
-.card{
-  border-radius:var(--radius);
-  border:1px solid var(--border);
-  background:var(--glass);
-  backdrop-filter:blur(18px);
-  padding:28px;
-}
-
-.hero h1{
-  margin:10px 0;
-  font-size:3rem;
-  line-height:1.05;
-}
-
-.hero p{
-  color:var(--muted);
-  max-width:65ch;
-}
-
-.flow{
-  margin-top:18px;
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-.flow button{
-  padding:10px 14px;
-  border-radius:16px;
-  border:1px solid var(--border);
-  background:rgba(2,6,23,.35);
-  color:#e0e7ff;
-  cursor:pointer;
-  font-weight:800;
-}
-
-/* Intent Grid */
-.intentGrid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
-
-.intent{
-  padding:16px;
-  border-radius:18px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.06);
-  cursor:pointer;
-}
-
-.intent:hover{
-  box-shadow:0 0 30px rgba(96,165,250,.25);
-}
-
-/* Sections */
-.section{
-  margin-top:30px;
-  border-radius:26px;
-  border:1px solid var(--border);
-  background:var(--glass);
-  backdrop-filter:blur(18px);
-  display:none;
-}
-
-.sectionHeader{
-  padding:22px;
-  border-bottom:1px solid var(--border);
-}
-
-.cards{
-  padding:22px;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-}
-
-@media(max-width:960px){
-  .cards{grid-template-columns:1fr}
-}
-
-.choice{
-  padding:18px;
-  border-radius:18px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.06);
-}
-
-.choice button{
-  margin-top:12px;
-  width:100%;
-  padding:12px;
-  border-radius:14px;
-  border:none;
-  background:linear-gradient(180deg,#3b82f6,#1d4ed8);
-  color:#fff;
-  font-weight:900;
-  cursor:pointer;
-}
-
-/* Footer */
-.legal{
-  margin-top:38px;
+header{
   text-align:center;
-  font-size:.9rem;
-  color:var(--muted2);
+  margin-bottom:48px;
+}
+header h1{
+  margin:0 0 10px;
+  font-size:3rem;
+}
+header p{
+  color:var(--muted);
+  max-width:720px;
+  margin:0 auto;
+  line-height:1.6;
+}
+.notice{
+  background:rgba(241,208,138,.12);
+  border:1px solid rgba(241,208,138,.35);
+  padding:14px;
+  border-radius:12px;
+  text-align:center;
+  margin-bottom:32px;
+  font-size:.95rem;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:24px;
+}
+.card{
+  background:linear-gradient(180deg,var(--panel),var(--panel-soft));
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.card h3{margin:0 0 10px;font-size:1.4rem;}
+.card p{margin:0;color:var(--muted);font-size:.95rem;line-height:1.6;}
+.card a{
+  display:inline-block;
+  margin-top:18px;
+  padding:14px 18px;
+  border-radius:12px;
+  background:linear-gradient(180deg,var(--cta),#1e40af);
+  color:#fff;
+  text-decoration:none;
+  font-weight:700;
+  text-align:center;
+}
+.card a:hover{background:linear-gradient(180deg,var(--cta-hover),#1e3a8a);}
+footer{
+  margin-top:72px;
+  padding-top:24px;
+  border-top:1px solid var(--border);
+  text-align:center;
+  font-size:.85rem;
+  color:var(--muted);
 }
 </style>
 </head>
 
 <body>
-
-<div class="bg">
-  <img class="active" src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=2400&q=80">
-  <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=2400&q=80">
-</div>
-<div class="overlay"></div>
-
 <div class="container">
 
-  <div class="topbar">
-    <div class="brand">
-      <div class="logo">LG</div>
-      <strong>LionGate Travels</strong>
-    </div>
-    <div class="nav">
-      <button class="active" onclick="showSection('home')">Explore</button>
-      <button onclick="showSection('vacation')">Vacation</button>
-      <button onclick="showSection('deals')">Deals</button>
-    </div>
+<header>
+  <h1>LionGate Travels</h1>
+  <p>Explore destinations first. When you're ready to book, continue securely with our trusted partners.</p>
+</header>
+
+<div class="notice">
+  We do not sell travel or process payments. Booking and checkout are completed on partner websites.
+</div>
+
+<div class="grid">
+
+  <div class="card">
+    <h3>Hotels & Stays</h3>
+    <p>Browse hotels, resorts, and short-term stays worldwide.</p>
+    <a href="https://www.booking.com/index.html" target="_blank" rel="noopener">
+      Book Hotels on Booking.com
+    </a>
   </div>
 
-  <div class="hero">
-    <div class="card">
-      <h1>Explore first.<br>Book when ready.</h1>
-      <p>
-        LionGate Travels helps you explore ideas and intent.
-        When you decide, we send you to our trusted partners to book securely.
-      </p>
-      <div class="flow">
-        <button onclick="showSection('home')">Pick a vibe</button>
-        <button onclick="showSection('vacation')">Build a plan</button>
-        <button onclick="alert('Partner redirect demo')">Continue</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>Choose your path</h3>
-      <div class="intentGrid">
-        <div class="intent" onclick="showSection('vacation')"><strong>Vacation</strong><br><small>Packages & stays</small></div>
-        <div class="intent" onclick="showSection('deals')"><strong>Deals</strong><br><small>Value-first picks</small></div>
-        <div class="intent"><strong>Things To Do</strong><br><small>Experiences first</small></div>
-        <div class="intent"><strong>Cruises</strong><br><small>Low-stress trips</small></div>
-      </div>
-    </div>
+  <div class="card">
+    <h3>Flights</h3>
+    <p>Find and book flights with airlines and trusted platforms.</p>
+    <a href="https://expedia.com/affiliate/HUJIj2eI" target="_blank" rel="noopener">
+      Search Flights on Expedia
+    </a>
   </div>
 
-  <div class="section" id="home" style="display:block">
-    <div class="sectionHeader">
-      <h2>Explore Paths</h2>
-    </div>
-  </div>
-
-  <div class="section" id="vacation">
-    <div class="sectionHeader">
-      <h2>Vacation Builder</h2>
-    </div>
-    <div class="cards">
-      <div class="choice">
-        <strong>Hotels</strong>
-        <p>Anchor your trip with the perfect stay.</p>
-        <button>Continue</button>
-      </div>
-      <div class="choice">
-        <strong>Flights</strong>
-        <p>Add flights once dates are set.</p>
-        <button>Continue</button>
-      </div>
-      <div class="choice">
-        <strong>Packages</strong>
-        <p>Bundle planning made easy.</p>
-        <button>Continue</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="section" id="deals">
-    <div class="sectionHeader">
-      <h2>Deals First</h2>
-    </div>
-    <div class="cards">
-      <div class="choice">
-        <strong>Top Deals</strong>
-        <p>Start with the best value available.</p>
-        <button>Continue</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="legal">
-    Affiliate disclosure: LionGate Travels may earn a commission from partner links.<br>
-    Powered by LionGateOS.
+  <div class="card">
+    <h3>Car Rentals</h3>
+    <p>Rent vehicles from major providers worldwide.</p>
+    <a href="https://expedia.com/affiliate/UZjj6qy" target="_blank" rel="noopener">
+      Rent a Car on Expedia
+    </a>
   </div>
 
 </div>
 
-<script>
-function showSection(id){
-  document.querySelectorAll('.section').forEach(s=>s.style.display='none');
-  document.getElementById(id).style.display='block';
-}
-</script>
+<footer>
+  Affiliate disclosure: LionGate Travels may earn a commission from partner links at no extra cost to you.<br>
+  Powered by LionGateOS.
+</footer>
 
+</div>
 </body>
 </html>
