@@ -17,108 +17,118 @@
   --stroke:2px;
 }
 html,body{
-  margin:0;height:100%;background:var(--bg);color:var(--text);
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial
+  margin:0;
+  height:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
 }
-
-#ambient{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:
-    radial-gradient(900px 600px at 20% 20%, rgba(90,160,255,.08), transparent 60%),
-    radial-gradient(900px 650px at 85% 55%, rgba(215,179,90,.06), transparent 65%);
-  opacity:.30;
+#page{
+  min-height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px;
 }
-
-#gateway{
-  position:relative;z-index:2;min-height:100%;
-  display:flex;align-items:center;justify-content:center;padding:40px
-}
-.panel{max-width:1100px;width:100%;display:grid;grid-template-columns:1fr;gap:24px}
-
 .card{
   position:relative;
+  width:100%;
+  max-width:1100px;
   background:var(--card);
   border-radius:var(--radius);
+  padding:40px;
   box-shadow:0 22px 60px rgba(0,0,0,.55);
-  padding:30px;
-  text-align:center
 }
-
-.logo{max-width:420px;width:100%;display:block;margin:0 auto 18px}
-
 .edgeRunner{
-  position:absolute;inset:0;pointer-events:none;z-index:5
+  position:absolute;
+  inset:0;
+  pointer-events:none;
 }
-.edgeRunner svg{width:100%;height:100%;display:block}
-
-.services{
+.edgeRunner svg{
+  width:100%;
+  height:100%;
+  display:block;
+}
+.logo{
+  display:block;
+  margin:0 auto 20px;
+  max-width:240px;
+}
+h1{text-align:center;margin:10px 0}
+p{text-align:center;color:var(--muted)}
+.actions{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:16px;margin-top:24px
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  margin-top:30px;
 }
-.service{background:rgba(255,255,255,.04);border-radius:18px;padding:18px}
-.service a{
-  display:inline-block;margin-top:10px;padding:10px 14px;
-  border-radius:12px;text-decoration:none;color:#fff;background:#5aa0ff
+.action{
+  background:rgba(255,255,255,.04);
+  border-radius:18px;
+  padding:20px;
+  text-align:center;
+}
+.action a{
+  display:inline-block;
+  margin-top:10px;
+  padding:10px 16px;
+  border-radius:12px;
+  background:#6d8cff;
+  color:#fff;
+  text-decoration:none;
+}
+@media(max-width:900px){
+  .actions{grid-template-columns:1fr}
 }
 </style>
 </head>
-
 <body>
 
-<div id="ambient"></div>
+<div id="page">
+  <div class="card" id="mainCard">
+    <div class="edgeRunner" aria-hidden="true">
+      <svg id="edgeSvg">
+        <rect id="edgeBase"/>
+        <rect id="edgeRun"/>
+      </svg>
+    </div>
 
-<div id="gateway">
-  <div class="panel">
-    <div class="card">
+    <img src="LionGateOS_Travels_logo_1024.png" alt="LionGateOS Travels" class="logo"/>
 
-      <!-- EDGE TRACER -->
-      <div class="edgeRunner" aria-hidden="true">
-        <svg id="svgMain">
-          <rect id="baseMain"/>
-          <rect id="runMain"/>
-        </svg>
+    <h1>LionGateOS Travels</h1>
+    <p>Explore destinations first. When you're ready to book, continue securely with trusted partners.</p>
+
+    <div class="actions">
+      <div class="action">
+        <strong>Hotels & Stays</strong><br/>
+        <a href="https://www.booking.com" target="_blank" rel="noopener">Book on Booking.com</a>
       </div>
-
-      <img src="LionGateOS_Travels_logo_1024.png" alt="LionGateOS Travels" class="logo"/>
-
-      <h1>LionGateOS Travels</h1>
-      <p>Explore destinations first. When you're ready to book, continue securely with trusted partners.</p>
-
-      <div class="services">
-        <div class="service">
-          <strong>Hotels & Stays</strong><br/>
-          <a href="https://www.booking.com" target="_blank" rel="noopener">Book on Booking.com</a>
-        </div>
-        <div class="service">
-          <strong>Flights</strong><br/>
-          <a href="https://www.expedia.com/Flights" target="_blank" rel="noopener">Search Flights</a>
-        </div>
-        <div class="service">
-          <strong>Car Rentals</strong><br/>
-          <a href="https://www.expedia.com/Cars" target="_blank" rel="noopener">Rent a Car</a>
-        </div>
+      <div class="action">
+        <strong>Flights</strong><br/>
+        <a href="https://www.expedia.com" target="_blank" rel="noopener">Search Flights</a>
       </div>
-
+      <div class="action">
+        <strong>Car Rentals</strong><br/>
+        <a href="https://www.expedia.com/Cars" target="_blank" rel="noopener">Rent a Car</a>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-// === EDGE TRACER ===
-function initEdgeTracer(){
-  const card = document.querySelector('.card');
-  const svg = document.getElementById('svgMain');
-  const base = document.getElementById('baseMain');
-  const run  = document.getElementById('runMain');
-  if(!card || !svg) return;
+(function(){
+  const card = document.getElementById("mainCard");
+  const svg = document.getElementById("edgeSvg");
+  const base = document.getElementById("edgeBase");
+  const run  = document.getElementById("edgeRun");
 
-  function apply(){
+  function layout(){
     const r = card.getBoundingClientRect();
-    const rad = parseFloat(getComputedStyle(card).borderTopLeftRadius) || 26;
-    const stroke = 2;
+    const radius = parseFloat(getComputedStyle(card).borderTopLeftRadius) || 26;
+    const stroke = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--stroke')) || 2;
 
     svg.setAttribute("viewBox", `0 0 ${r.width} ${r.height}`);
+
     const inset = stroke/2;
     const w = r.width - stroke;
     const h = r.height - stroke;
@@ -128,37 +138,47 @@ function initEdgeTracer(){
       el.setAttribute("y", inset);
       el.setAttribute("width", w);
       el.setAttribute("height", h);
-      el.setAttribute("rx", rad);
-      el.setAttribute("ry", rad);
-      el.setAttribute("fill","none");
-      el.setAttribute("vector-effect","non-scaling-stroke");
+      el.setAttribute("rx", radius);
+      el.setAttribute("ry", radius);
+      el.setAttribute("fill", "none");
+      el.setAttribute("vector-effect", "non-scaling-stroke");
+      el.setAttribute("stroke-linejoin","round");
     });
 
     base.setAttribute("stroke","rgba(255,255,255,0.12)");
-    base.setAttribute("stroke-width","1.5");
+    base.setAttribute("stroke-width",stroke);
 
-    run.setAttribute("stroke","#5aa0ff");
-    run.setAttribute("stroke-width", stroke);
+    run.setAttribute("stroke","var(--trace)");
+    run.setAttribute("stroke-width",stroke);
 
-    const perimeter = 2*(w+h) - 8*rad + 2*Math.PI*rad;
-    const seg = Math.max(120, perimeter*0.22);
-    const gap = Math.max(120, perimeter - seg);
-    run.setAttribute("stroke-dasharray", `${seg} ${gap}`);
+    const perimeter = 2*(w+h) - 8*radius + 2*Math.PI*radius;
+    const seg = Math.max(120, perimeter*0.25);
+    run.setAttribute("stroke-dasharray", `${seg} ${perimeter}`);
   }
-
-  apply();
-  window.addEventListener("resize", apply);
 
   let t=0;
-  function tick(){
-    t++;
-    run.setAttribute("stroke-dashoffset", (t*2.2).toFixed(2));
-    requestAnimationFrame(tick);
+  function animate(){
+    t+=1.2;
+    run.setAttribute("stroke-dashoffset", (-t).toFixed(2));
+    requestAnimationFrame(animate);
   }
-  requestAnimationFrame(tick);
-}
 
-requestAnimationFrame(()=>requestAnimationFrame(initEdgeTracer));
+  function init(){
+    layout();
+    requestAnimationFrame(()=>{
+      layout();
+      animate();
+    });
+  }
+
+  if(document.readyState==="complete"){
+    init();
+  }else{
+    window.addEventListener("load", init);
+  }
+
+  new ResizeObserver(()=>layout()).observe(card);
+})();
 </script>
 
 </body>
