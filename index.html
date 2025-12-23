@@ -9,535 +9,166 @@
 <style>
 :root{
   --bg:#070a12;
-  --card:rgba(14, 18, 34, 0.78); /* LOCKED */
+  --panel:rgba(14,18,34,0.78);
   --text:#e8edf7;
   --muted:#aab6d6;
-  --trace:#5aa0ff;              /* neon blue */
-  --radius:26px;                 /* LOCKED */
+  --trace:#5aa0ff;
+  --radius:26px;
   --stroke:2px;
 }
-
-html,body{
-  margin:0;
-  height:100%;
-  background:var(--bg);
-  color:var(--text);
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
-}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
 
 /* Ambient background */
 #ambient{
   position:fixed; inset:0; z-index:0; pointer-events:none;
   background:
-    radial-gradient(900px 600px at 20% 20%, rgba(90,160,255,.08), transparent 60%),
-    radial-gradient(900px 650px at 85% 55%, rgba(215,179,90,.06), transparent 65%),
-    url("ambient_purple.png");
+    radial-gradient(900px 600px at 20% 20%, rgba(90,160,255,.10), transparent 60%),
+    radial-gradient(900px 650px at 80% 60%, rgba(168,132,255,.10), transparent 65%),
+    url("assets/ambient_purple.png");
   background-size:cover;
   background-position:center;
-  opacity:.35;
-  filter:saturate(1.06) contrast(1.06);
-  transform:scale(1.02);
-}
-#ambient::after{
-  content:"";
-  position:absolute; inset:0;
-  background:radial-gradient(70% 70% at 50% 55%, rgba(0,0,0,0), rgba(0,0,0,.55));
+  opacity:.45;
 }
 
-/* Sparkles (behind the panel, visible through 0.78 opacity) */
-#sparkles{
-  position:fixed; inset:0; z-index:1; pointer-events:none;
-  opacity:.30;
-}
+/* Sparkles */
+#sparkles{position:fixed; inset:0; z-index:1; pointer-events:none}
 .dot{
-  position:absolute;
-  width:4px;
-  height:4px;
-  border-radius:50%;
-  background:rgba(168, 132, 255, .95);
-  box-shadow: 0 0 12px rgba(168, 132, 255, .85), 0 0 24px rgba(90,160,255,.25);
-  animation:floatUp 26s linear infinite;
+  position:absolute; width:4px; height:4px; border-radius:50%;
+  background:rgba(170,150,255,.95);
+  box-shadow:0 0 10px rgba(170,150,255,.9), 0 0 20px rgba(120,180,255,.45);
+  animation:floatUp 28s linear infinite;
 }
-@keyframes floatUp{
-  from{ transform:translateY(0) translateZ(0); }
-  to  { transform:translateY(-140vh) translateZ(0); }
-}
+@keyframes floatUp{from{transform:translateY(0)}to{transform:translateY(-160vh)}}
 
-#page{
-  position:relative;
-  z-index:2;
-  min-height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:40px;
-}
-
+/* Layout */
+#page{position:relative; z-index:2; min-height:100%; display:flex; align-items:center; justify-content:center; padding:40px}
 .card{
-  position:relative;
-  width:100%;
-  max-width:1100px;
-  background:var(--card); /* LOCKED */
-  border-radius:var(--radius);
-  padding:40px;
-  box-shadow:0 22px 60px rgba(0, 0, 0, 0.55);
-  overflow:hidden; /* LOCKED */
+  position:relative; width:100%; max-width:1100px;
+  background:var(--panel); border-radius:var(--radius);
+  padding:40px; box-shadow:0 22px 60px rgba(0,0,0,.55);
+  overflow:hidden;
 }
 
-/* Edge runner overlay */
-.edgeRunner{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  z-index:5;
-}
-.edgeRunner svg{
-  width:100%;
-  height:100%;
-  display:block;
-}
-.edgeRunner .base{
-  stroke: rgba(255,255,255,0.12);
-}
+/* Tracer layer */
+.edgeRunner{position:absolute; inset:0; pointer-events:none; z-index:3}
+.edgeRunner svg{width:100%; height:100%; display:block}
 .edgeRunner .run{
-  stroke: var(--trace);
-  filter: drop-shadow(0 0 8px rgba(90,160,255,.32));
+  stroke:var(--trace);
+  filter:drop-shadow(0 0 10px rgba(90,160,255,.45));
 }
 
-/* Content sits above runner just in case */
-.content{
-  position:relative;
-  z-index:2;
-}
-
-.logo{
-  display:block;
-  margin:0 auto 20px;
-  max-width:240px;
-}
-h1{ text-align:center; margin:10px 0; }
-p{ text-align:center; color:var(--muted); }
-
-.actions{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:20px;
-  margin-top:30px;
-}
-
-.action{
-  background:rgba(255,255,255,.04);
-  border-radius:18px;
-  padding:20px;
-  text-align:center;
-}
-
-.action a{
-  display:inline-block;
-  margin-top:10px;
-  padding:10px 16px;
-  border-radius:12px;
-  background:#6d8cff;
-  color:#fff;
-  text-decoration:none;
-}
-
-.footer{
-  margin-top:18px;
-  text-align:center;
-  font-size:12px;
-  color:rgba(232,237,247,.72);
-}
-
-@media(max-width:900px){
-  .actions{ grid-template-columns:1fr; }
-}
-
-@media (prefers-reduced-motion: reduce){
-  #sparkles{ display:none; }
-}
+/* Content */
+.logo{display:block; margin:0 auto 20px; max-width:220px}
+h1{text-align:center; margin:10px 0}
+p{text-align:center; color:var(--muted)}
+.actions{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:30px}
+.action{background:rgba(255,255,255,.04); border-radius:18px; padding:20px; text-align:center}
+.action a{display:inline-block; margin-top:10px; padding:10px 16px; border-radius:12px; background:#6d8cff; color:#fff; text-decoration:none}
+@media(max-width:900px){.actions{grid-template-columns:1fr}}
 </style>
 </head>
 
 <body>
-<div id="ambient" aria-hidden="true"></div>
-<div id="sparkles" aria-hidden="true"></div>
+<div id="ambient"></div>
+<div id="sparkles"></div>
 
 <div id="page">
-  <div class="card" id="mainCard">
-    <div class="edgeRunner" aria-hidden="true">
-      <svg id="edgeSvg">
-        <rect id="edgeBase" class="base" />
-        <rect id="edgeRun1" class="run" />
-        <rect id="edgeRun2" class="run" />
+  <div class="card" id="card">
+    <div class="edgeRunner">
+      <svg id="svg">
+        <rect id="t1" class="run"/>
+        <rect id="t2" class="run"/>
       </svg>
     </div>
 
-    <div class="content">
-      <img src="LionGateOS_Travels_logo_1024.png" alt="LionGateOS Travels" class="logo"/>
+    <img src="LionGateOS_Travels_logo_1024.png" class="logo" alt="LionGateOS Travels"/>
+    <h1>LionGateOS Travels</h1>
+    <p>Explore destinations first. When you're ready to book, continue securely with trusted partners.</p>
 
-      <h1>LionGateOS Travels</h1>
-      <p>Explore destinations first. When you're ready to book, continue securely with trusted partners.</p>
-
-      <div class="actions">
-        <div class="action">
-          <strong>Hotels & Stays</strong><br/>
-          <a href="https://www.booking.com" target="_blank" rel="noopener">Book on Booking.com</a>
-        </div>
-        <div class="action">
-          <strong>Flights</strong><br/>
-          <a href="https://www.expedia.com" target="_blank" rel="noopener">Search Flights</a>
-        </div>
-        <div class="action">
-          <strong>Car Rentals</strong><br/>
-          <a href="https://www.expedia.com/Cars" target="_blank" rel="noopener">Rent a Car</a>
-        </div>
-      </div>
-
-      <div class="footer">
-        Affiliate disclosure: LionGateOS Travels may earn a commission from partner links at no extra cost to you.
-      </div>
+    <div class="actions">
+      <div class="action"><strong>Hotels & Stays</strong><br/><a href="https://www.booking.com" target="_blank">Book on Booking.com</a></div>
+      <div class="action"><strong>Flights</strong><br/><a href="https://www.expedia.com" target="_blank">Search Flights</a></div>
+      <div class="action"><strong>Car Rentals</strong><br/><a href="https://www.expedia.com/Cars" target="_blank">Rent a Car</a></div>
     </div>
   </div>
 </div>
 
 <script>
-/* ===== Sparkles ===== */
-(function initSparkles(){
-  const container = document.getElementById("sparkles");
-  if (!container) return;
-
-  // Visible through panel (without being loud)
-  const COUNT = 42;
-
-  for (let i = 0; i < COUNT; i++) {
-    const dot = document.createElement("div");
-    dot.className = "dot";
-
-    // Slight size variance (still reads as 4px overall)
-    const size = 3 + Math.floor(Math.random() * 3); // 3..5
-    dot.style.width = size + "px";
-    dot.style.height = size + "px";
-
-    dot.style.left = (Math.random() * 100) + "vw";
-    dot.style.top  = (105 + Math.random() * 60) + "vh";
-    dot.style.animationDelay = (Math.random() * 26) + "s";
-
-    const o = 0.35 + Math.random() * 0.55; // brighter than before, still subtle
-    dot.style.opacity = o.toFixed(2);
-
-    container.appendChild(dot);
+/* Sparkles init */
+(()=>{
+  const s=document.getElementById("sparkles");
+  for(let i=0;i<40;i++){
+    const d=document.createElement("div");
+    d.className="dot";
+    d.style.left=Math.random()*100+"vw";
+    d.style.top=(110+Math.random()*70)+"vh";
+    d.style.animationDelay=Math.random()*30+"s";
+    d.style.opacity=(0.4+Math.random()*0.6).toFixed(2);
+    s.appendChild(d);
   }
 })();
 
-/* ===== Edge Tracer System (LOCKED) =====
-- One direction only
-- Grow → Run (>=95% lap) → Shrink (tunnel-close) → Disappear
-- 2 tracers, equal brightness, separation enforced
-- Init after layout stabilizes (no resize/refresh dependency)
-*/
-(function edgeTracer(){
-  const card = document.getElementById("mainCard");
-  const svg  = document.getElementById("edgeSvg");
-  const base = document.getElementById("edgeBase");
-  const r1   = document.getElementById("edgeRun1");
-  const r2   = document.getElementById("edgeRun2");
+/* Tracers: grow -> run -> tunnel-close */
+(()=>{
+  const card=document.getElementById("card");
+  const svg=document.getElementById("svg");
+  const a=document.getElementById("t1");
+  const b=document.getElementById("t2");
+  const stroke=2, radius=26, DIR=-1, SPEED=1.6;
+  let P=0, last=0, A=null, B=null;
 
-  if (!card || !svg || !base || !r1 || !r2) return;
-
-  const DIR = -1;          // ONE direction only (locked per card)
-  const SPEED = 1.85;      // calm premium motion
-  const STROKE = () => (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--stroke')) || 2);
-  const RADIUS = () => (parseFloat(getComputedStyle(card).borderTopLeftRadius) || 26);
-
-  let perimeter = 0;
-  let raf = null;
-
-  function setRectAttrs(el, w, h, inset, rad){
-    el.setAttribute("x", inset);
-    el.setAttribute("y", inset);
-    el.setAttribute("width", w);
-    el.setAttribute("height", h);
-    el.setAttribute("rx", rad);
-    el.setAttribute("ry", rad);
-    el.setAttribute("fill", "none");
-    el.setAttribute("vector-effect", "non-scaling-stroke");
-    el.setAttribute("stroke-linejoin", "round");
-    el.setAttribute("stroke-linecap", "round");
-    el.setAttribute("stroke-width", String(STROKE()));
-  }
-
-  function applyGeometry(){
-    const r = card.getBoundingClientRect();
-    const stroke = STROKE();
-    const rad = Math.min(RADIUS(), Math.min(r.width, r.height) / 2);
-
-    svg.setAttribute("viewBox", `0 0 ${r.width} ${r.height}`);
-    svg.setAttribute("preserveAspectRatio", "none");
-
-    const inset = stroke / 2;
-    const w = Math.max(1, r.width  - stroke);
-    const h = Math.max(1, r.height - stroke);
-
-    setRectAttrs(base, w, h, inset, rad);
-    setRectAttrs(r1,   w, h, inset, rad);
-    setRectAttrs(r2,   w, h, inset, rad);
-
-    // Perimeter approximation for rounded rect:
-    perimeter = 2 * (w + h) - 8 * rad + 2 * Math.PI * rad;
-
-    // Base outline
-    base.setAttribute("stroke", "rgba(255,255,255,0.12)");
-
-    // Tracer stroke (equal brightness)
-    const trace = (getComputedStyle(document.documentElement).getPropertyValue('--trace').trim() || "#5aa0ff");
-    r1.setAttribute("stroke", trace);
-    r2.setAttribute("stroke", trace);
-
-    // Ensure "no dot" when hidden:
-    hideTracer(r1);
-    hideTracer(r2);
-  }
-
-  function hideTracer(el){
-    // Fully hidden (prevents a stuck dot artifact)
-    el.setAttribute("stroke-dasharray", `0 ${Math.max(1, perimeter)}`);
-    el.setAttribute("stroke-dashoffset", "0");
-  }
-
-  function norm(x){
-    const p = perimeter || 1;
-    let v = x % p;
-    if (v < 0) v += p;
-    return v;
-  }
-
-  function distAlong(a, b){
-    // Distance from a to b moving in DIR direction
-    // DIR = -1 means decreasing dashoffset corresponds to moving forward.
-    const p = perimeter || 1;
-    const da = norm(a);
-    const db = norm(b);
-    if (DIR === -1){
-      // forward means decreasing: distance when going from da down to db
-      return da >= db ? (da - db) : (da + (p - db));
-    } else {
-      // forward means increasing
-      return db >= da ? (db - da) : (db + (p - da));
-    }
-  }
-
-  function addAlong(a, d){
-    // Move position a forward by distance d (respecting DIR)
-    return norm(a + (DIR * d));
-  }
-
-  function rand(min, max){ return min + Math.random() * (max - min); }
-
-  function mkTracer(el){
-    return {
-      el,
-      state: "idle",   // idle | grow | run | shrink | wait
-      startDelay: 0,
-      head: 0,         // "head" position along perimeter
-      tail: 0,         // "tail" position along perimeter
-      len: 0,          // current length
-      targetLen: 0,    // target length for grow/run
-      runTarget: 0,    // distance to travel during run (>=95% lap)
-      runTraveled: 0,
-      age: 0
-    };
-  }
-
-  const T1 = mkTracer(r1);
-  const T2 = mkTracer(r2);
-
-  function spawn(t, startPos){
-    const p = perimeter || 1;
-
-    t.state = "wait";
-    t.age = 0;
-    t.startDelay = rand(0.0, 1.4); // slight staggering
-    t.len = 0;
-    t.targetLen = rand(0.12, 0.25) * p; // 12%..25% (LOCKED)
-    t.head = norm(startPos);
-    t.tail = norm(startPos);
-    t.runTarget = rand(0.95, 1.0) * p;  // 95%..100% lap (LOCKED)
-    t.runTraveled = 0;
-
-    hideTracer(t.el);
-  }
-
-  function setDashFor(t){
-    // Draw segment from tail to head, moving forward with DIR.
-    // We use dasharray = len + gap, and dashoffset = -tail, but
-    // because rect path is the perimeter, we can treat it as a linear ring.
-    const p = perimeter || 1;
-    const len = Math.max(0.001, Math.min(t.len, p * 0.999));
-
-    // Gap covers rest of perimeter
-    const gap = Math.max(1, p - len);
-
-    // Place the lit segment starting at tail. The SVG rect dashoffset direction
-    // is opposite of our param, so we map consistently by using tail position.
-    // Using negative tail generally places the dash start at tail.
-    t.el.setAttribute("stroke-dasharray", `${len.toFixed(2)} ${gap.toFixed(2)}`);
-
-    // For consistent direction, we drive motion by advancing head/tail positions,
-    // and compute offset from tail.
-    t.el.setAttribute("stroke-dashoffset", (-t.tail).toFixed(2));
-  }
-
-  function ensureSeparation(){
-    // Enforce a minimum separation so tracers never touch/overlap.
-    // Work in head positions; if too close, push T2 forward.
-    const p = perimeter || 1;
-    const minSep = Math.max(90, p * 0.10); // enough to avoid overlap even with max len
-    const d = distAlong(T1.head, T2.head); // forward distance from T1 to T2
-
-    // If T2 is too close behind/overlapping, push it forward.
-    if (d < minSep){
-      const push = (minSep - d) + 6;
-      T2.head = addAlong(T2.head, push);
-      T2.tail = addAlong(T2.tail, push);
-    }
-  }
-
-  function stepTracer(t, dt){
-    t.age += dt;
-
-    if (t.state === "wait"){
-      if (t.age >= t.startDelay){
-        t.state = "grow";
-        t.age = 0;
-      } else {
-        // stay hidden
-        hideTracer(t.el);
-        return;
-      }
-    }
-
-    if (t.state === "grow"){
-      // Grow forward from a dot: tail stays at initial, head advances as length increases.
-      const growSpeed = SPEED * 1.35;
-      t.len = Math.min(t.targetLen, t.len + growSpeed * dt * 60);
-
-      // Advance head forward while growing (head-only growth)
-      t.head = addAlong(t.head, growSpeed * dt * 60);
-      t.tail = addAlong(t.head, -t.len); // tail = head - len (in forward sense)
-
-      setDashFor(t);
-
-      if (t.len >= t.targetLen - 0.5){
-        t.state = "run";
-        t.age = 0;
-        t.runTraveled = 0;
-      }
-      return;
-    }
-
-    if (t.state === "run"){
-      // Constant length, constant direction
-      const v = SPEED * dt * 60;
-      t.head = addAlong(t.head, v);
-      t.tail = addAlong(t.head, -t.len);
-
-      t.runTraveled += Math.abs(v);
-
-      setDashFor(t);
-
-      if (t.runTraveled >= t.runTarget){
-        t.state = "shrink";
-        t.age = 0;
-      }
-      return;
-    }
-
-    if (t.state === "shrink"){
-      // Tunnel-close: head continues forward, length shrinks until dot, then disappear.
-      const v = SPEED * dt * 60;
-      const shrinkSpeed = SPEED * 1.55;
-
-      t.head = addAlong(t.head, v);
-      t.len = Math.max(0, t.len - shrinkSpeed * dt * 60);
-      t.tail = addAlong(t.head, -t.len);
-
-      if (t.len <= 0.75){
-        // fully gone
-        t.state = "idle";
-        hideTracer(t.el);
-        return;
-      }
-      setDashFor(t);
-      return;
-    }
-
-    // idle fallback
-    hideTracer(t.el);
-  }
-
-  function tick(now){
-    if (!perimeter) { raf = requestAnimationFrame(tick); return; }
-
-    if (!tick.last) tick.last = now;
-    const dt = Math.min(0.05, (now - tick.last) / 1000);
-    tick.last = now;
-
-    // Spawn logic: keep TWO tracers active with calm cadence
-    if (T1.state === "idle"){
-      spawn(T1, rand(0, perimeter));
-    }
-    if (T2.state === "idle"){
-      // Start well-separated from T1
-      const start = addAlong(T1.head, Math.max(140, perimeter * 0.45));
-      spawn(T2, start);
-    }
-
-    // Run steps
-    stepTracer(T1, dt);
-    stepTracer(T2, dt);
-
-    // Enforce separation during motion (never touch)
-    ensureSeparation();
-
-    raf = requestAnimationFrame(tick);
-  }
-
-  function stableInit(){
-    // Wait for layout + images + fonts to settle before measuring.
-    const waitFonts = (document.fonts && document.fonts.ready) ? document.fonts.ready.catch(()=>{}) : Promise.resolve();
-    const imgs = Array.from(document.images || []);
-    const waitImages = Promise.all(imgs.map(img=>{
-      try{
-        if (img.complete) return Promise.resolve();
-        if (img.decode) return img.decode().catch(()=>{});
-      }catch(e){}
-      return new Promise(res=>{
-        img.addEventListener("load", ()=>res(), {once:true});
-        img.addEventListener("error",()=>res(), {once:true});
-      });
-    }));
-
-    Promise.all([waitFonts, waitImages]).then(()=>{
-      // Two RAFs + tiny timeout prevents first-load crop without needing refresh
-      requestAnimationFrame(()=>requestAnimationFrame(()=>{
-        applyGeometry();
-        setTimeout(()=>{
-          applyGeometry();
-          if (raf) cancelAnimationFrame(raf);
-          tick.last = 0;
-          raf = requestAnimationFrame(tick);
-        }, 60);
-      }));
+  function geom(){
+    const r=card.getBoundingClientRect();
+    svg.setAttribute("viewBox",`0 0 ${r.width} ${r.height}`);
+    const w=r.width-stroke, h=r.height-stroke;
+    [a,b].forEach(el=>{
+      el.setAttribute("x",stroke/2);
+      el.setAttribute("y",stroke/2);
+      el.setAttribute("width",w);
+      el.setAttribute("height",h);
+      el.setAttribute("rx",radius);
+      el.setAttribute("ry",radius);
+      el.setAttribute("fill","none");
+      el.setAttribute("stroke-width",stroke);
+      el.setAttribute("vector-effect","non-scaling-stroke");
+      el.setAttribute("stroke-linecap","round");
     });
+    P=2*(w+h)-8*radius+2*Math.PI*radius;
+    hide(a); hide(b);
   }
-
-  // Keep geometry in sync without forcing refresh
-  const ro = new ResizeObserver(()=>applyGeometry());
-  ro.observe(card);
-
-  window.addEventListener("load", stableInit, {once:true});
-  if (document.readyState === "complete") stableInit();
+  function hide(el){el.setAttribute("stroke-dasharray",`0 ${P}`);}
+  function norm(x){x%=P; return x<0?x+P:x}
+  function adv(x,d){return norm(x+DIR*d)}
+  function mk(el,start){
+    return{el, head:start, len:0, max:P*(0.12+Math.random()*0.13),
+           run:P*(0.95+Math.random()*0.05), done:0, state:"grow"};
+  }
+  function draw(t){
+    t.el.setAttribute("stroke-dasharray",`${t.len} ${Math.max(1,P-t.len)}`);
+    t.el.setAttribute("stroke-dashoffset",(-t.head).toFixed(2));
+  }
+  function step(t,dt){
+    const v=SPEED*dt*60;
+    if(t.state==="grow"){ t.len=Math.min(t.max,t.len+v); t.head=adv(t.head,v); if(t.len>=t.max-1)t.state="run"; }
+    else if(t.state==="run"){ t.head=adv(t.head,v); t.done+=v; if(t.done>=t.run)t.state="shrink"; }
+    else if(t.state==="shrink"){ t.head=adv(t.head,v); t.len=Math.max(0,t.len-v*1.4); if(t.len<=1){ t.state="dead"; hide(t.el);} }
+    if(t.state!=="dead") draw(t);
+  }
+  function loop(ts){
+    if(!last) last=ts;
+    const dt=Math.min(0.05,(ts-last)/1000); last=ts;
+    if(!A) A=mk(a, Math.random()*P);
+    if(!B) B=mk(b, adv(A.head, P*0.5));
+    step(A,dt); step(B,dt);
+    if(A.state==="dead") A=null;
+    if(B.state==="dead") B=null;
+    requestAnimationFrame(loop);
+  }
+  window.addEventListener("load",()=>{
+    geom();
+    requestAnimationFrame(()=>requestAnimationFrame(()=>loop(performance.now())));
+  });
+  new ResizeObserver(geom).observe(card);
 })();
 </script>
 </body>
