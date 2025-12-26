@@ -70,6 +70,26 @@ p{text-align:center; color:var(--muted)}
 @media (prefers-reduced-motion: reduce){
   .dot{animation:none}
 }
+
+.actions.booking-only{
+  grid-template-columns:1fr;
+  justify-items:center;
+}
+.actions.booking-only .action{
+  max-width:360px;
+}
+
+
+.logo-wrap{
+  display:flex;
+  justify-content:center;
+  margin-bottom:16px;
+}
+.logo-wrap img{
+  max-width:220px;
+  height:auto;
+}
+
 </style>
 </head>
 
@@ -90,10 +110,13 @@ p{text-align:center; color:var(--muted)}
     <h1>LionGateOS Travels</h1>
     <p>Explore destinations first. When you're ready to book, continue securely with trusted partners.</p>
 
-    <div class="actions">
-      <div class="action"><strong>Hotels & Stays</strong><br/><a href="https://www.booking.com" target="_blank" rel="noopener">Book on Booking.com</a></div>
-      <div class="action"><strong>Flights</strong><br/><a href="https://www.expedia.com" target="_blank" rel="noopener">Search Flights</a></div>
-      <div class="action"><strong>Car Rentals</strong><br/><a href="https://www.expedia.com/Cars" target="_blank" rel="noopener">Rent a Car</a></div>
+    <div class="actions booking-only">
+      <div class="action">
+        <strong>Hotels & Stays</strong><br/>
+        <a href="https://www.booking.com" target="_blank" rel="noopener">
+          Book on Booking.com
+        </a>
+      </div>
     </div>
   </div>
 </div>
