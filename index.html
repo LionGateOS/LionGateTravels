@@ -87,6 +87,26 @@ a.button:hover {
     from { transform: translateY(0); }
     to { transform: translateY(-40px); }
 }
+
+.actions.booking-only{
+  grid-template-columns:1fr;
+  justify-items:center;
+}
+.actions.booking-only .action{
+  max-width:360px;
+}
+
+
+.logo-wrap{
+  display:flex;
+  justify-content:center;
+  margin-bottom:16px;
+}
+.logo-wrap img{
+  max-width:220px;
+  height:auto;
+}
+
 </style>
 </head>
 
@@ -116,5 +136,226 @@ a.button:hover {
     </section>
 </main>
 
+<<<<<<< HEAD
+=======
+    <div class="actions booking-only">
+      <div class="action">
+        <strong>Hotels & Stays</strong><br/>
+        <a href="https://www.booking.com" target="_blank" rel="noopener">
+          Book on Booking.com
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   Performance Guardrails (non-visual, passive)
+   - No permissions
+   - No fingerprinting
+   - No storage
+========================================================= */
+(function(){
+  const d = {
+    prefersReducedMotion: window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    isCoarsePointer: window.matchMedia && window.matchMedia("(pointer: coarse)").matches,
+    isSmallScreen: Math.min(window.innerWidth, window.innerHeight) < 820,
+    cores: (navigator && navigator.hardwareConcurrency) ? navigator.hardwareConcurrency : 4,
+    memory: (navigator && navigator.deviceMemory) ? navigator.deviceMemory : 4
+  };
+
+  // Very conservative tiers (avoid misclassifying good devices as "low")
+  let tier = "high";
+  if (d.prefersReducedMotion) tier = "low";
+  else if (d.isSmallScreen || d.isCoarsePointer) tier = "mid";
+  if (d.cores <= 4 || d.memory <= 4) tier = (tier === "high") ? "mid" : "low";
+  if (d.cores <= 2 || d.memory <= 2) tier = "low";
+
+  // Budgets (locked intent: look the same, just cheaper on weak devices)
+  const budgets = {
+    high: { sparkleCount: 40, tracerMax: 2, spawnMinMs: 900,  spawnMaxMs: 1600 },
+    mid:  { sparkleCount: 28, tracerMax: 1, spawnMinMs: 1200, spawnMaxMs: 2200 },
+    low:  { sparkleCount: 16, tracerMax: 1, spawnMinMs: 1600, spawnMaxMs: 3000 }
+  };
+
+  window.__LGOS_PERF__ = { tier, ...budgets[tier] };
+})();
+
+/* Sparkles (guardrailed count, no runaway nodes) */
+(function initSparkles(){
+  const s = document.getElementById("sparkles");
+  if(!s) return;
+  const cfg = window.__LGOS_PERF__ || { sparkleCount: 40 };
+  const COUNT = Math.max(8, Math.min(60, cfg.sparkleCount));
+  s.innerHTML = ""; // failsafe: no accumulation
+
+  for(let i=0;i<COUNT;i++){
+    const d=document.createElement("div");
+    d.className="dot";
+    d.style.left=Math.random()*100+"vw";
+    d.style.top=(110+Math.random()*70)+"vh";
+    d.style.animationDelay=Math.random()*30+"s";
+    d.style.opacity=(0.4+Math.random()*0.6).toFixed(2);
+    s.appendChild(d);
+  }
+})();
+
+/* Tracers: grow -> run -> tunnel-close (guardrailed budget + tab pause) */
+(function(){
+  const card=document.getElementById("card");
+  const svg=document.getElementById("svg");
+  const a=document.getElementById("t1");
+  const b=document.getElementById("t2");
+
+  const stroke=2, radius=26, DIR=-1;
+  const SPEED=1.6; // unchanged baseline
+  let P=0, last=0, running=true;
+
+  const cfg = window.__LGOS_PERF__ || { tracerMax: 2, spawnMinMs: 900, spawnMaxMs: 1600 };
+  const MAX_TRACERS = Math.max(1, Math.min(2, cfg.tracerMax));
+  const SPAWN_MIN = Math.max(600, cfg.spawnMinMs|0);
+  const SPAWN_MAX = Math.max(SPAWN_MIN+200, cfg.spawnMaxMs|0);
+
+  function geom(){
+    const r=card.getBoundingClientRect();
+    svg.setAttribute("viewBox",`0 0 ${r.width} ${r.height}`);
+    const w=r.width-stroke, h=r.height-stroke;
+
+    [a,b].forEach(el=>{
+      el.setAttribute("x",stroke/2);
+      el.setAttribute("y",stroke/2);
+      el.setAttribute("width",w);
+      el.setAttribute("height",h);
+      el.setAttribute("rx",radius);
+      el.setAttribute("ry",radius);
+      el.setAttribute("fill","none");
+      el.setAttribute("stroke-width",stroke);
+      el.setAttribute("vector-effect","non-scaling-stroke");
+      el.setAttribute("stroke-linecap","round");
+      el.setAttribute("stroke-linejoin","round");
+    });
+
+    P=2*(w+h)-8*radius+2*Math.PI*radius;
+    hide(a); hide(b);
+  }
+
+  function hide(el){
+    el.setAttribute("stroke-dasharray",`0 ${Math.max(1,P)}`);
+    el.setAttribute("stroke-dashoffset","0");
+  }
+
+  function norm(x){ x%=P; return x<0?x+P:x; }
+  function adv(x,d){ return norm(x+DIR*d); }
+
+  function mk(el,start){
+    return{
+      el,
+      head:start,
+      len:0,
+      max:P*(0.12+Math.random()*0.13),            // 12%–25%
+      run:P*(0.95+Math.random()*0.05),            // 95%–100%
+      done:0,
+      state:"grow"
+    };
+  }
+
+  function draw(t){
+    t.el.setAttribute("stroke-dasharray",`${t.len} ${Math.max(1,P-t.len)}`);
+    t.el.setAttribute("stroke-dashoffset",(-t.head).toFixed(2));
+  }
+
+  function step(t,dt){
+    const v=SPEED*dt*60;
+    if(t.state==="grow"){
+      t.len=Math.min(t.max,t.len+v);
+      t.head=adv(t.head,v);
+      if(t.len>=t.max-1) t.state="run";
+    } else if(t.state==="run"){
+      t.head=adv(t.head,v);
+      t.done+=v;
+      if(t.done>=t.run) t.state="shrink";
+    } else if(t.state==="shrink"){
+      // Tunnel-close: the head keeps moving forward while the length collapses
+      t.head=adv(t.head,v);
+      t.len=Math.max(0,t.len-v*1.4);
+      if(t.len<=1){
+        t.state="dead";
+        hide(t.el);
+      }
+    }
+    if(t.state!=="dead") draw(t);
+  }
+
+  let T1=null, T2=null;
+  let nextSpawnA=0, nextSpawnB=0;
+
+  function randSpawn(){
+    return SPAWN_MIN + Math.random()*(SPAWN_MAX-SPAWN_MIN);
+  }
+
+  function loop(ts){
+    if(!running){ requestAnimationFrame(loop); return; }
+    if(!last) last=ts;
+    const dt=Math.min(0.05,(ts-last)/1000);
+    last=ts;
+
+    // Spawn controller (failsafe, no runaway)
+    if(!T1 && ts>=nextSpawnA){
+      T1=mk(a, Math.random()*P);
+      nextSpawnA = ts + randSpawn();
+    }
+    if(MAX_TRACERS>1 && !T2 && ts>=nextSpawnB){
+      // Ensure separation: start ~50% away from tracer 1 if it exists
+      const start = T1 ? adv(T1.head, P*0.5) : Math.random()*P;
+      T2=mk(b, start);
+      nextSpawnB = ts + randSpawn();
+    }
+
+    if(T1) step(T1,dt);
+    if(T2) step(T2,dt);
+
+    if(T1 && T1.state==="dead") T1=null;
+    if(T2 && T2.state==="dead") T2=null;
+
+    requestAnimationFrame(loop);
+  }
+
+  // Tab focus guardrail
+  document.addEventListener("visibilitychange", ()=>{
+    if(document.hidden){
+      running=false;
+    } else {
+      // Resume after layout stabilization to prevent "first-frame weirdness"
+      last=0;
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{ running=true; }));
+    }
+  });
+
+  // Init only after stable layout
+  window.addEventListener("load", ()=>{
+    geom();
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      nextSpawnA = performance.now() + 250;
+      nextSpawnB = performance.now() + 650;
+      running=true;
+      requestAnimationFrame(loop);
+    }));
+  });
+
+  // Resize safety
+  try{
+    new ResizeObserver(()=>{
+      // Re-geometry then let tracers continue without accumulating artifacts
+      geom();
+      last=0;
+    }).observe(card);
+  }catch(e){
+    window.addEventListener("resize", ()=>{ geom(); last=0; });
+  }
+})();
+</script>
+>>>>>>> e450b3bac87336d071fffa8dc3be7e70b06ecd68
 </body>
 </html>
+
