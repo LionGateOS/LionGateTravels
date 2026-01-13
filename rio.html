@@ -215,10 +215,60 @@ body > * {
     margin-left: auto;
     margin-right: auto;
 }
+/* Partner Preview Minimal Stack v1 (visual layer) */
+.lg-live-grid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+@media (min-width: 900px){
+  .lg-live-grid{
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: start;
+  }
+}
+.lg-live-photo{
+  width:100%;
+  border-radius: 14px;
+  border: 1px solid rgba(140,120,255,0.25);
+  display:block;
+  box-shadow: 0 18px 60px rgba(120,90,255,0.18);
+}
+#lg-map{
+  height: 280px;
+  width: 100%;
+  border-radius: 14px;
+  overflow:hidden;
+  border: 1px solid rgba(140,120,255,0.25);
+  box-shadow: 0 18px 60px rgba(120,90,255,0.12);
+}
+.lg-map-caption{ margin-top: 8px; }
+.lg-mini-table{
+  width:100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+.lg-mini-table th, .lg-mini-table td{
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  text-align:left;
+}
+.lg-signal-list{
+  margin:0;
+  padding-left: 18px;
+}
+.lg-fallback{
+  padding: 14px;
+}
+
 </style>
 
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script defer src="partner-preview-minstack.js"></script>
+
 </head>
-<body>
+<body data-lg-lat="-22.9068" data-lg-lon="-43.1729" data-lg-zoom="11" data-lg-teleport="rio-de-janeiro">
 <header><div class="wrap">
 <nav>
 <a href="index.html">Home</a>
@@ -232,6 +282,31 @@ body > * {
 
 <h1>Rio de Janeiro</h1>
 <p class="muted">City-level decision intelligence for high-reward, high-variance urban travel.</p>
+<div class="card lg-live" style="margin-top:16px;">
+  <h2 style="margin-top:0">Live Planning Signals (Partner Preview)</h2>
+  <p class="muted">Context-only signals powered by OpenStreetMap, Open‑Meteo, Teleport (where available), and Unsplash. No pricing. No availability. No booking.</p>
+  <div class="lg-live-grid">
+    <div>
+      <img class="lg-live-photo" data-unsplash="Rio de Janeiro" alt="Rio de Janeiro travel context image"/>
+    </div>
+    <div>
+      <div id="lg-map"></div>
+      <div class="muted lg-map-caption">Map shows geographic context only (no listings).</div>
+    </div>
+  </div>
+  <div class="lg-live-grid" style="margin-top:14px;">
+    <div class="card" style="margin:0;">
+      <h3 style="margin-top:0">Weather Reality Check</h3>
+      <div data-role="weather" class="muted">Loading weather context…</div>
+    </div>
+    <div class="card" style="margin:0;">
+      <h3 style="margin-top:0">City Signals</h3>
+      <div data-role="teleport" class="muted">Loading city signals…</div>
+      <div class="muted" style="margin-top:8px;">Signals are high-level context only and are not recommendations.</div>
+    </div>
+  </div>
+</div>
+
 
 <div class="card">
 <h2 style="margin-top:0">Who Rio is for</h2>
